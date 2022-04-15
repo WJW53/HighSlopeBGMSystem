@@ -14,7 +14,8 @@
         </p>
       </div>
 
-      <BasicForm @register="registerForm" />
+      <!-- 支持回车完后锁屏 -->
+      <BasicForm @register="registerForm" @keyup.enter.native="handleLock" />
 
       <div :class="`${prefixCls}__footer`">
         <a-button type="primary" block class="mt-2" @click="handleLock">

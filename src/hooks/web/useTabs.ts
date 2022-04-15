@@ -16,6 +16,7 @@ enum TableActionEnum {
   CLOSE,
 }
 
+//useTabs hook, 标签页按钮功能
 export function useTabs(_router?: Router) {
   const appStore = useAppStore();
 
@@ -55,6 +56,7 @@ export function useTabs(_router?: Router) {
     await tabStore.updateTabPath(path, targetTab);
   }
 
+  // 处理标签行为、操作
   async function handleTabAction(action: TableActionEnum, tab?: RouteLocationNormalized) {
     const canIUse = canIUseTabs;
     if (!canIUse) {

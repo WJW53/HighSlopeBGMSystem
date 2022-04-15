@@ -40,12 +40,15 @@ export function useGo(_router?: Router) {
 export const useRedo = (_router?: Router) => {
   const { push, currentRoute } = _router || useRouter();
   const { query, params = {}, name, fullPath } = unref(currentRoute.value);
+  console.log('重定向之前: ', unref(currentRoute.value), { query, params, name, fullPath });
   function redo(): Promise<boolean> {
     return new Promise((resolve) => {
       if (name === REDIRECT_NAME) {
         resolve(false);
         return;
       }
+      // 这个params为啥是{}??上面route里有值啊, 不应该用默认的{}啊, 导致走进了else
+      // console.log(name, Object.keys(params), name && Object.keys(params).length > 0);
       if (name && Object.keys(params).length > 0) {
         params['_redirect_type'] = 'name';
         params['path'] = String(name);
@@ -53,6 +56,8 @@ export const useRedo = (_router?: Router) => {
         params['_redirect_type'] = 'path';
         params['path'] = fullPath;
       }
+      // console.log('重新加载中调用useRedo的redo', { name: REDIRECT_NAME, params, query });
+      //利用Redirect重定向到当前路由, 路径啥的在params里存好了
       push({ name: REDIRECT_NAME, params, query }).then(() => resolve(true));
     });
   }

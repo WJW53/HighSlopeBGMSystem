@@ -49,6 +49,7 @@ export function useTabDropdown(tabContentProps: TabContentProps, getIsTabs: Comp
     // Close right
     const closeRightDisabled =
       !isCurItem || (index === tabStore.getTabList.length - 1 && tabStore.getLastDragEndIndex >= 0);
+    //标签页右侧功能下拉按钮列表
     const dropMenuList: DropMenu[] = [
       {
         icon: 'ion:reload-sharp',

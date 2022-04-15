@@ -33,10 +33,12 @@
               {{ userinfo.realName }}
             </p>
           </div>
+          <!-- 支持回车解锁屏幕 -->
           <InputPassword
             :placeholder="t('sys.lock.placeholder')"
             class="enter-x"
             v-model:value="password"
+            @keyup.enter.native="unLock"
           />
           <span :class="`${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
             {{ t('sys.lock.alert') }}

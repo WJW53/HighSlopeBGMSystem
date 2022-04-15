@@ -14,6 +14,27 @@ const system: AppRouteModule = {
     title: t('routes.demo.system.moduleName'),
   },
   children: [
+    // {
+    //   path: 'account',
+    //   name: 'AccountManagement',
+    //   meta: {
+    //     title: t('routes.demo.system.account'),
+    //     ignoreKeepAlive: false,
+    //   },
+    //   component: () => import('/@/views/demo/system/account/index.vue'),
+    // },
+    // {
+    //   path: 'account_detail/:id',
+    //   name: 'AccountDetail',
+    //   meta: {
+    //     hideMenu: true,
+    //     title: t('routes.demo.system.account_detail'),
+    //     ignoreKeepAlive: true,
+    //     showMenu: false,
+    //     currentActiveMenu: '/permission/account',
+    //   },
+    //   component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
+    // },
     {
       path: 'project',
       name: 'ProjectManagement',
@@ -21,7 +42,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.project'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/project/index.vue'),
+      component: () => import('/@/views/demo/system/account/index.vue'),
     },
     {
       path: 'station',
@@ -30,7 +51,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.station'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/station/index.vue'),
+      component: () => import('/@/views/demo/system/account/index.vue'),
     },
     {
       path: 'equipment',

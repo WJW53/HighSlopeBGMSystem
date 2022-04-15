@@ -2,6 +2,7 @@
   <div></div>
 </template>
 <script lang="ts" setup>
+  // 自定义Redirect路由重定向组件
   import { unref } from 'vue';
   import { useRouter } from 'vue-router';
 

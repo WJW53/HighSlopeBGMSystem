@@ -260,6 +260,7 @@ export const useMultipleTabStore = defineStore({
         const leftTabs = this.tabList.slice(0, index);
         const pathList: string[] = [];
         for (const item of leftTabs) {
+          //affix是homepage的标记, 不能去掉
           const affix = item?.meta?.affix ?? false;
           if (!affix) {
             pathList.push(item.fullPath);

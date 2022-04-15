@@ -17,7 +17,8 @@
           icon="ion:document-text-outline"
           v-if="getShowDoc"
         /> -->
-        <MenuDivider v-if="getShowDoc" />
+        <!-- <MenuDivider v-if="getShowDoc" /> -->
+        <!-- 锁定屏幕与退出系统 -->
         <MenuItem
           v-if="getUseLockPage"
           key="lock"

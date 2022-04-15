@@ -33,7 +33,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.account_detail'),
         ignoreKeepAlive: true,
         showMenu: false,
-        currentActiveMenu: '/system/account',
+        currentActiveMenu: '/permission/account',
       },
       component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
     },

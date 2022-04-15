@@ -115,7 +115,7 @@
       }
 
       function handleView(record: Recordable) {
-        go('/system/account_detail/' + record.id);
+        go('/permission/account_detail/' + record.id);
       }
 
       return {
