@@ -20,6 +20,21 @@
           :placeholder="t('sys.login.smsCode')"
         />
       </FormItem>
+      <FormItem name="password" class="enter-x">
+        <StrengthMeter
+          size="large"
+          v-model:value="formData.password"
+          :placeholder="t('sys.login.newPassword')"
+        />
+      </FormItem>
+      <FormItem name="confirmPassword" class="enter-x">
+        <InputPassword
+          size="large"
+          visibilityToggle
+          v-model:value="formData.confirmPassword"
+          :placeholder="t('sys.login.newConfirmPassword')"
+        />
+      </FormItem>
 
       <FormItem class="enter-x">
         <Button type="primary" size="large" block @click="handleReset" :loading="loading">
@@ -35,12 +50,14 @@
 <script lang="ts" setup>
   import { reactive, ref, computed, unref } from 'vue';
   import LoginFormTitle from './LoginFormTitle.vue';
+  import { StrengthMeter } from '/@/components/StrengthMeter';
   import { Form, Input, Button } from 'ant-design-vue';
   import { CountdownInput } from '/@/components/CountDown';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useLoginState, useFormRules, LoginStateEnum } from './useLogin';
 
   const FormItem = Form.Item;
+  const InputPassword = Input.Password;
   const { t } = useI18n();
   const { handleBackLogin, getLoginState } = useLoginState();
   const { getFormRules } = useFormRules();
@@ -52,6 +69,8 @@
     account: '',
     mobile: '',
     sms: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const getShow = computed(() => unref(getLoginState) === LoginStateEnum.RESET_PASSWORD);

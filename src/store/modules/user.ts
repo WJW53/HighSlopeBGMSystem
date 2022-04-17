@@ -138,7 +138,7 @@ export const useUserStore = defineStore({
         this.setRoleList([]);
       }
       //都到这里了, 代表肯定是登录进来了
-      setWatermark('W Admin');
+      setWatermark('WJW Admin');
       this.setUserInfo(userInfo);
       return userInfo;
     },

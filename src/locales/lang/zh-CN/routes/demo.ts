@@ -60,7 +60,7 @@ export default {
     customExport: '选择导出格式',
     jsonExport: 'JSON数据导出',
     arrayExport: 'Array数据导出',
-    importExcel: '导入',
+    importExcel: '导入数据',
   },
   feat: {
     feat: '功能',
@@ -143,6 +143,11 @@ export default {
     listCard: '卡片列表',
     listBasic: '标准列表',
     listSearch: '搜索列表',
+  },
+  personal: {
+    personalCenter: '个人中心',
+    personalSetting: '个人设置',
+    changePassword: '修改密码',
   },
   permission: {
     permission: '权限管理',

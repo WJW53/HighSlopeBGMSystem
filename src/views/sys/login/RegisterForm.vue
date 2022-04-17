@@ -10,6 +10,14 @@
           :placeholder="t('sys.login.userName')"
         />
       </FormItem>
+      <FormItem name="nickname" class="enter-x">
+        <Input
+          class="fix-auto-fill"
+          size="large"
+          v-model:value="formData.nickname"
+          :placeholder="t('sys.login.nickName')"
+        />
+      </FormItem>
       <FormItem name="mobile" class="enter-x">
         <Input
           size="large"
@@ -84,6 +92,7 @@
 
   const formData = reactive({
     account: '',
+    nickname: '',
     password: '',
     confirmPassword: '',
     mobile: '',

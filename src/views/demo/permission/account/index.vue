@@ -2,20 +2,25 @@
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <BasicTable @register="registerTable" class="w-full xl:w-full" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate">新增设备</a-button>
+        <a-button type="primary" @click="handleCreate">新增账号</a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              icon: 'clarity:info-standard-line',
+              tooltip: '查看用户详情',
+              onClick: handleView.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑设备信息',
+              tooltip: '编辑用户资料',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此设备',
+              tooltip: '删除此账号',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -42,7 +47,7 @@
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
-    name: 'EquipmentManagement',
+    name: 'AccountManagement',
     components: { BasicTable, PageWrapper, AccountModal, TableAction },
     setup() {
       const go = useGo();
@@ -80,7 +85,7 @@
       }
 
       function handleEdit(record: Recordable) {
-        console.log('edit', record);
+        console.log(record);
         openModal(true, {
           record,
           isUpdate: true,
@@ -88,7 +93,7 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log('delete', record);
+        console.log(record);
       }
 
       function handleSuccess({ isUpdate, values }) {

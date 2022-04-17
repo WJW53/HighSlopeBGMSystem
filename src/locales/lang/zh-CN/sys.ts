@@ -92,8 +92,11 @@ export default {
     diffPwd: '两次输入密码不一致',
 
     userName: '账号',
+    nickName: '昵称',
     password: '密码',
     confirmPassword: '确认密码',
+    newPassword: '新密码',
+    newConfirmPassword: '确认新密码',
     email: '邮箱',
     smsCode: '短信验证码',
     mobile: '手机号码',

@@ -12,29 +12,9 @@ const system: AppRouteModule = {
     orderNo: 16,
     icon: 'ion:settings-outline',
     title: t('routes.demo.system.moduleName'),
+    ignoreKeepAlive: true,
   },
   children: [
-    // {
-    //   path: 'account',
-    //   name: 'AccountManagement',
-    //   meta: {
-    //     title: t('routes.demo.system.account'),
-    //     ignoreKeepAlive: false,
-    //   },
-    //   component: () => import('/@/views/demo/system/account/index.vue'),
-    // },
-    // {
-    //   path: 'account_detail/:id',
-    //   name: 'AccountDetail',
-    //   meta: {
-    //     hideMenu: true,
-    //     title: t('routes.demo.system.account_detail'),
-    //     ignoreKeepAlive: true,
-    //     showMenu: false,
-    //     currentActiveMenu: '/permission/account',
-    //   },
-    //   component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
-    // },
     {
       path: 'project',
       name: 'ProjectManagement',
@@ -42,7 +22,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.project'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/account/index.vue'),
+      component: () => import('/@/views/demo/system/project/index.vue'),
     },
     {
       path: 'station',
@@ -51,7 +31,7 @@ const system: AppRouteModule = {
         title: t('routes.demo.system.station'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/account/index.vue'),
+      component: () => import('/@/views/demo/system/station/index.vue'),
     },
     {
       path: 'equipment',
@@ -63,49 +43,14 @@ const system: AppRouteModule = {
       component: () => import('/@/views/demo/system/equipment/index.vue'),
     },
     {
-      path: 'excel',
-      name: 'Excel',
-      redirect: '/system/excel/customExport',
-      component: getParentLayout('Excel'),
+      path: 'uploadExcel',
+      name: 'uploadExcel',
+      component: () => import('/@/views/demo/system/excel/UploadExcel.vue'),
       meta: {
         // icon: 'mdi:microsoft-excel',
-        title: t('routes.demo.excel.excel'),
+        title: t('routes.demo.excel.importExcel'),
+        ignoreKeepAlive: true,
       },
-
-      children: [
-        {
-          path: 'customExport',
-          name: 'CustomExport',
-          component: () => import('/@/views/demo/excel/CustomExport.vue'),
-          meta: {
-            title: t('routes.demo.excel.customExport'),
-          },
-        },
-        {
-          path: 'jsonExport',
-          name: 'JsonExport',
-          component: () => import('/@/views/demo/excel/JsonExport.vue'),
-          meta: {
-            title: t('routes.demo.excel.jsonExport'),
-          },
-        },
-        {
-          path: 'arrayExport',
-          name: 'ArrayExport',
-          component: () => import('/@/views/demo/excel/ArrayExport.vue'),
-          meta: {
-            title: t('routes.demo.excel.arrayExport'),
-          },
-        },
-        {
-          path: 'importExcel',
-          name: 'ImportExcel',
-          component: () => import('/@/views/demo/excel/ImportExcel.vue'),
-          meta: {
-            title: t('routes.demo.excel.importExcel'),
-          },
-        },
-      ],
     },
   ],
 };

@@ -11,7 +11,7 @@ const permission: AppRouteModule = {
   redirect: '/permission/front/page',
   meta: {
     orderNo: 15,
-    icon: 'ion:key-outline',
+    icon: 'ion:shield-checkmark-outline',
     title: t('routes.demo.permission.permission'),
   },
 
@@ -23,7 +23,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.account'),
         ignoreKeepAlive: false,
       },
-      component: () => import('/@/views/demo/system/account/index.vue'),
+      component: () => import('/@/views/demo/permission/account/index.vue'),
     },
     {
       path: 'account_detail/:id',
@@ -35,7 +35,7 @@ const permission: AppRouteModule = {
         showMenu: false,
         currentActiveMenu: '/permission/account',
       },
-      component: () => import('/@/views/demo/system/account/AccountDetail.vue'),
+      component: () => import('/@/views/demo/permission/account/AccountDetail.vue'),
     },
     {
       path: 'role',
@@ -44,25 +44,7 @@ const permission: AppRouteModule = {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
       },
-      component: () => import('/@/views/demo/system/role/index.vue'),
-    },
-    {
-      path: 'menu',
-      name: 'MenuManagement',
-      meta: {
-        title: t('routes.demo.system.menu'),
-        ignoreKeepAlive: true,
-      },
-      component: () => import('/@/views/demo/system/menu/index.vue'),
-    },
-    {
-      path: 'changePassword',
-      name: 'ChangePassword',
-      meta: {
-        title: t('routes.demo.system.password'),
-        ignoreKeepAlive: true,
-      },
-      component: () => import('/@/views/demo/system/password/index.vue'),
+      component: () => import('/@/views/demo/permission/role/index.vue'),
     },
   ],
 };

@@ -96,8 +96,11 @@ export default {
     diffPwd: 'The two passwords are inconsistent',
 
     userName: 'Username',
+    nickName: 'Nickname',
     password: 'Password',
     confirmPassword: 'Confirm Password',
+    newPassword: 'New Password',
+    newConfirmPassword: 'New Confirm Password',
     email: 'Email',
     smsCode: 'SMS code',
     mobile: 'Mobile',

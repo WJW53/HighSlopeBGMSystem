@@ -61,7 +61,7 @@ export default {
     customExport: 'Select export format',
     jsonExport: 'JSON data export',
     arrayExport: 'Array data export',
-    importExcel: 'Import',
+    importExcel: 'Import Data',
   },
   feat: {
     feat: 'Page Function',
@@ -148,6 +148,11 @@ export default {
     basic: 'Basic list',
     listBasic: 'Basic list',
     listSearch: 'Search list',
+  },
+  personal: {
+    personalCenter: 'Personal Center',
+    personalSetting: 'Personal Setting',
+    changePassword: 'Change Password',
   },
   permission: {
     permission: 'Permission management',

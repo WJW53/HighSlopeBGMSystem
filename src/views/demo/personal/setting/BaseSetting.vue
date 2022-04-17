@@ -49,7 +49,7 @@
       const { createMessage } = useMessage();
       const userStore = useUserStore();
 
-      const [register, { setFieldsValue }] = useForm({
+      const [register, { setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 120,
         schemas: baseSetschemas,
         showActionButtonGroup: false,
@@ -76,7 +76,9 @@
         register,
         uploadApi: uploadApi as any,
         updateAvatar,
-        handleSubmit: (data) => {
+        handleSubmit: () => {
+          console.log(getFieldsValue());
+          // 把新数据发送给后端, 然后同步更新全局的数据
           createMessage.success('更新成功！');
         },
       };
