@@ -21,7 +21,7 @@ class UserController extends Controller {
     }
 
     async findOne() {
-        console.log(this.ctx.params, this.ctx.query);
+        console.log(this.ctx.params, this.ctx.query);//params路由上的动态参数, query是路由上带的参数以及请求体里的body
         this.ctx.body = await this.ctx.service.user.findOne(this.ctx.params.id);
     }
 
