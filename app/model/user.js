@@ -8,7 +8,7 @@ module.exports = ({ mongoose }) => {
    * 注意账号密码手机号等的字符串长度问题, 可以在验证中间件中的rules里验证
    */
   const UserSchema = new Schema({
-      acount: {//账户
+      account: {//账户
         type: String,
         required: true,
         unique: true,

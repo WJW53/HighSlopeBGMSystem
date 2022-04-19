@@ -44,7 +44,7 @@ const transform: AxiosTransform = {
     }
     // 错误的时候返回
 
-    const { data } = res;
+    const { data } = res || {};
     if (!data) {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
@@ -213,7 +213,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
-
+        // baseURL: 'http://localhost:27017', // 我tmd服了啊, 不知道为啥vite配置跨域不生效, 现在怀疑和node版本有关, 前后端技术生态依赖的node有参差
+// 现在只能先这样简单代替一下模拟跨域, 反正我后端给了cors了
         headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
@@ -234,7 +235,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 消息提示类型
           errorMessageMode: 'message',
           // 接口地址
-          apiUrl: globSetting.apiUrl,
+          apiUrl: globSetting.apiUrl, //VITE_GLOB_API_URL
           // 接口拼接地址
           urlPrefix: urlPrefix,
           //  是否加入时间戳

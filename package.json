@@ -8,12 +8,14 @@
   },
   "dependencies": {
     "egg": "^2.15.1",
+    "egg-cors": "^2.2.3",
     "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
     "markdown-toc": "^1.2.0",
     "md5": "^2.3.0",
+    "rimraf": "^3.0.2",
     "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
@@ -30,7 +32,9 @@
     "start": "egg-scripts start --daemon --title=egg-server-mysite-server",
     "stop": "egg-scripts stop --title=egg-server-mysite-server",
     "dev": "egg-bin dev",
-    "debug": "egg-bin debug"
+    "debug": "egg-bin debug",
+    "clean:cache": "rimraf node_modules/.cache/",
+    "clean:lib": "rimraf node_modules"
   },
   "ci": {
     "version": "10"

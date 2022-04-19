@@ -15,6 +15,17 @@ const httpsRE = /^https:\/\//;
  * Generate proxy
  * @param list
  */
+// .env.development的vite_proxy配置完后, 就在这里拦截一次统一配置其他字段
+// VITE_PROXY: [
+//   [
+//     '/api',
+//     'http://localhost:27017'
+//   ],
+//   [
+//     '/upload',
+//     'http://localhost:27017/upload'
+//   ]
+// ],
 export function createProxy(list: ProxyList = []) {
   const ret: ProxyTargetList = {};
   for (const [prefix, target] of list) {
@@ -30,5 +41,6 @@ export function createProxy(list: ProxyList = []) {
       ...(isHttps ? { secure: false } : {}),
     };
   }
+  console.log('createProxy', ret);
   return ret;
 }

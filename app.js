@@ -34,6 +34,7 @@ class AppBootHook {
   async initUser() {
     const User = this.app.model.User;
     const count = await User.countDocuments();
+    console.log('user已连接数据库')
     if (!count) {
       await User.create({
         acount: 'wjw',

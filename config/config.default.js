@@ -66,7 +66,14 @@ exports.security = {
   csrf: {
     enable: false,
   },
+  // domainWhiteList: [ 'http://localhost:3100' ],
+  domainWhiteList: [ '*' ],
 };
+
+exports.cors = {
+  origin: '*',
+  allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+},
 
 // validate
 exports.validate = {

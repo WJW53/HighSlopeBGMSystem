@@ -1,6 +1,15 @@
 const Service = require('../core/BaseService');
 
 class UserService extends Service {
+  async login({username, password}) {
+    console.log('node接收到前端代理过来的请求了!!', username, password);
+    return await this.ctx.model.User.findOne({
+      account: username,
+      password: password,
+      // loginPwd: md5(loginPwd),
+    });
+  }
+
   async add(info) {
     this.validate(
       {

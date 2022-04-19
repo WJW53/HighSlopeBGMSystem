@@ -23,6 +23,7 @@ module.exports = (app) => {
   // router.put('/api/userInfo/:id', controller.user.update);
   // router.get('/api/userInfo', controller.user.index);
   router.get('/api/userInfo/:id', controller.user.findOne);
+  router.post('/api/login', controller.user.login);
   
 
   /**

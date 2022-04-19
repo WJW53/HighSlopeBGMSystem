@@ -1,6 +1,11 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
+    async login(){
+        console.log('loginWWWWWWWWWWW');
+        this.ctx.body = await this.ctx.service.user.login(this.ctx.request.body);
+    }
+
     async add() {
         this.ctx.body = await this.ctx.service.user.add(this.ctx.request.body);
     }

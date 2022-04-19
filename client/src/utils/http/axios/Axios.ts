@@ -20,6 +20,7 @@ export class VAxios {
 
   constructor(options: CreateAxiosOptions) {
     this.options = options;
+    console.log('wjw VAxios"s options', options);
     this.axiosInstance = axios.create(options);
     this.setupInterceptors();
   }
@@ -206,11 +207,13 @@ export class VAxios {
     conf.requestOptions = opt;
 
     conf = this.supportFormData(conf);
+    console.log('wjw requestconf', conf, config, options);
 
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
+          console.log('after wjw requestconf res', res);
           if (transformRequestHook && isFunction(transformRequestHook)) {
             try {
               const ret = transformRequestHook(res, opt);

@@ -46,10 +46,11 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/basic-api/login',
+    url: '/api/login',
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
+      console.log('wjw mock userlogin', body);
       const { username, password } = body;
       const checkUser = createFakeUserList().find(
         (item) => item.username === username && password === item.password,
@@ -69,7 +70,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getUserInfo',
+    url: '/api/getUserInfo',
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
@@ -82,7 +83,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/getPermCode',
+    url: '/api/getPermCode',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
@@ -98,7 +99,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/logout',
+    url: '/api/logout',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
@@ -112,7 +113,7 @@ export default [
     },
   },
   {
-    url: '/basic-api/testRetry',
+    url: '/api/testRetry',
     statusCode: 405,
     method: 'get',
     response: () => {
