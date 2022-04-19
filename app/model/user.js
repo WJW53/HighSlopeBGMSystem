@@ -55,7 +55,7 @@ module.exports = ({ mongoose }) => {
       remark: {
         type: String,
       },
-      // 因为这些表里存了acount, 到时直接在那些数据里通过account存数据得
+      // 因为这些表里存了account, 到时直接在那些数据里通过account存数据得
       // projectNo: {
       //   type: ObjectId,
       //   ref: 'Station',

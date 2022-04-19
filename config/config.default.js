@@ -28,6 +28,8 @@ exports.mongoose = {
   url: 'mongodb://localhost/HighSlope',
   options: {
     useUnifiedTopology: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
   },
 };
 

@@ -1,13 +1,24 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { resultError, resultPageSuccess, resultSuccess } from '../_util';
 
+function getMoble() {
+  const prefixArray = new Array("130", "131", "132", "133", "135", "137", "138", "170", "187", "189");
+  const i = parseInt(10 * Math.random());
+  let prefix = prefixArray[i];
+
+  for (let j = 0; j < 8; j++) {
+    prefix = prefix + Math.floor(Math.random() * 10);
+  }
+  return prefix;
+}
+
 const accountList = (() => {
   const result: any[] = [];
   for (let index = 0; index < 20; index++) {
     result.push({
       id: `${index}`,
       account: '@first',
-      phoneNo: '@phone',
+      phoneNo: getMoble(),
       email: '@email',
       nickname: '@cname()',
       role: '@first',

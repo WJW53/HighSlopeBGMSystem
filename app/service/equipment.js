@@ -2,68 +2,16 @@ const Service = require('../core/BaseService');
 
 class EquipmentService extends Service {
   async add(info) {
-    this.validate(
-      {
-        name: 'string',
-        url: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-        },
-        order: 'int?',
-        thumb: 'string',
-      },
-      info
-    );
-    info.order = +info.order;
-    if (isNaN(+info.order)) {
-      info.order = 0;
-    }
+    // this.validate(
+    //   {}
+    // );
+    //TODO: 记得加校验
+    info._user_ = this.ctx.user._id;
     return await this.ctx.model.Equipment.create(info);
   }
 
   async update(id, info) {
-    this.validate(
-      {
-        name: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-        url: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-          required: false,
-        },
-        order: {
-          type: 'int',
-          required: false,
-        },
-        thumb: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-      },
-      info
-    );
+    //TODO: 记得加校验
     await this.ctx.model.Equipment.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }
@@ -78,7 +26,7 @@ class EquipmentService extends Service {
   }
 
   async findAll() {
-    return await this.ctx.model.Equipment.find().sort('order');
+    return await this.ctx.model.Equipment.find({_user_: this.ctx.user._id});
   }
 }
 

@@ -14,16 +14,23 @@ mongoose.Document.prototype.toJSON = function (...args) {
   return obj;
 };
 
+const appId = '625d58940aa9a93f2c0771e1';
+
 // app.js
 class AppBootHook {
   constructor(app) {
     this.app = app;
   }
 
+  /**
+   * TODO: 做一个初始化超级管理员, 默认就有的账户
+   */
+
   // 初始化管理员
   async initAdmin() {
     const Admin = this.app.model.Admin;
     const count = await Admin.countDocuments();
+    console.log('管理员已连接到数据库');
     if (!count) {
       this.app.config.admin.loginPwd = md5(this.app.config.admin.loginPwd);
       await Admin.create(this.app.config.admin);
@@ -34,7 +41,7 @@ class AppBootHook {
   async initUser() {
     const User = this.app.model.User;
     const count = await User.countDocuments();
-    console.log('user已连接数据库')
+    console.log('User已连接数据库')
     if (!count) {
       await User.create({
         acount: 'wjw',
@@ -44,6 +51,59 @@ class AppBootHook {
         nickname: '吴经纬',
       });
       console.log('User初始化成功');
+    }
+  }
+
+  async initStation() {
+    const Station = this.app.model.Station;
+    const count = await Station.countDocuments();
+    console.log('Station已连接数据库')
+    if (!count) {
+      await Station.create({
+        stationNo: 'S1',
+        stationName: '第一个工位',
+        _user_: appId,
+        location: '重庆市巴南区红光大道',
+      });
+      console.log('Station初始化成功');
+    }
+  }
+
+  async initEquipment() {
+    const Equipment = this.app.model.Equipment;
+    const count = await Equipment.countDocuments();
+    console.log('Equipment已连接数据库')
+    if (!count) {
+      await Equipment.create({
+        equipmentNo: 'E1',
+        equipmentName: '第一台设备',
+        _user_: appId,
+        frequency: '12hours/次',
+      });
+      console.log('Equipment初始化成功');
+    }
+  }
+
+  async initProject() {
+    const Project = this.app.model.Project;
+    const count = await Project.countDocuments();
+    console.log('Project已连接数据库')
+    if (!count) {
+      await Project.create({
+        projectNo: 'P1',
+        projectName: '第一个项目',
+        projectLeader: '吴经纬',
+        phoneNo: '17839706350',
+        _user_: appId,
+        stationNo: 'S1',
+        stationName: '第一个工位',
+        equipmentNo: 'E1',
+        equipmentName: '第一台设备',
+        createTime: Date.now(),
+        longitude: '99.99',
+        latitude: '88.88',
+      });
+      console.log('Project初始化成功');
     }
   }
 
@@ -109,6 +169,9 @@ class AppBootHook {
 
     // 初始化用户--超级管理员
     this.initUser();
+    this.initStation();
+    this.initEquipment();
+    this.initProject();
 
     // // 初始化全局设置
     // this.initSetting();

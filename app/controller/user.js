@@ -1,11 +1,27 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
-    async login(){
+    async login() {//登录 手机or账号密码or...
         console.log('loginWWWWWWWWWWW');
         this.ctx.body = await this.ctx.service.user.login(this.ctx.request.body);
     }
 
+    async register() {//注册
+        console.log('registerRRRRRRRRRRR');
+        this.ctx.body = await this.ctx.service.user.register(this.ctx.request.body);
+    }
+
+    async resetPassword() {//重置密码
+        console.log('resetPasswordDDDDDDDDD');
+        this.ctx.body = await this.ctx.service.user.resetPassword(this.ctx.request.body);
+    }
+
+    async changePassword() {//修改密码
+        console.log('changePasswordCCCCCDDDD');
+        this.ctx.body = await this.ctx.service.user.changePassword(this.ctx.request.body);
+    }
+
+//=============================================================================================
     async add() {
         this.ctx.body = await this.ctx.service.user.add(this.ctx.request.body);
     }

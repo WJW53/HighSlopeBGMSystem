@@ -12,6 +12,7 @@ module.exports = (app) => {
 
   // app.middleware.limit()  可以在一些post请求中用上这个中间件
 
+  // TODO: 最好把超级管理员放在超级管理员的表里，普通用户就是普通用户?
 
   /**
    * user 用户管理  TODO: 未完成,这里最后做吧, 根据前端的功能配合完成后端, 接口也要改
@@ -24,6 +25,9 @@ module.exports = (app) => {
   // router.get('/api/userInfo', controller.user.index);
   router.get('/api/userInfo/:id', controller.user.findOne);
   router.post('/api/login', controller.user.login);
+  router.post('/api/register', controller.user.register);
+  router.post('/api/changePassword', controller.user.changePassword);
+  router.post('/api/resetPassword', controller.user.resetPassword);
   
 
   /**
@@ -48,7 +52,7 @@ module.exports = (app) => {
   // router.put('/api/setting', controller.setting.update);
 
 
-  //记得加入中间件噢, 基本都要加auth吧
+  //记得加入中间件噢, 基本都要加auth吧, 就是为了通过token拿到user
   /**
    * station 工位管理crud, 路径一致, 只需要控制method和参数即可
    */

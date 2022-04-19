@@ -1,6 +1,8 @@
 const Service = require('../core/BaseService');
 
 class UserService extends Service {
+  // TODO: 记得都要查重, 是否注册过、字段值是否合格, 密码记得用md5加密
+
   async login({username, password}) {
     console.log('node接收到前端代理过来的请求了!!', username, password);
     return await this.ctx.model.User.findOne({
@@ -10,6 +12,37 @@ class UserService extends Service {
     });
   }
 
+  async register(info) {
+    console.log('正在注册的用户信息', info);
+    return await this.ctx.model.User.create(info);// 记得改返回值
+    // const { password, ...rest } = doc;
+    // return rest;//不行 返回的是doc还有User原型链上的东西, why?
+  }
+
+  // 这俩貌似也可以合并为一个: 就是要多做几个or关系的验证和筛选
+  async resetPassword(info) {
+    console.log('正在重置用户密码', info);
+    // TODO: 验证验证码是否正确 info.smsCode;
+    return await this.ctx.model.User.findOneAndUpdate(
+      { account: info.account, phoneNo: info.phoneNo },
+      { password: info.newPassword },
+      { new: true, }//runValidators: true, //new: true代表要返回更新后的doc
+    );
+  }
+
+  async changePassword(info) {
+    console.log('正在修改用户密码', info);
+    return await this.ctx.model.User.findOneAndUpdate(
+      { account: info.account },
+      { password: info.newPassword },
+      { new: true, }//runValidators: true, 
+    );
+  }
+
+  /**
+   * 
+   * TODO: 每个账号初始化建立后, 就给它两个可选设备、工位; 普通用户权限
+   */
   async add(info) {
     this.validate(
       {

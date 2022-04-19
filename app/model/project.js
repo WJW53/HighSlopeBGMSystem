@@ -47,7 +47,7 @@ module.exports = ({ mongoose }) => {
       },
       createTime: {
         type: String,
-        // required: true,
+        required: true,
       },
       //经度
       longitude: {
