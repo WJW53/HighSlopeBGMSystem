@@ -33,7 +33,8 @@ class AppBootHook {
     console.log('管理员已连接到数据库');
     if (!count) {
       this.app.config.admin.loginPwd = md5(this.app.config.admin.loginPwd);
-      await Admin.create(this.app.config.admin);
+      this.ctx.superAdmin = await Admin.create(this.app.config.admin);
+      console.log('superAdminnnnnn', this.ctx.superAdmin);
       console.log('管理员初始化成功');
     }
   }

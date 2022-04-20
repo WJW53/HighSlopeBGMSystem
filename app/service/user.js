@@ -32,8 +32,9 @@ class UserService extends Service {
 
   async changePassword(info) {
     console.log('正在修改用户密码', info);
+    // TODO: 这里应该把user._id也传进去作为筛选条件, 后续记得加上
     return await this.ctx.model.User.findOneAndUpdate(
-      { account: info.account },
+      { account: info.account, password: info.password },
       { password: info.newPassword },
       { new: true, }//runValidators: true, 
     );
@@ -72,40 +73,41 @@ class UserService extends Service {
   }
 
   async update(id, info) {
-    this.validate(
-      {
-        name: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-        url: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-          required: false,
-        },
-        order: {
-          type: 'int',
-          required: false,
-        },
-        thumb: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-      },
-      info
-    );
+    // this.validate(
+    //   {
+    //     name: {
+    //       type: 'string',
+    //       required: false,
+    //       allowEmpty: false,
+    //     },
+    //     url: {
+    //       type: 'string',
+    //       required: false,
+    //       allowEmpty: true,
+    //     },
+    //     github: {
+    //       type: 'string',
+    //       required: false,
+    //       allowEmpty: true,
+    //     },
+    //     description: {
+    //       type: 'array',
+    //       itemType: 'string',
+    //       required: false,
+    //     },
+    //     order: {
+    //       type: 'int',
+    //       required: false,
+    //     },
+    //     thumb: {
+    //       type: 'string',
+    //       required: false,
+    //       allowEmpty: false,
+    //     },
+    //   },
+    //   info
+    // );
+    // TODO: 记得加校验
     await this.ctx.model.User.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }

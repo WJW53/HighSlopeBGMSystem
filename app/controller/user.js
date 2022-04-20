@@ -11,6 +11,11 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.register(this.ctx.request.body);
     }
 
+    // async updateAvatar() {//TODO:这要去调upload接口, 然后再调用this.updateBasicInfo
+    //     console.log('updateAvatar');
+    //     this.ctx.body = await this.ctx.service.user.updateAvatar(this.ctx.request.body);
+    // }
+
     async resetPassword() {//重置密码
         console.log('resetPasswordDDDDDDDDD');
         this.ctx.body = await this.ctx.service.user.resetPassword(this.ctx.request.body);
@@ -31,6 +36,8 @@ class UserController extends Controller {
     }
 
     async update() {
+        console.log('updateBasicInfoOOOOOOOOO');
+        // TODO: 防止有account, _id等字段的更新
         this.ctx.body = await this.ctx.service.user.update(
             this.ctx.params.id,
             this.ctx.request.body
@@ -44,6 +51,11 @@ class UserController extends Controller {
     async findOne() {
         console.log(this.ctx.params, this.ctx.query);//params路由上的动态参数, query是路由上带的参数以及请求体里的body
         this.ctx.body = await this.ctx.service.user.findOne(this.ctx.params.id);
+    }
+
+    async whoami() {
+        console.log('whoamiIIIIIII', this.ctx.user);
+        this.ctx.body = await this.ctx.service.user.findOne(this.ctx.user._id);
     }
 
     async find() {

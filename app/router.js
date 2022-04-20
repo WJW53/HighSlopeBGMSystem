@@ -7,26 +7,31 @@ module.exports = (app) => {
   const auth = middleware.auth();
   const passport = middleware.passport();
   const captcha = middleware.captcha();
+  const superAdminAuth = middleware.superAdminAuth();
   // const limit = middleware.limit();
   // const responseFomatter = middleware.responseFomatter();
 
   // app.middleware.limit()  可以在一些post请求中用上这个中间件
 
-  // TODO: 最好把超级管理员放在超级管理员的表里，普通用户就是普通用户?
+  // TODO: 最好把超级管理员放在超级管理员的表里，普通用户就是普通用户?----不要这样, 应该加个超级管理员鉴权中间件即可
 
   /**
    * user 用户管理  TODO: 未完成,这里最后做吧, 根据前端的功能配合完成后端, 接口也要改
    * CRUD, 注册、登录、忘记密码、三方登录、认证、权限...
    */
-  // router.post('/login', controller.user.add);
-  // router.post('/api/userInfo', controller.user.add);
-  // router.delete('/api/userInfo/:id', controller.user.remove);
-  // router.put('/api/userInfo/:id', controller.user.update);
-  // router.get('/api/userInfo', controller.user.index);
+  router.post('/api/userInfo', superAdminAuth ,controller.user.add);// 增加一个用户
+  router.delete('/api/userInfo/:id', superAdminAuth , controller.user.remove);// 删除一个用户
+  router.put('/api/userInfo/:id', controller.user.update);// 某个用户基本信息的更新
+  router.get('/api/userInfo', superAdminAuth, controller.user.index);// superAdmin获取所有用户数据, TODO: 加个superAdminAuth中间件
+  router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
   router.get('/api/userInfo/:id', controller.user.findOne);
-  router.post('/api/login', controller.user.login);
+
+  /**
+   * 账号的注册、登录、修改&重置密码
+   */
   router.post('/api/register', controller.user.register);
-  router.post('/api/changePassword', controller.user.changePassword);
+  router.post('/api/login', controller.user.login);
+  router.post('/api/changePassword', auth, controller.user.changePassword);//这个需要先鉴权啊, 确定你已经登录了
   router.post('/api/resetPassword', controller.user.resetPassword);
   
 
