@@ -55,11 +55,11 @@ exports.onerror = {
       msg = constErrorMsg[code];
     }
 
-    ctx.body = JSON.stringify({
+    ctx.body = JSON.parse(JSON.stringify({
       code,
       msg,
       data: null,
-    });
+    }));
   },
 };
 

@@ -21,10 +21,10 @@
       function jsonPrint() {
         printJS({
           printable: [
-            { name: 'll', email: '123@gmail.com', phone: '123' },
-            { name: 'qq', email: '456@gmail.com', phone: '456' },
+            { name: 'll', email: '123@gmail.com', mobile: '123' },
+            { name: 'qq', email: '456@gmail.com', mobile: '456' },
           ],
-          properties: ['name', 'email', 'phone'],
+          properties: ['name', 'email', 'mobile'],
           type: 'json',
         });
       }

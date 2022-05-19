@@ -42,19 +42,19 @@ export const baseSetschemas: FormSchema[] = [
     colProps: { span: 18 },
   },
   {
-    field: 'name',
+    field: 'nickname',
     component: 'Input',
     label: '昵称',
     colProps: { span: 18 },
   },
   {
-    field: 'introduction',
+    field: 'profile',
     component: 'InputTextArea',
     label: '个人简介',
     colProps: { span: 18 },
   },
   {
-    field: 'phone',
+    field: 'mobile',
     component: 'Input',
     label: '联系电话',
     colProps: { span: 18 },

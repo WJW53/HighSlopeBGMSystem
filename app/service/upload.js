@@ -2,6 +2,13 @@ const Service = require('../core/BaseService');
 const fs = require('fs');
 
 class UploadService extends Service {
+    // 覆盖具体用户的头像信息
+    async postAvatar(userId, url) {
+        const user = await this.ctx.model.User.findOneAndUpdate({_id: userId}, { $set: {avatar: url} }, { new: true });
+        console.log('postAvatar', user,);
+        return user;
+    }
+
     // 添加图片 URL
     async add(data) {
         return await this.ctx.model.Upload.create(data);

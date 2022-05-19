@@ -7,7 +7,7 @@ const userInfo = {
   userid: '00000001',
   email: 'test@gmail.com',
   signature: '海纳百川，有容乃大',
-  introduction: '微笑着，努力着，欣赏着',
+  profile: '微笑着，努力着，欣赏着',
   title: '交互专家',
   group: '某某某事业群－某某平台部－某某技术部－UED',
   tags: [
@@ -40,7 +40,7 @@ const userInfo = {
   unreadCount: 11,
   country: 'China',
   address: 'Xiamen City 77',
-  phone: '0592-268888888',
+  mobile: '0592-268888888',
 };
 
 export default [

@@ -4,7 +4,7 @@ import { resultError, resultSuccess, getRequestToken, requestParams } from '../_
 export function createFakeUserList() {
   return [
     {
-      userId: '1',
+      userId: '625d58940aa9a93f2c0771e1',
       account: 'wjw',
       nickname: 'WJW Admin',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
@@ -20,7 +20,7 @@ export function createFakeUserList() {
       ],
     },
     {
-      userId: '2',
+      userId: '625eba6e517efc2b40a3700e',
       account: 'test',
       password: '123456',
       nickname: 'test user',

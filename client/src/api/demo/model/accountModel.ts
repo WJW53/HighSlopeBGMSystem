@@ -1,7 +1,7 @@
 export interface GetAccountInfoModel {
   email: string;
   name: string;
-  introduction: string;
-  phone: string;
+  profile: string;
+  mobile: string;
   address: string;
 }

@@ -121,13 +121,14 @@
   import { dataURLtoBlob } from '/@/utils/file/base64Conver';
   import { isFunction } from '/@/utils/is';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { useUserStore } from '/@/store/modules/user';
 
   type apiFunParams = { file: Blob; name: string; filename: string };
 
   const props = {
     circled: { type: Boolean, default: true },
     uploadApi: {
-      type: Function as PropType<(params: apiFunParams) => Promise<any>>,
+      type: Function as PropType<(config: any, params: apiFunParams) => Promise<any>>,
     },
   };
 
@@ -137,6 +138,7 @@
     props,
     emits: ['uploadSuccess', 'register'],
     setup(props, { emit }) {
+      const userStore = useUserStore();
       let filename = '';
       const src = ref('');
       const previewSource = ref('');
@@ -182,10 +184,21 @@
       async function handleOk() {
         const uploadApi = props.uploadApi;
         if (uploadApi && isFunction(uploadApi)) {
-          const blob = dataURLtoBlob(previewSource.value);
+          const blob = dataURLtoBlob(previewSource.value); // 将该图片资源转为装有base64格式的blob
           try {
             setModalProps({ confirmLoading: true });
-            const result = await uploadApi({ name: 'file', file: blob, filename });
+            const result = await uploadApi(
+              {
+                id: userStore.getUserInfo.userId, // 把用户id也带过去
+                suffixPath: 'avatar', // 这里其实应该从上级传下来控制的, 本次系统仅使用到头像上传, 所以暂未变动此处
+              },
+              {
+                name: 'file',
+                file: blob,
+                filename,
+              },
+            );
+            console.log('after uploadFile, ', result);
             emit('uploadSuccess', { source: previewSource.value, data: result.data });
             closeModal();
           } finally {

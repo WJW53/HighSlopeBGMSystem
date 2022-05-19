@@ -6,7 +6,7 @@ class UserService extends Service {
   async login({account, password}) {
     console.log('node接收到前端代理过来的请求了!!', account, password);
     return {
-      "userId": "1",
+      "userId": "625d58940aa9a93f2c0771e1",
       "account": "wjw",
       "nickname": "WJW Service",
       "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",

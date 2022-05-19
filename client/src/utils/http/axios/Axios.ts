@@ -119,7 +119,7 @@ export class VAxios {
   }
 
   /**
-   * @description:  File Upload
+   * @description:  File Upload 文件上传, file/blob转binaray->formData
    */
   uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams) {
     const formData = new window.FormData();

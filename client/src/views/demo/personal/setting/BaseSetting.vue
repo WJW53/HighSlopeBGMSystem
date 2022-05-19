@@ -31,10 +31,11 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { accountInfoApi } from '/@/api/demo/account';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/upload';
+
+  import { getUserInfo, updateUserInfo } from '/@/api/demo/user';
 
   export default defineComponent({
     components: {
@@ -48,6 +49,8 @@
     setup() {
       const { createMessage } = useMessage();
       const userStore = useUserStore();
+      // const userId = userStore.$state.userInfo.id;
+      const userId = '625d58940aa9a93f2c0771e1'; // TODO: 这里记得改回动态的
 
       const [register, { setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 120,
@@ -56,7 +59,8 @@
       });
 
       onMounted(async () => {
-        const data = await accountInfoApi();
+        const data = await getUserInfo({ id: userId }); // 拉取用户基本信息
+        console.log('userInfo', data);
         setFieldsValue(data);
       });
 
@@ -65,9 +69,12 @@
         return avatar || headerImg;
       });
 
-      function updateAvatar(src: string) {
+      //source就是src->base64, data是上传到服务器后, 返回的数据
+      function updateAvatar({ source, data }) {
+        console.log('已经上传给服务器base64地址了, 这个src就是base64', source, data);
         const userinfo = userStore.getUserInfo;
-        userinfo.avatar = src;
+        // userinfo.avatar = source;
+        userinfo.avatar = data.result; // TODO: 记得看看是否要改回来
         userStore.setUserInfo(userinfo);
       }
 
@@ -77,9 +84,20 @@
         uploadApi: uploadApi as any,
         updateAvatar,
         handleSubmit: () => {
-          console.log(getFieldsValue());
+          const newUserInfo = getFieldsValue();
           // 把新数据发送给后端, 然后同步更新全局的数据
-          createMessage.success('更新成功！');
+          console.log('准备新提交的用户信息', newUserInfo);
+          updateUserInfo(userId, newUserInfo).then(
+            (data) => {
+              createMessage.success('更新成功！');
+              console.log(userStore.getUserInfo);
+              userStore.setUserInfo(data);
+            },
+            (error) => {
+              console.error('系统异常！更新失败', error);
+              createMessage.error('系统异常！更新失败');
+            },
+          );
         },
       };
     },

@@ -5,7 +5,7 @@ module.exports = () => async (ctx, next) => {
   const user = await ctx.service.admin.login(body);
   ctx.user = user;
   if (user) {
-    const remember = +body.remember || 1;
+    const remember = +body.remember || 7;
     const maxAge = remember * 24 * 3600;
 
     const token = jwt.sign({ id: user._id }, ctx.app.config.keys, {

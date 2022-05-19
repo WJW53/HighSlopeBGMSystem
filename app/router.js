@@ -98,11 +98,11 @@ module.exports = (app) => {
   /**
    * upload 文件上传的
    */
-  router.post('/api/upload', auth, controller.upload.index);
-  // router.post('/api/upload', controller.upload.index);
-  router.post('/api/uploadURL', controller.upload.addUploadImageURL);
-  router.get('/api/upload', controller.upload.findAllImageURL);
-  router.delete('/api/upload/:id', controller.upload.removeImage);
+  router.post('/upload/avatar/:id', auth, controller.upload.uploadAvatar);
+  // router.post('/upload', auth, controller.upload.index);
+  router.post('/uploadURL', controller.upload.addUploadImageURL);
+  router.get('/upload', controller.upload.findAllImageURL);
+  router.delete('/upload/:id', controller.upload.removeImage);
 
 
   // // demo

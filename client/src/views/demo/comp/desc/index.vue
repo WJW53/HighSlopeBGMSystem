@@ -31,7 +31,7 @@
     account: 'test',
     nickName: 'VB',
     age: '123',
-    phone: '15695909xxx',
+    mobile: '15695909xxx',
     email: '190848757@qq.com',
     addr: '厦门市思明区',
     sex: '男',
@@ -51,7 +51,7 @@
       },
     },
     {
-      field: 'phone',
+      field: 'mobile',
       label: '联系电话',
     },
     {

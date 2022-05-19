@@ -155,6 +155,7 @@ class AppBootHook {
     }
   }
 
+  // 初始化头像
   initAvatars() {
     const allows = ['.png', '.gif', '.jpg', '.png', '.webp', '.bmp', '.svg'];
     const files = fs
