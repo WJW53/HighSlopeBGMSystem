@@ -47,6 +47,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { getAllProject } from '/@/api/demo/project';
 
   export default defineComponent({
     name: 'ProjectManagement',
@@ -56,8 +57,8 @@
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
-        title: '账号列表',
-        api: getAccountList,
+        title: '项目列表',
+        api: getAccountList, //TODO: 换成getAllProject
         rowKey: 'id',
         columns,
         formConfig: {

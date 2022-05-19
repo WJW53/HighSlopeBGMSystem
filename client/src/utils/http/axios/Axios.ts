@@ -213,16 +213,18 @@ export class VAxios {
       this.axiosInstance
         .request<any, AxiosResponse<Result>>(conf)
         .then((res: AxiosResponse<Result>) => {
-          console.log('after wjw requestconf res', res);
+          console.log('after wjw requestconf Response', res);
           if (transformRequestHook && isFunction(transformRequestHook)) {
             try {
               const ret = transformRequestHook(res, opt);
               resolve(ret);
+              console.log('ret', ret);
             } catch (err) {
               reject(err || new Error('request error!'));
             }
             return;
           }
+          console.log('路径2');
           resolve(res as unknown as Promise<T>);
         })
         .catch((e: Error | AxiosError) => {

@@ -17,7 +17,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '联系电话',
-    dataIndex: 'phoneNo',
+    dataIndex: 'mobile',
   },
   {
     title: '工位名称',
@@ -97,7 +97,7 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'phoneNo',
+    field: 'mobile',
     label: '联系电话',
     component: 'Input',
     required: true,

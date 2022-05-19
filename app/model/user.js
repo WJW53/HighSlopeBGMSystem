@@ -15,7 +15,7 @@ module.exports = ({ mongoose }) => {
         minLength: 3,
         maxLength: 16,
       },
-      phoneNo: {
+      mobile: {
         type: String,
         require: true,
         unique: true,

@@ -7,7 +7,7 @@
           class="fix-auto-fill"
           size="large"
           v-model:value="formData.account"
-          :placeholder="t('sys.login.userName')"
+          :placeholder="t('sys.login.account')"
         />
       </FormItem>
       <FormItem name="nickname" class="enter-x">
@@ -76,11 +76,12 @@
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { Form, Input, Button, Checkbox } from 'ant-design-vue';
+  import { Form, Input, Button, Checkbox, message } from 'ant-design-vue';
   import { StrengthMeter } from '/@/components/StrengthMeter';
   import { CountdownInput } from '/@/components/CountDown';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
+  import { registerUser } from '/@/api/demo/user';
 
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
@@ -109,5 +110,15 @@
     const data = await validForm();
     if (!data) return;
     console.log(data);
+    registerUser(data).then(
+      (resp) => {
+        console.log('注册之后后端返回的数据', resp);
+        message.success('注册成功！');
+        handleBackLogin();
+      },
+      (error) => {
+        console.error('注册异常', error);
+      },
+    );
   }
 </script>

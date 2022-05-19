@@ -18,7 +18,7 @@ const accountList = (() => {
     result.push({
       id: `${index}`,
       account: '@first',
-      phoneNo: getMoble(),
+      mobile: getMoble(),
       email: '@email',
       nickname: '@cname()',
       role: '@first',

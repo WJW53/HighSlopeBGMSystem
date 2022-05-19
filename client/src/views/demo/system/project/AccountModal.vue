@@ -9,6 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   import { getDeptList } from '/@/api/demo/system';
+  import { createProject } from '/@/api/demo/project';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -59,7 +60,9 @@
           const values = await validate();
           setModalProps({ confirmLoading: true });
           // TODO custom api
+          // TODO 在这里做新增/编辑请求即可
           console.log(values);
+          createProject()
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

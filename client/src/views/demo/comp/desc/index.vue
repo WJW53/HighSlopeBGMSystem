@@ -28,7 +28,7 @@
   import { PageWrapper } from '/@/components/Page';
 
   const mockData: Recordable = {
-    username: 'test',
+    account: 'test',
     nickName: 'VB',
     age: '123',
     phone: '15695909xxx',
@@ -40,14 +40,14 @@
   };
   const schema: DescItem[] = [
     {
-      field: 'username',
+      field: 'account',
       label: '用户名',
     },
     {
       field: 'nickName',
       label: '昵称',
       render: (curVal, data) => {
-        return `${data.username}-${curVal}`;
+        return `${data.account}-${curVal}`;
       },
     },
     {

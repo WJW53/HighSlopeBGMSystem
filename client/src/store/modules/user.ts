@@ -97,6 +97,8 @@ export const useUserStore = defineStore({
         console.log('after loginApi');
         // save token
         this.setToken(token);
+        // save userInfo
+        this.setUserInfo(data);
         return this.afterLoginAction(goHome);
       } catch (error) {
         console.log(error, 'wjw');
@@ -128,7 +130,8 @@ export const useUserStore = defineStore({
     },
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-      const userInfo = await getUserInfo();
+      // const userInfo = await getUserInfo();//不用请求这个接口, 刚才那个登录后返回的data直接就是后端给的数据
+      const userInfo = this.getUserInfo;
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
         const roleList = roles.map((item) => item.value) as RoleEnum[];
@@ -138,7 +141,7 @@ export const useUserStore = defineStore({
         this.setRoleList([]);
       }
       //都到这里了, 代表肯定是登录进来了
-      setWatermark('WJW Admin');
+      setWatermark('HighSlope_WJW');
       this.setUserInfo(userInfo);
       return userInfo;
     },
@@ -150,7 +153,7 @@ export const useUserStore = defineStore({
         try {
           await doLogout();
         } catch {
-          console.log('注销Token失败');
+          console.log('注销Token失败;');
         }
       }
       this.setToken(undefined);

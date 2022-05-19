@@ -6,7 +6,7 @@ module.exports = () => async (ctx, next) => {
   ctx.status = 200;
   ctx.body = {
     code: 0,
-    msg: '',
-    data: ctx.body,
+    message: '',
+    result: ctx.body,
   };
 };

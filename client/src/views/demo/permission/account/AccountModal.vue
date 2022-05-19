@@ -48,7 +48,7 @@
             show: !unref(isUpdate),
           },
           {
-            field: 'phoneNo',
+            field: 'mobile',
             show: !unref(isUpdate),
           },
         ]);

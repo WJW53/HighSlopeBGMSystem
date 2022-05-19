@@ -10,15 +10,22 @@
   </PageWrapper>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, unref } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import { BasicForm, useForm } from '/@/components/Form';
-
   import { formSchema } from './pwd.data';
+  import { changePassword } from '/@/api/demo/user';
+  import { useUserStore } from '/@/store/modules/user';
+  // import { useRouter } from 'vue-router';
+  // import { useGo } from '/@/hooks/web/usePage';
+  // import { PageEnum } from '/@/enums/pageEnum';
+
   export default defineComponent({
     name: 'ChangePassword',
     components: { BasicForm, PageWrapper },
     setup() {
+      const userStore = useUserStore();
+      // const router = useRouter();
       const [register, { validate, resetFields }] = useForm({
         size: 'large',
         labelWidth: 100,
@@ -29,13 +36,14 @@
       async function handleSubmit() {
         try {
           const values = await validate();
-          const { passwordOld, passwordNew } = values;
-
-          // TODO custom api
-          console.log(passwordOld, passwordNew);
-          // const { router } = useRouter();
-          // router.push(pageEnum.BASE_LOGIN);
-        } catch (error) {}
+          const params = { ...values, account: userStore.$state.userInfo?.account };
+          console.log('ChangePassword-handleSubmit', params);
+          // custom api
+          await changePassword(params);
+          userStore.logout(true); //退出并回到login页
+        } catch (error) {
+          console.error('修改密码失败', error);
+        }
       }
 
       return { register, resetFields, handleSubmit };

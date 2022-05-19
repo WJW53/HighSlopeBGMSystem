@@ -13,7 +13,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '手机号',
-    dataIndex: 'phoneNo',
+    dataIndex: 'mobile',
   },
   {
     title: '邮箱',
@@ -47,7 +47,7 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'phoneNo',
+    field: 'mobile',
     label: '手机号',
     component: 'Input',
     colProps: { span: 8 },
@@ -79,7 +79,7 @@ export const accountFormSchema: FormSchema[] = [
       {
         validator(_, value) {
           return new Promise((resolve, reject) => {
-            isAccountExist(value)
+            isAccountExist(value) // 是否存在该账户
               .then(() => resolve())
               .catch((err) => {
                 reject(err.message || '验证失败');
@@ -97,7 +97,7 @@ export const accountFormSchema: FormSchema[] = [
     // ifShow: false,
   },
   {
-    field: 'phoneNo',
+    field: 'mobile',
     label: '手机号',
     component: 'Input',
     required: true,

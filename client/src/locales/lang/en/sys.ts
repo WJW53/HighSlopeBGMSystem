@@ -88,14 +88,14 @@ export default {
     loginSuccessDesc: 'Welcome back',
 
     // placeholder
-    accountPlaceholder: 'Please input username',
+    accountPlaceholder: 'Please input account',
     passwordPlaceholder: 'Please input password',
     smsPlaceholder: 'Please input sms code',
     mobilePlaceholder: 'Please input mobile',
     policyPlaceholder: 'Register after checking',
     diffPwd: 'The two passwords are inconsistent',
 
-    userName: 'Username',
+    account: 'Account',
     nickName: 'Nickname',
     password: 'Password',
     confirmPassword: 'Confirm Password',

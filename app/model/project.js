@@ -19,7 +19,7 @@ module.exports = ({ mongoose }) => {
         type: String,
         required: true,
       },
-      phoneNo: {
+      mobile: {
         type: String,
         required: true,
       },

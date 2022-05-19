@@ -6,6 +6,11 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.login(this.ctx.request.body);
     }
 
+    async logout() {//TODO: 注销token，清除redis等
+        console.log('logoutTTTTTT');
+        this.ctx.body = await this.ctx.service.user.logout(this.ctx.request.body);
+    }
+
     async register() {//注册
         console.log('registerRRRRRRRRRRR');
         this.ctx.body = await this.ctx.service.user.register(this.ctx.request.body);

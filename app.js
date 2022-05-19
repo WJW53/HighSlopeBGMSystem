@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const md5 = require('md5');
 const fs = require('fs');
 const path = require('path');
+
 // monkey toJSON
 const originToJSON = mongoose.Document.prototype.toJSON;
 // 将_id转为id, 对前端更友好
@@ -46,7 +47,7 @@ class AppBootHook {
     if (!count) {
       await User.create({
         acount: 'wjw',
-        phoneNo: '17839706350',
+        mobile: '17839706350',
         password: '123456',
         // _role_: '',
         nickname: '吴经纬',
@@ -94,7 +95,7 @@ class AppBootHook {
         projectNo: 'P1',
         projectName: '第一个项目',
         projectLeader: '吴经纬',
-        phoneNo: '17839706350',
+        mobile: '17839706350',
         _user_: appId,
         stationNo: 'S1',
         stationName: '第一个工位',

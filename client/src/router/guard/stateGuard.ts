@@ -7,7 +7,9 @@ import { PageEnum } from '/@/enums/pageEnum';
 import { removeTabChangeListener } from '/@/logics/mitt/routeChange';
 
 export function createStateGuard(router: Router) {
+  console.log('createStateGuard');
   router.afterEach((to) => {
+    console.log('afterEach');
     // Just enter the login page and clear the authentication information
     if (to.path === PageEnum.BASE_LOGIN) {
       const tabStore = useMultipleTabStore();

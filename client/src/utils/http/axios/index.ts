@@ -49,13 +49,16 @@ const transform: AxiosTransform = {
       // return '[HTTP] Request has no return value';
       throw new Error(t('sys.api.apiRequestFailed'));
     }
-    //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+
+    //TODO: 这里配置成个性化的; 先拦截成自己的res直接返回吧
+    // //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, result, message } = data;
 
-    // 这里逻辑可以根据项目进行修改
+    // // 这里逻辑可以根据项目进行修改
     const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    console.log('hasSuccess', hasSuccess, 'data.result', result);
     if (hasSuccess) {
-      return result;
+      return data.result;
     }
 
     // 在此处根据自己项目的实际情况对不同的code执行不同的操作
@@ -212,9 +215,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         authenticationScheme: '',
         timeout: 10 * 1000,
         // 基础接口地址
-        // baseURL: globSetting.apiUrl,
-        // baseURL: 'http://localhost:27017', // 我tmd服了啊, 不知道为啥vite配置跨域不生效, 现在怀疑和node版本有关, 前后端技术生态依赖的node有参差
-// 现在只能先这样简单代替一下模拟跨域, 反正我后端给了cors了
+        //// baseURL: globSetting.apiUrl,
+        baseURL: 'http://localhost:27017', // 我tmd服了啊, 不知道为啥vite配置跨域不生效, 现在怀疑和node版本有关, 前后端技术生态依赖的node有参差
+        //现在只能先这样简单代替一下模拟跨域, 反正我后端给了cors了
         headers: { 'Content-Type': ContentTypeEnum.JSON },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },

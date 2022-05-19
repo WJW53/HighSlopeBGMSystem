@@ -1,15 +1,37 @@
 const Service = require('../core/BaseService');
 
 class UserService extends Service {
-  // TODO: 记得都要查重, 是否注册过、字段值是否合格, 密码记得用md5加密
+  // TODO: 记得都要查重, 是否注册过、字段值是否合格, 所有密码记得用md5加密
 
-  async login({username, password}) {
-    console.log('node接收到前端代理过来的请求了!!', username, password);
+  async login({account, password}) {
+    console.log('node接收到前端代理过来的请求了!!', account, password);
+    return {
+      "userId": "1",
+      "account": "wjw",
+      "nickname": "WJW Service",
+      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",
+      "desc": "manager",
+      "password": "123456",
+      "token": "fakeToken1",
+      "homePath": "/personal/changePassword",
+      "roles": [
+          {
+              "roleName": "Super Admin",
+              "value": "super"
+          }
+      ]
+  };
+  //TODO: 到时候联表查询然后格式化数据传给前端.
     return await this.ctx.model.User.findOne({
-      account: username,
-      password: password,
+      account,
+      password,
       // loginPwd: md5(loginPwd),
     });
+  }
+
+
+  async logout(params){
+    return `已经注销`;
   }
 
   async register(info) {
@@ -24,7 +46,7 @@ class UserService extends Service {
     console.log('正在重置用户密码', info);
     // TODO: 验证验证码是否正确 info.smsCode;
     return await this.ctx.model.User.findOneAndUpdate(
-      { account: info.account, phoneNo: info.phoneNo },
+      { account: info.account, mobile: info.mobile },
       { password: info.newPassword },
       { new: true, }//runValidators: true, //new: true代表要返回更新后的doc
     );

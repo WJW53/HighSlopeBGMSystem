@@ -12,7 +12,7 @@
       <Input
         size="large"
         v-model:value="formData.account"
-        :placeholder="t('sys.login.userName')"
+        :placeholder="t('sys.login.account')"
         class="fix-auto-fill"
       />
     </FormItem>
@@ -26,13 +26,13 @@
     </FormItem>
 
     <ARow class="enter-x">
+      <!-- No logic, you need to deal with it yourself -->
       <ACol :span="12">
-        <FormItem>
-          <!-- No logic, you need to deal with it yourself -->
+        <!-- <FormItem>
           <Checkbox v-model:checked="rememberMe" size="small">
             {{ t('sys.login.rememberMe') }}
           </Checkbox>
-        </FormItem>
+        </FormItem> -->
       </ACol>
       <ACol :span="12">
         <FormItem :style="{ 'text-align': 'right' }">
@@ -136,13 +136,14 @@
       loading.value = true;
       const userInfo = await userStore.login({
         password: data.password,
-        username: data.account,
+        account: data.account,
         mode: 'none', //不要默认的错误提示
       });
+      console.log('登录成功, userInfo', userInfo);
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.nickname}`,
           duration: 3,
         });
       }
