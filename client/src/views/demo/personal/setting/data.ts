@@ -53,12 +53,12 @@ export const baseSetschemas: FormSchema[] = [
     label: '个人简介',
     colProps: { span: 18 },
   },
-  {
-    field: 'mobile',
-    component: 'Input',
-    label: '联系电话',
-    colProps: { span: 18 },
-  },
+  // {
+  //   field: 'mobile',
+  //   component: 'Input',
+  //   label: '联系电话',
+  //   colProps: { span: 18 },
+  // },
   {
     field: 'address',
     component: 'Input',

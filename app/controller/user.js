@@ -11,6 +11,23 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.logout(this.ctx.request.body);
     }
 
+    //TODO: 把验证码缓存起来，为了到时候验证注册/登录/忘记密码时的手机验证码;
+    async getSMS(){
+        console.log('getSMSSSSSSSSSSSS');
+        const code = this.ctx.app.utils.randomCode(6);//生成6位数字随机验证码
+        console.log('短信验证码是: ', code);
+        try{
+           const success =  await this.ctx.app.utils.sendCode(this.ctx.query.mobile, code)
+            if(success){
+                this.ctx.body = '短信验证码已发送至其手机，请查收！';
+            }else{
+                this.ctx.body = '系统异常，短信验证码发送失败！';
+            }
+        }catch(e){
+            console.error('错误！', e);
+        }
+    }
+
     async register() {//注册
         console.log('registerRRRRRRRRRRR');
         this.ctx.body = await this.ctx.service.user.register(this.ctx.request.body);

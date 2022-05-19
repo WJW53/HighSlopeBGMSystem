@@ -13,9 +13,12 @@
     "egg-mongoose": "^3.3.1",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
+    "js-base64": "^3.7.2",
     "jsonwebtoken": "^8.5.1",
     "markdown-toc": "^1.2.0",
     "md5": "^2.3.0",
+    "moment": "^2.29.3",
+    "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "svg-captcha": "^1.4.0"
   },
