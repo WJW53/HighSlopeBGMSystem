@@ -15,3 +15,13 @@ exports.cors = {
   enable: true,
   package: 'egg-cors'
 }
+
+//redis缓存
+exports.sessionRedis = {
+  enable: true,
+  package: 'egg-session-redis',
+},
+exports.redis = {
+  enable: true,
+  package: 'egg-redis',
+}

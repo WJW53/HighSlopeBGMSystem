@@ -31,6 +31,7 @@
           size="large"
           class="fix-auto-fill"
           v-model:value="formData.sms"
+          :mobile="formData.mobile"
           :placeholder="t('sys.login.smsCode')"
         />
       </FormItem>
@@ -113,8 +114,12 @@
     registerUser(data).then(
       (resp) => {
         console.log('注册之后后端返回的数据', resp);
-        message.success('注册成功！');
-        handleBackLogin();
+        if (String(resp.code) === '0') {
+          message.success('注册成功！');
+          handleBackLogin();
+        } else {
+          message.error(resp.message);
+        }
       },
       (error) => {
         console.error('注册异常', error);

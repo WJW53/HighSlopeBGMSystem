@@ -18,7 +18,6 @@ module.exports = ({ mongoose }) => {
       mobile: {
         type: String,
         require: true,
-        unique: true,
         length: 11,
       },
       password: {

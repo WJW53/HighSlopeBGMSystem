@@ -7,11 +7,14 @@
     "declarations": true
   },
   "dependencies": {
+    "@types/superagent": "4.1.15",
     "axios": "^0.19.2",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-mongoose": "^3.3.1",
+    "egg-redis": "^2.4.0",
     "egg-scripts": "^2.11.0",
+    "egg-session-redis": "^2.1.0",
     "egg-validate": "^2.0.2",
     "js-base64": "^3.7.2",
     "jsonwebtoken": "^8.5.1",

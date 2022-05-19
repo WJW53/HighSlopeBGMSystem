@@ -36,9 +36,36 @@ class UserService extends Service {
 
   async register(info) {
     console.log('正在注册的用户信息', info);
-    return await this.ctx.model.User.create(info);// 记得改返回值
     // const { password, ...rest } = doc;
     // return rest;//不行 返回的是doc还有User原型链上的东西, why?
+    //TODO: 校验redis缓存的5分钟的验证码是否正确,用户名是否已经存在 然后才可注册
+    const mobile = info.mobile;
+    const redis_vc = await this.app.redis.get('vc-' + mobile);
+    console.log('redis_vccccc', mobile, redis_vc);
+    let code = 0;
+    let message = '';
+    let result = null;
+    if (redis_vc === null) {
+        code = 'ERROR';
+        message = '超时，请重新获取验证码。';
+    } else if (redis_vc === info.sms) {
+    // 检查是否存在user，如果没有就添加
+        let user = await this.ctx.model.User.find({account: info.account});
+        console.log('user', user);
+        if(user===null || (Array.isArray(user) && user.length===0)){
+            user = await this.ctx.model.User.create(info);
+            code = 0;
+            message = '注册成功！';
+            result = user;
+        } else {
+            code = 'ERROR';
+            message = '该账户已存在！不可重复注册!';
+        }
+    } else {
+        code = 'ERROR';
+        message = '验证码错误，请重新输入';
+    }
+    return {code, message, result};
   }
 
   // 这俩貌似也可以合并为一个: 就是要多做几个or关系的验证和筛选

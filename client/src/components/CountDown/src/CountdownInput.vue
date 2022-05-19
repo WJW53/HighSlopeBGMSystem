@@ -1,7 +1,13 @@
 <template>
   <a-input v-bind="$attrs" :class="prefixCls" :size="size" :value="state">
     <template #addonAfter>
-      <CountButton :size="size" :count="count" :value="state" :beforeStartFunc="sendCodeApi" />
+      <CountButton
+        :size="size"
+        :count="count"
+        :value="state"
+        :beforeStartFunc="sendCodeApi"
+        :mobile="mobile"
+      />
     </template>
     <template #[item]="data" v-for="item in Object.keys($slots).filter((k) => k !== 'addonAfter')">
       <slot :name="item" v-bind="data || {}"></slot>
@@ -13,6 +19,7 @@
   import CountButton from './CountButton.vue';
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useRuleFormItem } from '/@/hooks/component/useFormItem';
+  import { getSMSCode } from '/@/api/sys/user';
 
   const props = {
     value: { type: String },
@@ -20,7 +27,11 @@
     count: { type: Number, default: 60 },
     sendCodeApi: {
       type: Function as PropType<() => Promise<boolean>>,
-      default: null,
+      default: getSMSCode,
+    },
+    mobile: {
+      type: String,
+      default: '',
     },
   };
 

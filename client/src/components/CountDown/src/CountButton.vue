@@ -14,8 +14,12 @@
     value: { type: [Object, Number, String, Array] },
     count: { type: Number, default: 60 },
     beforeStartFunc: {
-      type: Function as PropType<() => Promise<boolean>>,
+      type: Function as PropType<(params) => Promise<boolean>>,
       default: null,
+    },
+    mobile: {
+      type: String,
+      default: '',
     },
   };
 
@@ -43,12 +47,15 @@
        * @description: Judge whether there is an external function before execution, and decide whether to start after execution
        */
       async function handleStart() {
-        const { beforeStartFunc } = props;
+        const { beforeStartFunc, mobile } = props;
         if (beforeStartFunc && isFunction(beforeStartFunc)) {
           loading.value = true;
           try {
-            const canStart = await beforeStartFunc();
-            canStart && start();
+            if (typeof mobile === 'string' && mobile.length === 11) {
+              console.log('mobile', mobile);
+              const canStart = await beforeStartFunc({ mobile });
+              canStart && start();
+            }
           } finally {
             loading.value = false;
           }

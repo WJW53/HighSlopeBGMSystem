@@ -11,6 +11,11 @@ async function sendCode(phone, code) {
     const AUTH_TOKEN = '0f0b674b583440099cef9a34c3ac26df';
     const Rest_URL = 'https://app.cloopen.com:8883';
     const AppID = '8a216da8804ba8a5018053f3682c020e';
+    /*
+    * 业务URL格式：/2013-12-26/Accounts/{accountSid}/SMS/{funcdes}?sig={SigParameter}
+    * 在URL格式中 {}内的内容表示为参数，非{}的内容固定不变。
+    */
+
     //1. 准备请求url
     /*
      1.使用MD5加密（账户Id + 账户授权令牌 + 时间戳）。其中账户Id和账户授权令牌根据url的验证级别对应主账户。
@@ -24,11 +29,20 @@ async function sendCode(phone, code) {
 
     console.log('手机号：', phone);
     //2. 准备请求体
+    /*
+    * to	String	必选	短信接收端手机号码集合，用英文逗号分开，每批发送的手机号数量不得超过200个
+    * appId	String	必选	应用Id，官网控制台应用列表获取
+    * templateId	String	必选	模板Id，官网控制台模板列表获取。测试模板id是1。测试模板的内容是：【云通讯】您使用的是云通讯短信模板，您的验证码是{1}，请于{2}分钟内正确输入
+    * datas	Array	可选	内容数据外层数组节点
+    * data	String	可选	内容数据，用于替换模板中{序号}，模板如果没有变量，此参数可不传，多个变量，使用数组的数据格式
+    * subAppend	String	可选	扩展码，四位数字 0~9999
+    * reqId	String	可选	第三方自定义消息id，最大支持32位，同账号下同一自然天内不允许重复。
+    */
     let data = {
         to : phone,
         appId : AppID,
         templateId : '1',
-        "datas":[code,"1"]
+        "datas":[code,"5"],//所以第二个元素"1"代表一分钟内输入
     }
 
     //3. 准备请求头

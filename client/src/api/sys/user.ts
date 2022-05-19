@@ -9,6 +9,7 @@ enum Api {
   GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
+  GetSMSCode = '/getSMS',
 }
 
 /**
@@ -50,6 +51,18 @@ export function testRetry() {
         count: 5,
         waitTime: 1000,
       },
+    },
+  );
+}
+
+export function getSMSCode(params, mode: ErrorMessageMode = 'none') {
+  return defHttp.get(
+    {
+      url: Api.GetSMSCode,
+      params,
+    },
+    {
+      errorMessageMode: mode,
     },
   );
 }
