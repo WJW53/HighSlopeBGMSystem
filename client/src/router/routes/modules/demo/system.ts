@@ -25,6 +25,18 @@ const system: AppRouteModule = {
       component: () => import('/@/views/demo/system/project/index.vue'),
     },
     {
+      path: 'project_detail/:id',
+      name: 'ProjectDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.demo.system.project_detail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/system/project',
+      },
+      component: () => import('/@/views/demo/system/project/ProjectDetail.vue'),
+    },
+    {
       path: 'station',
       name: 'StationManagement',
       meta: {
@@ -32,6 +44,18 @@ const system: AppRouteModule = {
         ignoreKeepAlive: true,
       },
       component: () => import('/@/views/demo/system/station/index.vue'),
+    },
+    {
+      path: 'station_detail/:id',
+      name: 'StationDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.demo.system.station_detail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/system/station',
+      },
+      component: () => import('/@/views/demo/system/station/StationDetail.vue'),
     },
     {
       path: 'equipment',
@@ -43,11 +67,23 @@ const system: AppRouteModule = {
       component: () => import('/@/views/demo/system/equipment/index.vue'),
     },
     {
+      path: 'equipment_detail/:id',
+      name: 'EquipmentDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.demo.system.equipment_detail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/system/equipment',
+      },
+      component: () => import('/@/views/demo/system/equipment/EquipmentDetail.vue'),
+    },
+    {
       path: 'uploadExcel',
       name: 'uploadExcel',
       component: () => import('/@/views/demo/system/excel/UploadExcel.vue'),
       meta: {
-        // icon: 'mdi:microsoft-excel',
+        icon: 'mdi:microsoft-excel',
         title: t('routes.demo.excel.importExcel'),
         ignoreKeepAlive: true,
       },

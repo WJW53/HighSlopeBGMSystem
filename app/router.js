@@ -93,7 +93,7 @@ module.exports = (app) => {
   /**
    * captcha 图片验证码 TODO: 后续整个手机验证码
    */
-  router.get('/res/captcha', controller.captcha.index);
+  router.get('/api/res/captcha', controller.captcha.index);
 
 
   /**

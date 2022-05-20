@@ -17,7 +17,8 @@ class EquipmentController extends Controller {
     }
 
     async index() {
-        this.ctx.body = await this.ctx.service.equipment.findAll();
+        console.log('this.ctx.request.body', this.ctx.request.body, 'this.ctx.query', this.ctx.query);
+        this.ctx.body = await this.ctx.service.equipment.findAll(this.ctx.query);
     }
 
     async findOne() {

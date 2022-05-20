@@ -8,6 +8,11 @@
         <TableAction
           :actions="[
             {
+              icon: 'clarity:info-standard-line',
+              tooltip: '查看工位详情',
+              onClick: handleView.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑工位信息',
               onClick: handleEdit.bind(null, record),
@@ -25,32 +30,33 @@
         />
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
+    <StationModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { deleteStation, getAllStation } from '/@/api/demo/station';
   import { PageWrapper } from '/@/components/Page';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
+  import StationModal from './StationModal.vue';
 
-  import { columns, searchFormSchema } from './account.data';
+  import { columns, searchFormSchema } from './station.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'StationManagement',
-    components: { BasicTable, PageWrapper, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, StationModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
-        title: '账号列表',
-        api: getAccountList,
+        title: '工位列表',
+        api: getAllStation,
         rowKey: 'id',
         columns,
         formConfig: {
@@ -88,7 +94,22 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        console.log('delete', record);
+        deleteStation(record.id).then(
+          (resp) => {
+            console.log(resp);
+            if (resp) {
+              message.success('该工位删除成功！');
+              reload();
+            } else {
+              message.success('该工位删除失败！');
+            }
+          },
+          (err) => {
+            console.error('删除该工位失败！', err);
+            message.error('系统异常，删除该工位失败！');
+          },
+        );
       }
 
       function handleSuccess({ isUpdate, values }) {
@@ -108,7 +129,7 @@
       }
 
       function handleView(record: Recordable) {
-        go('/permission/account_detail/' + record.id);
+        go('/system/station_detail/' + record.id);
       }
 
       return {

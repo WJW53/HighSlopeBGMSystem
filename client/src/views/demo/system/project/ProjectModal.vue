@@ -10,7 +10,6 @@
   import { projectFormSchema } from './project.data';
   import { createProject, updateProject } from '/@/api/demo/project';
   import { message } from 'ant-design-vue';
-  // import { getDeptList } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'ProjectModal',

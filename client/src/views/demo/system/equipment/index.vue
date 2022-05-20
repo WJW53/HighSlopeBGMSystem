@@ -25,32 +25,34 @@
         />
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
+    <EquipmentModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { getAllEquipment } from '/@/api/demo/equipment';
   import { PageWrapper } from '/@/components/Page';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
+  import EquipmentModal from './EquipmentModal.vue';
 
-  import { columns, searchFormSchema } from './account.data';
+  import { columns, searchFormSchema } from './equipment.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { deleteEquipment } from '/@/api/demo/equipment';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'EquipmentManagement',
-    components: { BasicTable, PageWrapper, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, EquipmentModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '账号列表',
-        api: getAccountList,
+        api: getAllEquipment,
         rowKey: 'id',
         columns,
         formConfig: {
@@ -89,6 +91,21 @@
 
       function handleDelete(record: Recordable) {
         console.log('delete', record);
+        deleteEquipment(record.id).then(
+          (resp) => {
+            console.log(resp);
+            if (resp) {
+              message.success('该设备删除成功！');
+              reload();
+            } else {
+              message.success('该设备删除失败！');
+            }
+          },
+          (err) => {
+            console.error('删除该设备失败！', err);
+            message.error('系统异常，删除该设备失败！');
+          },
+        );
       }
 
       function handleSuccess({ isUpdate, values }) {
@@ -108,7 +125,7 @@
       }
 
       function handleView(record: Recordable) {
-        go('/permission/account_detail/' + record.id);
+        go('/system/equipment_detail/' + record.id);
       }
 
       return {

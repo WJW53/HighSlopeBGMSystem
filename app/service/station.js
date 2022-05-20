@@ -81,8 +81,30 @@ class StationService extends Service {
     return await this.ctx.model.Station.findById(id);
   }
 
-  async findAll() {
-    return await this.ctx.model.Station.find({_user_: this.ctx.user._id});//查找这个用户下的所有的工位
+  async findAll(body) {
+    const options = this.getPagerOptions(body);
+    const { stationNo, stationName, location } = options;
+    console.log('工位查询最终options', options);
+
+    /** 多字段模糊匹配分页查询 */
+    const filter = {
+      _user_: options._user_
+    };
+    if(stationNo || stationName || location){//因为若都没值的话, 代表不要这些查询参数, 直接通过user_id全查
+      filter['$and'] = [];
+      stationNo && filter['$and'].push({ stationNo: { $regex: stationNo, $options: 'i' } });
+      stationName && filter['$and'].push({ stationName: { $regex: stationName, $options: 'i' } });
+      location && filter['$and'].push({ location: { $regex: location, $options: 'i' } });
+    }
+
+    const total = await this.ctx.model.Station.countDocuments(filter);
+    const result = await this.ctx.model.Station.find(filter)
+      .skip((options.page - 1) * options.limit)
+      .limit(options.limit);
+      // .sort('-createDate')
+      // .populate('blogId', 'id title');
+    result.total = total;
+    return result;
   }
 }
 

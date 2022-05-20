@@ -7,10 +7,12 @@
   import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { accountFormSchema } from './account.data';
+  import { stationFormSchema } from './station.data';
+  import { createStation, updateStation } from '/@/api/demo/station';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
-    name: 'AccountModal',
+    name: 'StationModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
@@ -19,7 +21,7 @@
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        schemas: accountFormSchema,
+        schemas: stationFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
           span: 23,
@@ -37,23 +39,29 @@
             ...data.record,
           });
         }
-
-        updateSchema([
-          {
-            field: 'pwd',
-            show: !unref(isUpdate),
-          },
-        ]);
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增设备' : '编辑设备'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '新增工位' : '编辑工位'));
 
       async function handleSubmit() {
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
+          // 在这里做新增/编辑请求即可
           console.log(values);
+          if (!unref(isUpdate)) {
+            const res = await createStation(values);
+            console.log(res);
+            if (res) {
+              message.success('该项目数据新增成功！');
+            }
+          } else {
+            const res = await updateStation(values.id, values);
+            console.log(res);
+            if (res) {
+              message.success('该项目数据更新成功！');
+            }
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

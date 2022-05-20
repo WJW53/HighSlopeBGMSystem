@@ -179,8 +179,11 @@ export default {
 
     dept: 'Department management',
     project: 'Project management',
+    project_detail: 'Project Detail',
     station: 'Station management',
+    station_detail: 'Station Detail',
     equipment: 'Equipment management',
+    equipment_detail: 'Equipment Detail',
 
     menu: 'Menu management',
     role: 'Role management',
