@@ -55,7 +55,7 @@ const transform: AxiosTransform = {
     const { code, result, message } = data;
 
     // // 这里逻辑可以根据项目进行修改
-    const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+    const hasSuccess = data && Reflect.has(data, 'code') && String(code) === String(ResultEnum.SUCCESS);
     console.log('hasSuccess', hasSuccess, 'data.result', result);
     if (hasSuccess) {
       return data.result;
@@ -77,8 +77,9 @@ const transform: AxiosTransform = {
         }
     }
 
-    // errorMessageMode=‘modal’的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
+    // errorMessageMode=modal的时候会显示modal错误弹窗，而不是消息提示，用于一些比较重要的错误
     // errorMessageMode='none' 一般是调用时明确表示不希望自动弹出错误提示
+    // errorMessageMode='message'就是用后端给的message作为提示
     if (options.errorMessageMode === 'modal') {
       createErrorModal({ title: t('sys.api.errorTip'), content: timeoutMsg });
     } else if (options.errorMessageMode === 'message') {

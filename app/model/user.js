@@ -77,5 +77,10 @@ module.exports = ({ mongoose }) => {
       strict: true,
     }
   );
+  UserSchema.methods.toJSON = function () {
+    const obj = mongoose.Document.prototype.toJSON.call(this);
+    delete obj.password;
+    return obj;
+  };
   return mongoose.model('User', UserSchema);
 };

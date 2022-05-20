@@ -2,43 +2,98 @@ const Service = require('../core/BaseService');
 
 class UserService extends Service {
   // TODO: 记得都要查重, 是否注册过、字段值是否合格, 所有密码记得用md5加密
-
-  async login({account, password}) {
-    console.log('node接收到前端代理过来的请求了!!', account, password);
-    return {
-      "userId": "625d58940aa9a93f2c0771e1",
-      "account": "wjw",
-      "nickname": "WJW Service",
-      "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",
-      "desc": "manager",
-      "password": "123456",
-      "token": "fakeToken1",
-      "homePath": "/personal/changePassword",
-      "roles": [
-          {
-              "roleName": "Super Admin",
-              "value": "super"
+  async login({account, password, mobile, sms}) {
+    // if(this.ctx.user){
+    //     console.log('jwt直接返回用户信息', this.ctx.user);
+    //     return this.ctx.user;//jwt验证过了, 可以直接返回
+    // }
+    console.log('node接收到前端代理过来的请求了!!', account, password, mobile, sms);
+    let code = 0;
+    let message = '';
+    let result = null;
+    /** 手机号验证码登录验证 */
+    if(mobile && sms){
+      const redis_vc = await this.app.redis.get('vc-' + mobile);
+      console.log('redis_vccccc', mobile, redis_vc);
+      if (redis_vc === null) {
+          code = 'ERROR';
+          message = '超时，请重新获取验证码。';
+      } else if (redis_vc === sms) {
+          let user = await this.ctx.model.User.findOne({ mobile });
+          if(user){
+              code = 0;
+              message = '登录成功！';
+              result = user;
+          }else{
+              code = 'ERROR';
+              message = '该手机号未注册！请先注册！';
+              result = null
           }
-      ]
-  };
-  //TODO: 到时候联表查询然后格式化数据传给前端.
-    return await this.ctx.model.User.findOne({
-      account,
-      password,
-      // loginPwd: md5(loginPwd),
-    });
+      } else {
+          code = 'ERROR';
+          message = '验证码错误，请重新输入';
+      }
+    }else if(account && password){
+      /** 账号密码登录验证 */
+      const user = await this.ctx.model.User.findOne({
+        account,
+        password,//md5 ?
+      });
+      if(user){
+        code = 0;
+        message = '登录成功！';
+        result = user;
+      }else{
+        code = 'ERROR';
+        message = '账号或密码错误，请重新输入';
+        result = null;
+      }
+    }else{
+      // return null;
+    }
+    // const testA = {
+    //   "userId": "625d58940aa9a93f2c0771e1",
+    //   "account": "wjw",
+    //   "nickname": "WJW Service",
+    //   "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",
+    //   "desc": "manager",
+    //   "password": "123456",
+    //   "token": "fakeToken1",
+    //   "homePath": "/personal/changePassword",
+    //   "roles": [
+    //       {
+    //           "roleName": "Super Admin",
+    //           "value": "super"
+    //       }
+    //   ]
+    // };
+    //TODO: 下面的部分操作记得删除啥的 到时候联表查询然后格式化数据传给前端.
+    const jsResult = result.toObject() || {};
+    if(result){// 必须是原result存在时才进行这一步
+      jsResult.homePath = '/personal/changePassword';//首页
+      jsResult.roles = [
+        {
+          "roleName": "Super Admin",
+          "value": "super"
+        }
+      ];
+      jsResult.userId = jsResult._id;
+      jsResult.token = this.ctx.token;
+      delete jsResult._id;
+      console.log('jsResult已经拦截成mock的testA并返回给前端', code, message, jsResult);
+    }
+    return {
+      code, message, result: jsResult
+    }
   }
 
 
   async logout(params){
-    return `已经注销`;
+    return `已经注销`;//TODO:
   }
 
   async register(info) {
     console.log('正在注册的用户信息', info);
-    // const { password, ...rest } = doc;
-    // return rest;//不行 返回的是doc还有User原型链上的东西, why?
-    //TODO: 校验redis缓存的5分钟的验证码是否正确,用户名是否已经存在 然后才可注册
     const mobile = info.mobile;
     const redis_vc = await this.app.redis.get('vc-' + mobile);
     console.log('redis_vccccc', mobile, redis_vc);
@@ -53,7 +108,15 @@ class UserService extends Service {
         let user = await this.ctx.model.User.find({account: info.account});
         console.log('user', user);
         if(user===null || (Array.isArray(user) && user.length===0)){
-            user = await this.ctx.model.User.create(info);
+            info.homePath = '/personal/changePassword';//首页
+            info.roles = [
+              {
+                  "roleName": "Tester",
+                  "value": "test"
+              }
+            ];
+            info.avatar = "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
+            user = await this.ctx.model.User.create(info);//落库
             code = 0;
             message = '注册成功！';
             result = user;
@@ -82,11 +145,33 @@ class UserService extends Service {
   async changePassword(info) {
     console.log('正在修改用户密码', info);
     // TODO: 这里应该把user._id也传进去作为筛选条件, 后续记得加上
-    return await this.ctx.model.User.findOneAndUpdate(
+    if(info.password===info.newPassword){
+      return {
+        code: 'ERROR',
+        message: '新旧密码不可相同！',
+        result : null,
+      }
+    }else if(info.confirmPassword!==info.newPassword){
+      return {
+        code: 'ERROR',
+        message: '确认密码与新密码不同！',
+        result : null,
+      }
+    }
+    const result = await this.ctx.model.User.findOneAndUpdate(
       { account: info.account, password: info.password },
       { password: info.newPassword },
       { new: true, }//runValidators: true, 
     );
+    if(result){
+      return { result };
+    }else{
+      return {
+        code: 'ERROR',
+        message: '旧密码错误！',
+        result: null,
+      }
+    }
   }
 
   /**

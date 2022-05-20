@@ -55,7 +55,8 @@ export function testRetry() {
   );
 }
 
-export function getSMSCode(params, mode: ErrorMessageMode = 'none') {
+// 获取手机验证码
+export function getSMSCode(params, mode: ErrorMessageMode = 'message') {
   return defHttp.get(
     {
       url: Api.GetSMSCode,

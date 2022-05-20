@@ -30,7 +30,7 @@ module.exports = (app) => {
    * 账号的注册、登录、修改&重置密码
    */
   router.post('/api/register', controller.user.register);
-  router.post('/api/login', controller.user.login);
+  router.post('/api/login', auth, passport, controller.user.login);
   router.get('/api/logout', controller.user.logout);
   router.get('/api/getSMS', controller.user.getSMS);
   router.post('/api/changePassword', auth, controller.user.changePassword);//这个需要先鉴权啊, 确定你已经登录了
