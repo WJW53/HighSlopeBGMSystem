@@ -40,14 +40,14 @@ module.exports = (app) => {
   /**
    * admin 管理员验证
    */
-  router.post(
-    '/api/admin/login',
-    captcha,
-    passport,
-    controller.admin.login
-  );
-  router.get('/api/admin/whoami', auth, controller.admin.profile);
-  router.put('/api/admin', auth, controller.admin.update);
+  // router.post(
+  //   '/api/admin/login',
+  //   captcha,
+  //   passport,
+  //   controller.admin.login
+  // );
+  // router.get('/api/admin/whoami', auth, controller.admin.profile);
+  // router.put('/api/admin', auth, controller.admin.update);
   // 超级管理员得到所有的用户信息
   // router.get('/api/admin/getAllUsersInfo', auth, controller.admin.all);
 
@@ -84,10 +84,10 @@ module.exports = (app) => {
    * project 项目管理crud
    */
   router.post('/api/projectInfo', auth, controller.project.add);
-  router.delete('/api/projectInfo/:id', auth, controller.project.remove);
-  router.put('/api/projectInfo/:id', auth, controller.project.update);
-  router.get('/api/projectInfo', auth, controller.project.index);
-  // router.get('/api/projectInfo', auth, controller.project.findOne);
+  router.delete('/api/projectInfo/:id', auth, controller.project.remove);//这个id是项目id
+  router.put('/api/projectInfo/:id', auth, controller.project.update);//项目id
+  router.get('/api/projectInfo', auth, controller.project.index);//算了，这里不用id了，因为这里id是用户id，怕和下面注释起来的搞混淆了
+  // router.get('/api/projectInfo/:id', auth, controller.project.findOne);//这个id是项目id
 
 
   /**

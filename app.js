@@ -9,7 +9,7 @@ const originToJSON = mongoose.Document.prototype.toJSON;
 mongoose.Document.prototype.toJSON = function (...args) {
   const obj = originToJSON.call(this, ...args);
   if (obj._id) {
-    obj.userId = obj._id;
+    obj.id = obj._id;
     delete obj._id;
   }
   return obj;

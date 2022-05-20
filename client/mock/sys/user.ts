@@ -4,7 +4,7 @@ import { resultError, resultSuccess, getRequestToken, requestParams } from '../_
 export function createFakeUserList() {
   return [
     {
-      userId: '625d58940aa9a93f2c0771e1',
+      id: '625d58940aa9a93f2c0771e1',
       account: 'wjw',
       nickname: 'WJW Admin',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
@@ -20,7 +20,7 @@ export function createFakeUserList() {
       ],
     },
     {
-      userId: '625eba6e517efc2b40a3700e',
+      id: '625eba6e517efc2b40a3700e',
       account: 'test',
       password: '123456',
       nickname: 'test user',
@@ -58,10 +58,10 @@ export default [
       if (!checkUser) {
         return resultError('Incorrect account or password！');
       }
-      const { userId, account: _account, token, nickname, desc, roles } = checkUser;
+      const { id, account: _account, token, nickname, desc, roles } = checkUser;
       return resultSuccess({
         roles,
-        userId,
+        id,
         account: _account,
         token,
         nickname,
@@ -93,7 +93,7 @@ export default [
       if (!checkUser) {
         return resultError('Invalid token!');
       }
-      const codeList = fakeCodeList[checkUser.userId];
+      const codeList = fakeCodeList[checkUser.id];
 
       return resultSuccess(codeList);
     },

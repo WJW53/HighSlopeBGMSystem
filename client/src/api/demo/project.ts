@@ -4,13 +4,13 @@ const projectUrl = '/projectInfo';
 
 export const getAllProject = (params) => defHttp.get({ url: projectUrl, params });
 
-export const getAnProject = (params) => defHttp.get({ url: projectUrl, params });
+export const getAnProject = (id, params) => defHttp.get({ url: `${projectUrl}/${id}`, params });
 
 export const createProject = (params) => defHttp.post({ url: projectUrl, params });
 
-export const deleteProject = (params) => defHttp.delete({ url: projectUrl, params });
+export const deleteProject = (id) => defHttp.delete({ url: `${projectUrl}/${id}` });
 
-export const updataProject = (params) => defHttp.put({ url: projectUrl + params.id, params });
+export const updateProject = (id, params) => defHttp.put({ url: `${projectUrl}/${id}`, params });
 
 // export const isAccountExist = (account: string) =>
 //   defHttp.post({ url: Api.IsAccountExist, params: { account } }, { errorMessageMode: 'none' });

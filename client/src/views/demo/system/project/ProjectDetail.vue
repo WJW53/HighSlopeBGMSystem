@@ -34,7 +34,7 @@
   import { useTabs } from '/@/hooks/web/useTabs';
   import { Tabs } from 'ant-design-vue';
   export default defineComponent({
-    name: 'AccountDetail',
+    name: 'ProjectDetail',
     components: { PageWrapper, ATabs: Tabs, ATabPane: Tabs.TabPane },
     setup() {
       const route = useRoute();
@@ -52,7 +52,7 @@
       // 页面左侧点击返回链接时的操作
       function goBack() {
         // 本例的效果时点击返回始终跳转到账号列表页，实际应用时可返回上一页
-        go('/permission/account');
+        go('/system/project');
       }
       return { userId, currentKey, goBack };
     },

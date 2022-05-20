@@ -1,7 +1,7 @@
 import { Result } from '../utils';
 
 const fakeUserInfo = {
-  userId: '1',
+  id: '1',
   account: 'vben',
   nickname: 'Vben Admin',
   desc: 'manager',

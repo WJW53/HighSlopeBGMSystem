@@ -475,6 +475,7 @@
       colProps: {
         span: 8,
       },
+      // 字段联动预先配置
       componentProps: ({ formModel, formActionType }) => {
         return {
           options: provincesOptions,

@@ -17,7 +17,9 @@ class ProjectController extends Controller {
     }
 
     async index() {
-        this.ctx.body = await this.ctx.service.project.findAll();
+        // 噢！ get请求的参数中的动态变量在ctx.params, get后面的参数在ctx.query中; post和put请求的参数都在请求体里ctx.request.body!!
+        console.log('this.ctx.request.body', this.ctx.request.body, 'this.ctx.query', this.ctx.query);
+        this.ctx.body = await this.ctx.service.project.findAll(this.ctx.query);
     }
 
     async findOne() {

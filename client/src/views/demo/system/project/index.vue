@@ -31,7 +31,7 @@
         />
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
+    <ProjectModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 
@@ -39,26 +39,26 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
 
   import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
+  import ProjectModal from './ProjectModal.vue';
 
-  import { columns, searchFormSchema } from './account.data';
+  import { columns, searchFormSchema } from './project.data';
   import { useGo } from '/@/hooks/web/usePage';
-  import { getAllProject } from '/@/api/demo/project';
+  import { getAllProject, deleteProject } from '/@/api/demo/project';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'ProjectManagement',
-    components: { BasicTable, PageWrapper, AccountModal, TableAction },
+    components: { BasicTable, PageWrapper, ProjectModal, TableAction },
     setup() {
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '项目列表',
-        api: getAccountList, //TODO: 换成getAllProject
+        api: getAllProject,
         rowKey: 'id',
         columns,
         formConfig: {
@@ -96,7 +96,22 @@
       }
 
       function handleDelete(record: Recordable) {
-        console.log(record);
+        console.log('delete', record);
+        deleteProject(record.id).then(
+          (resp) => {
+            console.log(resp);
+            if (resp) {
+              message.success('该项目删除成功！');
+              reload();
+            } else {
+              message.success('该项目删除失败！');
+            }
+          },
+          (err) => {
+            console.error('删除该项目失败！', err);
+            message.error('系统异常，删除该项目失败！');
+          },
+        );
       }
 
       function handleSuccess({ isUpdate, values }) {
@@ -116,7 +131,7 @@
       }
 
       function handleView(record: Recordable) {
-        go('/permission/account_detail/' + record.id);
+        go('/system/project_detail/' + record.id);
       }
 
       return {

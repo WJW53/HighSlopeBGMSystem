@@ -49,8 +49,7 @@
     setup() {
       const { createMessage } = useMessage();
       const userStore = useUserStore();
-      // const userId = userStore.$state.userInfo.id;
-      const userId = '625d58940aa9a93f2c0771e1'; // TODO: 这里记得改回动态的
+      const userId = userStore.$state.userInfo.id;
 
       const [register, { setFieldsValue, getFieldsValue }] = useForm({
         labelWidth: 120,

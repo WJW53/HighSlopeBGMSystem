@@ -19,6 +19,7 @@ module.exports = ({ mongoose }) => {
         type: String,
         require: true,
         length: 11,
+        unique: true,
       },
       password: {
         type: String,
@@ -54,22 +55,6 @@ module.exports = ({ mongoose }) => {
       remark: {
         type: String,
       },
-      // 因为这些表里存了account, 到时直接在那些数据里通过account存数据得
-      // projectNo: {
-      //   type: ObjectId,
-      //   ref: 'Station',
-      //   required: true,
-      // },
-      // equipmentNo: {
-      //   type: ObjectId,
-      //   ref: 'Equipment',
-      //   required: true,
-      // },
-      // stationNo: {
-      //   type: ObjectId,
-      //   ref: 'Station',
-      //   required: true,
-      // },
     },
     {
       timestamps: false,

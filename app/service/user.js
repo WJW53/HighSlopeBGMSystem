@@ -19,7 +19,7 @@ class UserService extends Service {
           code = 'ERROR';
           message = '超时，请重新获取验证码。';
       } else if (redis_vc === sms) {
-          let user = await this.ctx.model.User.findOne({ mobile });
+          let user = await this.ctx.model.User.findOne({ mobile }, {password: 0});
           if(user){
               code = 0;
               message = '登录成功！';
@@ -38,7 +38,7 @@ class UserService extends Service {
       const user = await this.ctx.model.User.findOne({
         account,
         password,//md5 ?
-      });
+      }, {password: 0});
       if(user){
         code = 0;
         message = '登录成功！';
@@ -52,7 +52,7 @@ class UserService extends Service {
       // return null;
     }
     // const testA = {
-    //   "userId": "625d58940aa9a93f2c0771e1",
+    //   "id": "625d58940aa9a93f2c0771e1",
     //   "account": "wjw",
     //   "nickname": "WJW Service",
     //   "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",
@@ -77,7 +77,7 @@ class UserService extends Service {
           "value": "super"
         }
       ];
-      jsResult.userId = jsResult._id;
+      jsResult.id = jsResult._id ? jsResult._id : jsResult.id;
       jsResult.token = this.ctx.token;
       delete jsResult._id;
       console.log('jsResult已经拦截成mock的testA并返回给前端', code, message, jsResult);
@@ -105,7 +105,9 @@ class UserService extends Service {
         message = '超时，请重新获取验证码。';
     } else if (redis_vc === info.sms) {
     // 检查是否存在user，如果没有就添加
-        let user = await this.ctx.model.User.find({account: info.account});
+        let user = await this.ctx.model.User.find({
+          $or: [{account: info.account}, {mobile: info.mobile}]
+        }, {password: 0});
         console.log('user', user);
         if(user===null || (Array.isArray(user) && user.length===0)){
             info.homePath = '/personal/changePassword';//首页
@@ -122,7 +124,7 @@ class UserService extends Service {
             result = user;
         } else {
             code = 'ERROR';
-            message = '该账户已存在！不可重复注册!';
+            message = '该账户名或者手机号已存在！不可重复注册!';
         }
     } else {
         code = 'ERROR';
@@ -144,7 +146,7 @@ class UserService extends Service {
 
   async changePassword(info) {
     console.log('正在修改用户密码', info);
-    // TODO: 这里应该把user._id也传进去作为筛选条件, 后续记得加上
+    // TODO: 这里应该看是否存在ctx.user, 存在说明已经登录, 可以修改, 否则不能修改;
     if(info.password===info.newPassword){
       return {
         code: 'ERROR',

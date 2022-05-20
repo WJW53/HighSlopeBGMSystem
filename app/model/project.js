@@ -31,7 +31,7 @@ module.exports = ({ mongoose }) => {
       // 这样写是因为, 项目数据比较多, 经常关联查询太耗费效率,
       stationNo: {
         type: String,
-        required: true,
+        // required: true,
       },
       stationName: {
         type: String,
@@ -39,7 +39,7 @@ module.exports = ({ mongoose }) => {
       },
       equipmentNo: {
         type: String,
-        required: true,
+        // required: true,
       },
       equipmentName: {
         type: String,

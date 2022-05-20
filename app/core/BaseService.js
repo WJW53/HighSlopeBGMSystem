@@ -15,9 +15,15 @@ class BaseService extends Service {
   }
 
   getPagerOptions(options) {
+    console.log(options);
     options.page = +options.page || 1;
-    options.limit = +options.limit || 10;
+    options.limit = (+options.pageSize) || (+options.limit) ||10;
     options.keyword = options.keyword || '';
+    options._user_ = this.ctx?.user?._id;//若有，则代表已经认证过token了
+    delete options._t;//删除get请求发过来的_t时间戳参数
+    for(const key of Object.keys(options)){
+      options[key] = typeof options[key] === 'string' ? options[key].trim() : options[key];
+    }
     return options;
   }
 }
