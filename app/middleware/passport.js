@@ -4,14 +4,16 @@ module.exports = () => async (ctx, next) => {
   if(!ctx.user){//没有发布过token时才再次验证并发布
     const body = ctx.request.body;//TODO: 这也需要看是手机号还是账号密码
     const user = await ctx.model.User.findOne(body);//相当于这里只是去数据库查当前用户数据而已
-    ctx.user = user;
     if (user) {
+      ctx.user = user;
       const remember = +body.remember || 7;
       const maxAge = remember * 24 * 3600 + 5;
-  
-      const token = jwt.sign({ id: user._id }, ctx.app.config.keys, {
+      const expires = Date.now()+maxAge*1000
+      const jwtid = Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);//这俩暂时没用上,
+      const token = jwt.sign({ id: user._id, jwtid, expires  }, ctx.app.config.keys, {
         expiresIn: maxAge,// 默认7天多5s
       });
+      await ctx.app.redis.set('tokenList-'+token, expires, 'ex', maxAge);
       console.log('userID, JWT分别为: ', user._id, token);
       // 添加到响应头
       ctx.set('authentication', token);

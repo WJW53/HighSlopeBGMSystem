@@ -2,36 +2,50 @@ import { BasicColumn } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: 'ID',
+    title: '项目id',
     dataIndex: 'id',
-    width: 80,
+    // defaultHidden: true,
+    ifShow: false,
   },
   {
-    title: '姓名',
-    dataIndex: 'name',
-    width: 120,
+    title: '项目编号',
+    dataIndex: 'projectNo',
   },
   {
-    title: '年龄',
-    dataIndex: 'age',
-    width: 80,
+    title: '项目名称',
+    dataIndex: 'projectName',
   },
   {
-    title: '编号',
-    dataIndex: 'no',
-    width: 80,
+    title: '项目负责人',
+    dataIndex: 'projectLeader',
   },
   {
-    title: '地址',
-    dataIndex: 'address',
+    title: '联系电话',
+    dataIndex: 'mobile',
   },
   {
-    title: '开始时间',
-    dataIndex: 'beginTime',
+    title: '工位名称',
+    dataIndex: 'stationName',
   },
   {
-    title: '结束时间',
-    dataIndex: 'endTime',
+    title: '设备名称',
+    dataIndex: 'equipmentName',
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+  },
+  {
+    title: '经度',
+    dataIndex: 'longitude',
+  },
+  {
+    title: '纬度',
+    dataIndex: 'latitude',
+  },
+  {
+    title: '备注',
+    dataIndex: 'remark',
   },
 ];
 

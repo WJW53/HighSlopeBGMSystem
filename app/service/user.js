@@ -68,7 +68,7 @@ class UserService extends Service {
     //   ]
     // };
     //TODO: 下面的部分操作记得删除啥的 到时候联表查询然后格式化数据传给前端.
-    const jsResult = result.toObject() || {};
+    const jsResult = result?.toObject() || {};
     if(result){// 必须是原result存在时才进行这一步
       jsResult.homePath = '/personal/changePassword';//首页
       jsResult.roles = [
@@ -87,9 +87,11 @@ class UserService extends Service {
     }
   }
 
-
+//TODO: 使jwt失效: token黑名单; 版本号
   async logout(params){
-    return `已经注销`;//TODO:
+    const res = await this.app.redis.del('tokenList-' + this.ctx.token);
+    console.log('已经删除该用户token', res);
+    return `该账户已退出`;
   }
 
   async register(info) {
@@ -147,30 +149,38 @@ class UserService extends Service {
   async changePassword(info) {
     console.log('正在修改用户密码', info);
     // TODO: 这里应该看是否存在ctx.user, 存在说明已经登录, 可以修改, 否则不能修改;
-    if(info.password===info.newPassword){
-      return {
-        code: 'ERROR',
-        message: '新旧密码不可相同！',
-        result : null,
+    if(this.ctx.user){
+      if(info.password===info.newPassword){
+        return {
+          code: 'ERROR',
+          message: '新旧密码不可相同！',
+          result : null,
+        }
+      }else if(info.confirmPassword!==info.newPassword){
+        return {
+          code: 'ERROR',
+          message: '确认密码与新密码不同！',
+          result : null,
+        }
       }
-    }else if(info.confirmPassword!==info.newPassword){
-      return {
-        code: 'ERROR',
-        message: '确认密码与新密码不同！',
-        result : null,
+      const result = await this.ctx.model.User.findOneAndUpdate(
+        { account: info.account, password: info.password },
+        { password: info.newPassword },
+        { new: true, }//runValidators: true, 
+      );
+      if(result){
+        return { result };
+      }else{
+        return {
+          code: 'ERROR',
+          message: '旧密码错误！',
+          result: null,
+        }
       }
-    }
-    const result = await this.ctx.model.User.findOneAndUpdate(
-      { account: info.account, password: info.password },
-      { password: info.newPassword },
-      { new: true, }//runValidators: true, 
-    );
-    if(result){
-      return { result };
     }else{
       return {
         code: 'ERROR',
-        message: '旧密码错误！',
+        message: '您尚未登录，不可使用系统内置修改密码功能！',
         result: null,
       }
     }

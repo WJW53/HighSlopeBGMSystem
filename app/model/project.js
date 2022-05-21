@@ -49,6 +49,10 @@ module.exports = ({ mongoose }) => {
         type: String,
         required: true,
       },
+      frequency: {
+        type: String,
+        required: true,
+      },
       //经度
       longitude: {
         type: String,

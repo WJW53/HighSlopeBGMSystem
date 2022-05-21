@@ -70,6 +70,7 @@ export const equipmentFormSchema: FormSchema[] = [
         required: true,
         message: '请输入设备编号',
       },
+      // TODO: 增加前后端编号字段等的唯一性校验
       // {
       //   validator(_, value) {
       //     // 用来验证是否唯一存在

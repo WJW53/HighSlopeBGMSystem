@@ -38,6 +38,10 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createTime',
   },
   {
+    title: '采集频率',
+    dataIndex: 'frequency',
+  },
+  {
     title: '经度',
     dataIndex: 'longitude',
   },
@@ -174,6 +178,12 @@ export const projectFormSchema: FormSchema[] = [
   {
     field: 'createTime',
     label: '创建时间',
+    component: 'Input',
+    required: true,
+  },
+  {
+    label: '采集频率',
+    field: 'frequency',
     component: 'Input',
     required: true,
   },
