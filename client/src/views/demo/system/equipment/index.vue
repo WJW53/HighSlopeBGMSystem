@@ -8,6 +8,11 @@
         <TableAction
           :actions="[
             {
+              icon: 'clarity:info-standard-line',
+              tooltip: '查看设备详情',
+              onClick: handleView.bind(null, record),
+            },
+            {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑设备信息',
               onClick: handleEdit.bind(null, record),

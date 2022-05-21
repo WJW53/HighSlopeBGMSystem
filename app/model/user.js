@@ -27,6 +27,16 @@ module.exports = ({ mongoose }) => {
         minLength: 6,
         maxLength: 16,
       },
+      roles: {
+        type:[{
+          roleName: {
+            type: String,
+          },
+          value: {
+            type: String,
+          }
+        }]
+      },
       _role_: {
         type: ObjectId,
         ref: 'Role',

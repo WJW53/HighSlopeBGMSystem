@@ -13,17 +13,21 @@ import {
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
-  AccountList = '/system/getAccountList',
-  IsAccountExist = '/system/accountExist',
-  DeptList = '/system/getDeptList',
-  setRoleStatus = '/system/setRoleStatus',
-  MenuList = '/system/getMenuList',
-  RolePageList = '/system/getRoleListByPage',
-  GetAllRoleList = '/system/getAllRoleList',
+  Account = '/userInfo',
+  IsAccountExist = '/accountExist',
+  DeptList = '/getDeptList',
+  setRoleStatus = '/setRoleStatus',
+  MenuList = '/getMenuList',
+  RolePageList = '/getRoleListByPage',
+  GetAllRoleList = '/getAllRoleList',
 }
 
-export const getAccountList = (params: AccountParams) =>
-  defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
+/** 超级管理员对账户的CRUD */
+export const getAllAccount = (params) => defHttp.get<AccountListGetResultModel>({ url: Api.Account, params });
+export const getAnAccount = (id, params) => defHttp.get({ url: `${Api.Account}/${id}`, params });
+export const createAccount = (params) => defHttp.post({ url: Api.Account, params });
+export const deleteAccount = (id) => defHttp.delete({ url: `${Api.Account}/${id}` });
+export const updateAccount = (id, params) => defHttp.put({ url: `${Api.Account}/${id}`, params });
 
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });

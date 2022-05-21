@@ -25,7 +25,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '角色',
-    dataIndex: 'role',
+    dataIndex: 'roles',
   },
   {
     title: '备注',
@@ -53,13 +53,13 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'role',
+    field: 'roles',
     label: '角色',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRoleList,
+      api: getAllRoleList, //TODO: 加rolelist
       labelField: 'roleName',
-      valueField: 'roleValue',
+      valueField: 'value',
     },
     colProps: { span: 8 },
   },
@@ -76,21 +76,21 @@ export const accountFormSchema: FormSchema[] = [
         required: true,
         message: '请输入账户名',
       },
-      {
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isAccountExist(value) // 是否存在该账户
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
-      },
+      // {
+      //   validator(_, value) {
+      //     return new Promise((resolve, reject) => {
+      //       isAccountExist(value) // 是否存在该账户
+      //         .then(() => resolve())
+      //         .catch((err) => {
+      //           reject(err.message || '验证失败');
+      //         });
+      //     });
+      //   },
+      // },
     ],
   },
   {
-    field: 'pwd',
+    field: 'password',
     label: '密码',
     component: 'InputPassword',
     required: true,
@@ -110,14 +110,14 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roles',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
       labelField: 'roleName',
-      valueField: 'roleValue',
+      valueField: 'value',
     },
-    required: true,
+    // required: true,
   },
   {
     label: '邮箱',

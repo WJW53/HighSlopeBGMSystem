@@ -191,31 +191,44 @@ class UserService extends Service {
    * TODO: 每个账号初始化建立后, 就给它两个可选设备、工位; 普通用户权限
    */
   async add(info) {
-    this.validate(
-      {
-        name: 'string',
-        url: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-        },
-        order: 'int?',
-        thumb: 'string',
-      },
-      info
-    );
-    info.order = +info.order;
-    if (isNaN(+info.order)) {
-      info.order = 0;
+    let body = {
+      code: 0,
+      message: '',
+      result: null,
     }
-    return await this.ctx.model.User.create(info);
+    try {
+      this.validate(
+        {
+          account: {
+            type: 'string',
+            // min: 3,
+            // max: 16
+          },
+          password: {
+            type: 'string',
+          },
+          mobile: {
+            type: 'string',
+          },
+          nickname: {
+            type: 'string',
+          },
+          // roles: {
+          //   type: 'array',
+          //   itemType: 'object',
+          //   allowEmpty: true,
+          // }
+        },
+        info
+      );
+      body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
+      console.log('成功新增账户：', body.result);
+    } catch (error) {
+      console.log('新增账户落库前Model层校验失败', error);
+      body.code = '406';
+      body.message = '校验失败，该账户数据不合规范！';
+    }
+      return this.ctx.body = body;
   }
 
   async update(id, info) {
@@ -254,6 +267,9 @@ class UserService extends Service {
     //   info
     // );
     // TODO: 记得加校验
+    if(Object.keys(info).includes('_id')){
+      delete info._id;//防止改了_id;
+    }
     await this.ctx.model.User.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }
@@ -271,8 +287,28 @@ class UserService extends Service {
     return await this.ctx.model.User.findById(id);
   }
 
-  async findAll() {
-    return await this.ctx.model.User.find().sort('order');
+  async findAll(body) {//只有超级管理员有资格查找所有的账号
+    const options = this.getPagerOptions(body);
+    const { account, nickname, mobile, roles } = options;
+    console.log('超级管理员查询所有用户最终options', options);
+
+    /** 多字段模糊匹配分页查询 */
+    const filter = {};
+    if(account || nickname || mobile){////TODO: 还有roles
+      filter['$and'] = [];
+      account && filter['$and'].push({ account: { $regex: account, $options: 'i' } });
+      nickname && filter['$and'].push({ nickname: { $regex: nickname, $options: 'i' } });
+      mobile && filter['$and'].push({ mobile: { $regex: mobile, $options: 'i' } });
+    }
+
+    const total = await this.ctx.model.User.countDocuments(filter);
+    const result = await this.ctx.model.User.find(filter, {avatar: 0})
+      .skip((options.page - 1) * options.limit)
+      .limit(options.limit);
+      // .sort('-createDate')
+      // .populate('_role_', '_id roleName value');
+    result.total = total;
+    return result;
   }
 }
 

@@ -57,8 +57,8 @@ exports.onerror = {
 
     ctx.body = JSON.parse(JSON.stringify({
       code,
-      msg,
-      data: null,
+      message: msg,
+      result: null,
     }));
   },
 };

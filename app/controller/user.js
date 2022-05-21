@@ -72,7 +72,8 @@ class UserController extends Controller {
     }
 
     async index() {
-        this.ctx.body = await this.ctx.service.user.findAll();
+        console.log('superAdminFindAllUserInfoOOOOOOOOO');
+        this.ctx.body = await this.ctx.service.user.findAll(this.ctx.query);
     }
 
     async findOne() {

@@ -8,6 +8,8 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
+  import { createAccount, updateAccount } from '/@/api/demo/system';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -44,7 +46,7 @@
             show: !unref(isUpdate),
           },
           {
-            field: 'pwd',
+            field: 'password',
             show: !unref(isUpdate),
           },
           {
@@ -60,8 +62,25 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
+          // 在这里做新增/编辑请求即可
           console.log(values);
+          if (!unref(isUpdate)) {
+            const res = await createAccount(values);
+            console.log(res);
+            if (res) {
+              message.success('该账号数据新增成功！');
+            } else {
+              message.success('账号数据新增失败！');
+            }
+          } else {
+            const res = await updateAccount(values.id, values);
+            console.log(res);
+            if (res) {
+              message.success('账号数据更新成功！');
+            } else {
+              message.success('账号数据更新失败');
+            }
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

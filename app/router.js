@@ -19,12 +19,12 @@ module.exports = (app) => {
    * user 用户管理  TODO: 未完成,这里最后做吧, 根据前端的功能配合完成后端, 接口也要改
    * CRUD, 注册、登录、忘记密码、三方登录、认证、权限...
    */
-  router.post('/api/userInfo', superAdminAuth ,controller.user.add);// 增加一个用户
-  router.delete('/api/userInfo/:id', superAdminAuth , controller.user.remove);// 删除一个用户
-  router.put('/api/userInfo/:id', controller.user.update);// 某个用户基本信息的更新
-  router.get('/api/userInfo', superAdminAuth, controller.user.index);// superAdmin获取所有用户数据, TODO: 加个superAdminAuth中间件
+  router.post('/api/userInfo', auth, superAdminAuth ,controller.user.add);// 增加一个用户
+  router.delete('/api/userInfo/:id', auth, superAdminAuth , controller.user.remove);// 删除一个用户
+  router.put('/api/userInfo/:id', auth, controller.user.update);// 某个用户基本信息的更新
+  router.get('/api/userInfo', auth, superAdminAuth, controller.user.index);// superAdmin获取所有用户数据
   router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
-  router.get('/api/userInfo/:id', controller.user.findOne);
+  router.get('/api/userInfo/:id', auth, controller.user.findOne);
 
   /**
    * 账号的注册、登录、修改&重置密码

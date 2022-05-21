@@ -3,15 +3,17 @@ const Service = require('egg').Service;
 class BaseService extends Service {
   validate(rules, obj) {
     try {
-      this.ctx.validate(rules, obj);
+      const result = this.ctx.validate(rules, obj);//成功校验则返回undefined, 失败则throw error, 进入catch
+      console.log('BaseService validte', result);
+      return result;
     } catch (e) {
-      console.log(e);
+      console.log('validate校验失败！ ', e.errors);//
       this.throw(406, JSON.stringify(e.errors));
     }
   }
 
   throw(code, message) {
-    this.ctx.app.error.throw(code, message);
+    this.ctx.app.error.throw(code, message);//ConsultError
   }
 
   getPagerOptions(options) {

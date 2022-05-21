@@ -27,7 +27,7 @@ export interface AccountListItem {
   account: string;
   email: string;
   nickname: string;
-  role: number;
+  roles: Array<Object>;
   createTime: string;
   remark: string;
   status: number;

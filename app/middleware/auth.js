@@ -14,8 +14,8 @@ module.exports = () => async (ctx, next) => {
       }else if(auth && !isExist){
         ctx.logger.info('身份未授权');
         console.log('身份未授权', auth);
-        ctx.statusCode = 401;
         ctx.body = { code: 401, message: '您的身份未授权！请重新登录！', result: null };
+        ctx.status = 401;
         return;
       }
     }
