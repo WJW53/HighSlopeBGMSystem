@@ -7,7 +7,7 @@ const system: AppRouteModule = {
   path: '/system',
   name: 'System',
   component: LAYOUT,
-  redirect: '/system/account',
+  redirect: '/system/station',
   meta: {
     orderNo: 16,
     icon: 'ion:settings-outline',
@@ -15,27 +15,6 @@ const system: AppRouteModule = {
     ignoreKeepAlive: true,
   },
   children: [
-    {
-      path: 'project',
-      name: 'ProjectManagement',
-      meta: {
-        title: t('routes.demo.system.project'),
-        ignoreKeepAlive: true,
-      },
-      component: () => import('/@/views/demo/system/project/index.vue'),
-    },
-    {
-      path: 'project_detail/:id',
-      name: 'ProjectDetail',
-      meta: {
-        hideMenu: true,
-        title: t('routes.demo.system.project_detail'),
-        ignoreKeepAlive: true,
-        showMenu: false,
-        currentActiveMenu: '/system/project',
-      },
-      component: () => import('/@/views/demo/system/project/ProjectDetail.vue'),
-    },
     {
       path: 'station',
       name: 'StationManagement',
@@ -77,6 +56,27 @@ const system: AppRouteModule = {
         currentActiveMenu: '/system/equipment',
       },
       component: () => import('/@/views/demo/system/equipment/EquipmentDetail.vue'),
+    },
+    {
+      path: 'project',
+      name: 'ProjectManagement',
+      meta: {
+        title: t('routes.demo.system.project'),
+        ignoreKeepAlive: true,
+      },
+      component: () => import('/@/views/demo/system/project/index.vue'),
+    },
+    {
+      path: 'project_detail/:id',
+      name: 'ProjectDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.demo.system.project_detail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/system/project',
+      },
+      component: () => import('/@/views/demo/system/project/ProjectDetail.vue'),
     },
     {
       path: 'uploadExcel',
