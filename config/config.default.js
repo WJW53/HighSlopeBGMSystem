@@ -46,18 +46,18 @@ exports.onerror = {
 
     // 设置响应内容
     // 设置正确的code值
-    let code = +err.code || ctx.status;
-    let msg = err.message || constErrorMsg[code];
+    let code = +err.code || ctx.status || 500;
+    let message = err.message || constErrorMsg[code];
     // 设置正确的msg值
     ctx.set('content-type', 'application/json');
-    ctx.status = 200;
+    ctx.status = ctx.status || 200;
     if (code === 500) {
-      msg = constErrorMsg[code];
+      message = constErrorMsg[code];
     }
-
+    console.log('出错后准备返回的: ', {status: ctx.status, code, message});
     ctx.body = JSON.parse(JSON.stringify({
       code,
-      message: msg,
+      message,
       result: null,
     }));
   },

@@ -80,13 +80,15 @@ async function sendCode(phone, code) {
 
 
 class ConsultError extends Error {
-  constructor(code, message) {
+  constructor(code, message, status) {
     super(message);
     this.code = code;
+    this.status = status;
   }
 
-  static throw(code = 500, message = '') {
-    throw new ConsultError(code, message);
+  static throw(code = 500, message = '', status = 500) {
+    console.log('application.js throw: ', code, message, status);
+    throw new ConsultError(code, message, status);
   }
 }
 

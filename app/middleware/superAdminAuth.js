@@ -5,15 +5,15 @@ module.exports = () => async (ctx, next) => {
   try {
     const isAccess = ctx.user && ctx.user._id.toString() === superAdminId;//因为_id是ObjectId类型
     console.log('是否放行? ', ctx.user._id, isAccess);
-    if(isAccess){
+    if (isAccess) {
       await next();//放行
-    }else{
+    } else {
+      ctx.status = 403;
       ctx.body = {
         code: '403',
         message: '权限不足, 您不是超级管理员!',
         result: null,
       };
-      ctx.status = 403;
     }
   } catch (e) {
     ctx.logger.error(e);

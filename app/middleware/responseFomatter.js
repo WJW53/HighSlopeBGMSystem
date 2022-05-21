@@ -1,11 +1,10 @@
 module.exports = () => async (ctx, next) => {
   await next();
-  if (ctx.status === 404) {
-    ctx.app.error.throw(404);
+  console.log('ctx.status: ', ctx.status, 'ctx.body: ', ctx.body);
+  if (ctx.status && ctx.status !== 200) {
+    ctx.app.error.throw(ctx.body.code, ctx.body.message, ctx.status);
   }
   ctx.status = 200;
-  // console.log('ctx.body:  ', ctx.body);
-
   // 1. 这说明是直接返回的数据库内容
   const hasCodeAttri = Object.keys(ctx.body).includes('code');
   if(!hasCodeAttri && !ctx.body?.result && ctx.body){
