@@ -10,12 +10,12 @@ module.exports = ({ mongoose }) => {
    */
   const RoleSchema = new Schema(
     {
-      roleNo: {
+      roleName: {
         type: String,
         required: true,
         unique: true,
       },
-      roleName: {
+      roleValue: {
         type: String,
         required: true,
         unique: true,
@@ -25,15 +25,17 @@ module.exports = ({ mongoose }) => {
         required: true,
         default: Date.now(),
       },
-      _user_: {
-        type: ObjectId,
-        ref: 'User',
-        required: true,
+      status: {
+        type: String,
+        // required: true,
       },
-      menuList: {
-        type: [Schema.Types.Mixed],//[{path, children}]
-        required: true,
-      }
+      remark: {
+        type: String,
+      },
+      // menuList: {
+      //   type: [Schema.Types.Mixed],//[{path, children}]
+      //   required: true,
+      // }
     },
     {
       timestamps: false,
@@ -41,6 +43,6 @@ module.exports = ({ mongoose }) => {
       strict: true,
     }
   );
-    console.log('wjw role', );
+  console.log('wjw role', );
   return mongoose.model('Role', RoleSchema);
 };

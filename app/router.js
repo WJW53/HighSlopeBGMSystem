@@ -26,6 +26,16 @@ module.exports = (app) => {
   router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
   router.get('/api/userInfo/:id', auth, controller.user.findOne);
 
+
+/**
+ * 超级管理员对角色（含菜单权限）的CRUD
+ */
+  router.post('/api/roleInfo', auth, superAdminAuth ,controller.role.add);// 增加一个角色
+  router.delete('/api/roleInfo/:id', auth, superAdminAuth , controller.role.remove);// 删除一个角色
+  router.put('/api/roleInfo/:id', auth, superAdminAuth, controller.role.update);// 某个角色信息的更新
+  router.get('/api/roleInfo', auth, superAdminAuth, controller.role.index);// superAdmin获取所有角色数据
+  router.get('/api/roleInfo/:id', auth, superAdminAuth, controller.role.findOne);
+
   /**
    * 账号的注册、登录、修改&重置密码
    */

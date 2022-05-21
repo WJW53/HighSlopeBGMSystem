@@ -27,7 +27,7 @@ export interface AccountListItem {
   account: string;
   email: string;
   nickname: string;
-  roles: Array<Object>;
+  role: Array<Object>;
   createTime: string;
   remark: string;
   status: number;
@@ -55,9 +55,9 @@ export interface RoleListItem {
   id: string;
   roleName: string;
   roleValue: string;
-  status: number;
-  orderNo: string;
   createTime: string;
+  status?: number;
+  orderNo?: string;
 }
 
 /**

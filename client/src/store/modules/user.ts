@@ -132,12 +132,12 @@ export const useUserStore = defineStore({
       if (!this.getToken) return null;
       // const userInfo = await getUserInfo();//不用请求这个接口, 刚才那个登录后返回的data直接就是后端给的数据
       const userInfo = this.getUserInfo;
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+      const { role = [] } = userInfo;
+      if (isArray(role)) {
+        const roleList = role.map((item) => item.value) as RoleEnum[];
         this.setRoleList(roleList);
       } else {
-        userInfo.roles = [];
+        userInfo.role = [];
         this.setRoleList([]);
       }
       //都到这里了, 代表肯定是登录进来了

@@ -1,5 +1,5 @@
 export {};
-
+// 路由meta字段
 declare module 'vue-router' {
   interface RouteMeta extends Record<string | number | symbol, unknown> {
     orderNo?: number;
@@ -12,7 +12,7 @@ declare module 'vue-router' {
     // Whether to ignore permissions
     ignoreAuth?: boolean;
     // role info
-    roles?: RoleEnum[];
+    role?: RoleEnum[];
     // Whether not to cache
     ignoreKeepAlive?: boolean;
     // Is it fixed on tab

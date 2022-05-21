@@ -17,7 +17,7 @@ class RoleController extends Controller {
     }
 
     async index() {
-        this.ctx.body = await this.ctx.service.role.findAll();
+        this.ctx.body = await this.ctx.service.role.findAll(this.ctx.query);
     }
 
     async findOne() {

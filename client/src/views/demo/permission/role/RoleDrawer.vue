@@ -8,7 +8,7 @@
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm">
-      <template #menu="{ model, field }">
+      <!-- <template #menu="{ model, field }">
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
@@ -17,7 +17,7 @@
           toolbar
           title="菜单分配"
         />
-      </template>
+      </template> -->
     </BasicForm>
   </BasicDrawer>
 </template>
@@ -28,7 +28,8 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { getMenuList, createRole, updateRole } from '/@/api/demo/system';
+  import { message } from 'ant-design-vue';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -48,9 +49,9 @@
         resetFields();
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
-        if (unref(treeData).length === 0) {
-          treeData.value = (await getMenuList()) as any as TreeItem[];
-        }
+        // if (unref(treeData).length === 0) {
+        //   treeData.value = (await getMenuList()) as any as TreeItem[];
+        // }
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
@@ -66,8 +67,25 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
+          // custom api
           console.log(values);
+          if (!unref(isUpdate)) {
+            const res = await createRole(values);
+            console.log(res);
+            if (res) {
+              message.success('该角色数据新增成功！');
+            } else {
+              message.success('角色数据新增失败！');
+            }
+          } else {
+            const res = await updateRole(values.id, values);
+            console.log(res);
+            if (res) {
+              message.success('角色数据更新成功！');
+            } else {
+              message.success('角色数据更新失败');
+            }
+          }
           closeDrawer();
           emit('success');
         } finally {

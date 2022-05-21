@@ -1,8 +1,13 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
+import { getAllRole, isAccountExist } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
+  {
+    title: '账户id',
+    dataIndex: 'id',
+    ifShow: false,
+  },
   {
     title: '账户名',
     dataIndex: 'account',
@@ -25,7 +30,7 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '角色',
-    dataIndex: 'roles',
+    dataIndex: 'role',
   },
   {
     title: '备注',
@@ -53,19 +58,25 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'roles',
+    field: 'role',
     label: '角色',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRoleList, //TODO: 加rolelist
+      api: getAllRole,
       labelField: 'roleName',
-      valueField: 'value',
+      valueField: 'roleValue',
     },
     colProps: { span: 8 },
   },
 ];
 
 export const accountFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '账户id',
+    component: 'Input',
+    show: false,
+  },
   {
     field: 'account',
     label: '账户名',
@@ -94,7 +105,7 @@ export const accountFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
-    // ifShow: false,
+    ifShow: true,
   },
   {
     field: 'mobile',
@@ -110,12 +121,12 @@ export const accountFormSchema: FormSchema[] = [
   },
   {
     label: '角色',
-    field: 'roles',
+    field: 'role',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRoleList,
+      api: getAllRole,
       labelField: 'roleName',
-      valueField: 'value',
+      valueField: 'roleValue',
     },
     // required: true,
   },

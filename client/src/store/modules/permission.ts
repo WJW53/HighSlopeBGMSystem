@@ -107,9 +107,9 @@ export const usePermissionStore = defineStore({
 
       const routeFilter = (route: AppRouteRecordRaw) => {
         const { meta } = route;
-        const { roles } = meta || {};
-        if (!roles) return true;
-        return roleList.some((role) => roles.includes(role));
+        const { role } = meta || {};
+        if (!role) return true;
+        return roleList.some((role) => role.includes(role));
       };
 
       const routeRemoveIgnoreFilter = (route: AppRouteRecordRaw) => {

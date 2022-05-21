@@ -2,68 +2,16 @@ const Service = require('../core/BaseService');
 
 class RoleService extends Service {
   async add(info) {
-    this.validate(
-      {
-        name: 'string',
-        url: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-        },
-        order: 'int?',
-        thumb: 'string',
-      },
-      info
-    );
-    info.order = +info.order;
-    if (isNaN(+info.order)) {
-      info.order = 0;
+    if(Object.keys(info).includes('_id')){
+      delete info._id;//防止改了_id;
     }
     return await this.ctx.model.Role.create(info);
   }
 
   async update(id, info) {
-    this.validate(
-      {
-        name: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-        url: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        github: {
-          type: 'string',
-          required: false,
-          allowEmpty: true,
-        },
-        description: {
-          type: 'array',
-          itemType: 'string',
-          required: false,
-        },
-        order: {
-          type: 'int',
-          required: false,
-        },
-        thumb: {
-          type: 'string',
-          required: false,
-          allowEmpty: false,
-        },
-      },
-      info
-    );
+    if(Object.keys(info).includes('_id')){
+      delete info._id;//防止改了_id;
+    }
     await this.ctx.model.Role.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }
@@ -77,8 +25,25 @@ class RoleService extends Service {
     return await this.ctx.model.Role.findById(id);
   }
 
-  async findAll() {
-    return await this.ctx.model.Role.find().sort('order');
+  async findAll(query) {
+    const options = this.getPagerOptions(query);
+    const { roleName, roleValue } = options;
+    console.log('超级管理员查询所有权限最终options', options);
+
+    /** 多字段模糊匹配分页查询 */
+    const filter = {};
+    if(roleName || roleValue){
+      filter['$and'] = [];
+      roleName && filter['$and'].push({ roleName: { $regex: roleName, $options: 'i' } });
+      roleValue && filter['$and'].push({ roleValue: { $regex: roleValue, $options: 'i' } });
+    }
+
+    const total = await this.ctx.model.Role.countDocuments(filter);
+    const result = await this.ctx.model.Role.find(filter)
+      .skip((options.page - 1) * options.limit)
+      .limit(options.limit);
+    result.total = total;
+    return result;
   }
 }
 

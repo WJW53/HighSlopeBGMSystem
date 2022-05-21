@@ -60,10 +60,10 @@ class UserService extends Service {
     //   "password": "123456",
     //   "token": "fakeToken1",
     //   "homePath": "/personal/changePassword",
-    //   "roles": [
+    //   "role": [
     //       {
     //           "roleName": "Super Admin",
-    //           "value": "super"
+    //           "roleValue": "super"
     //       }
     //   ]
     // };
@@ -71,10 +71,10 @@ class UserService extends Service {
     const jsResult = result?.toObject() || {};
     if(result){// 必须是原result存在时才进行这一步
       jsResult.homePath = '/personal/changePassword';//首页
-      jsResult.roles = [
+      jsResult.role = [
         {
           "roleName": "Super Admin",
-          "value": "super"
+          "roleValue": "super"
         }
       ];
       jsResult.id = jsResult._id ? jsResult._id : jsResult.id;
@@ -113,10 +113,10 @@ class UserService extends Service {
         console.log('user', user);
         if(user===null || (Array.isArray(user) && user.length===0)){
             info.homePath = '/personal/changePassword';//首页
-            info.roles = [
+            info.role = [
               {
                   "roleName": "Tester",
-                  "value": "test"
+                  "roleValue": "test"
               }
             ];
             info.avatar = "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
@@ -213,7 +213,7 @@ class UserService extends Service {
           nickname: {
             type: 'string',
           },
-          // roles: {
+          // role: {
           //   type: 'array',
           //   itemType: 'object',
           //   allowEmpty: true,
@@ -289,7 +289,7 @@ class UserService extends Service {
 
   async findAll(body) {//只有超级管理员有资格查找所有的账号
     const options = this.getPagerOptions(body);
-    const { account, nickname, mobile, roles } = options;
+    const { account, nickname, mobile, role } = options;
     console.log('超级管理员查询所有用户最终options', options);
 
     /** 多字段模糊匹配分页查询 */
@@ -306,7 +306,7 @@ class UserService extends Service {
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
       // .sort('-createDate')
-      // .populate('_role_', '_id roleName value');
+      // .populate('_role_', '_id roleName roleValue');
     result.total = total;
     return result;
   }

@@ -7,7 +7,7 @@ const fakeUserInfo = {
   desc: 'manager',
   password: '123456',
   token: 'fakeToken1',
-  roles: [
+  role: [
     {
       roleName: 'Super Admin',
       value: 'super',

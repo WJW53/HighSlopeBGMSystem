@@ -46,6 +46,18 @@ const permission: AppRouteModule = {
       },
       component: () => import('/@/views/demo/permission/role/index.vue'),
     },
+    {
+      path: 'role_detail/:id',
+      name: 'RoleDetail',
+      meta: {
+        hideMenu: true,
+        title: t('routes.demo.system.role_detail'),
+        ignoreKeepAlive: true,
+        showMenu: false,
+        currentActiveMenu: '/permission/role',
+      },
+      component: () => import('/@/views/demo/permission/role/RoleDetail.vue'),
+    },
   ],
 };
 

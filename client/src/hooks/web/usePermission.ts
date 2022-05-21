@@ -82,20 +82,20 @@ export function usePermission() {
   }
 
   /**
-   * Change roles
-   * @param roles
+   * Change role 变更角色
+   * @param role
    */
-  async function changeRole(roles: RoleEnum | RoleEnum[]): Promise<void> {
+  async function changeRole(role: RoleEnum | RoleEnum[]): Promise<void> {
     if (projectSetting.permissionMode !== PermissionModeEnum.ROUTE_MAPPING) {
       throw new Error(
         'Please switch PermissionModeEnum to ROUTE_MAPPING mode in the configuration to operate!',
       );
     }
 
-    if (!isArray(roles)) {
-      roles = [roles];
+    if (!isArray(role)) {
+      role = [role];
     }
-    userStore.setRoleList(roles);
+    userStore.setRoleList(role);
     await resume();
   }
 

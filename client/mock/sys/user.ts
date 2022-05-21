@@ -12,10 +12,10 @@ export function createFakeUserList() {
       password: '123456',
       token: 'fakeToken1',
       homePath: '/personal/changePassword',
-      roles: [
+      role: [
         {
           roleName: 'Super Admin',
-          value: 'super',
+          roleValue: 'super',
         },
       ],
     },
@@ -28,10 +28,10 @@ export function createFakeUserList() {
       desc: 'tester',
       token: 'fakeToken2',
       homePath: '/dashboard/workbench',
-      roles: [
+      role: [
         {
           roleName: 'Tester',
-          value: 'test',
+          roleValue: 'test',
         },
       ],
     },
@@ -58,9 +58,9 @@ export default [
       if (!checkUser) {
         return resultError('Incorrect account or password！');
       }
-      const { id, account: _account, token, nickname, desc, roles } = checkUser;
+      const { id, account: _account, token, nickname, desc, role } = checkUser;
       return resultSuccess({
-        roles,
+        role,
         id,
         account: _account,
         token,

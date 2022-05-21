@@ -76,6 +76,11 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.findAll(this.ctx.query);
     }
 
+    async getAllRoleList() {
+        console.log('getAllRoleListTTTTTTTTTTTTTTTT');
+        this.ctx.body = await this.ctx.service.role.findAll(this.ctx.query);
+    }
+
     async findOne() {
         console.log(this.ctx.params, this.ctx.query);//params路由上的动态参数, query是路由上带的参数以及请求体里的body
         this.ctx.body = await this.ctx.service.user.findOne(this.ctx.params.id);
