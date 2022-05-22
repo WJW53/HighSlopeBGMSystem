@@ -158,7 +158,7 @@ const allMenuBasicInfoList = [
       "children": [
         {
           "menuNo": "StationManagement",
-          "menuName": "账号管理",
+          "menuName": "工位管理",
           "type": "1",
           // "icon": "ion:document",
           "orderNo": 1,
@@ -166,7 +166,7 @@ const allMenuBasicInfoList = [
         },
         {
           "menuNo": "EquipmentManagement",
-          "menuName": "角色管理",
+          "menuName": "设备管理",
           "type": "1",
           // "icon": "ion:document",
           "orderNo": 2,
@@ -174,7 +174,7 @@ const allMenuBasicInfoList = [
         },
         {
           "menuNo": "ProjectManagement",
-          "menuName": "账号管理",
+          "menuName": "项目管理",
           "type": "1",
           // "icon": "ion:document",
           "orderNo": 3,

@@ -1,12 +1,19 @@
 const Service = require('../core/BaseService');
+const superAdminId = '625d58940aa9a93f2c0771e1';
+const superAdminAccount = 'wjw';
+const superAdminMobile = '17839706350';
+
+const initAccountField = (info) => {
+  info.homePath = info.homePath || '/personal/setting'; // 个人设置页
+  info.role = info.homePath || 'project';
+  info.avatar = info.avatar || "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
+}
+
+//TODO: 用户登录时, 应该去populate把role查出来, 组装成roleName, roleValue,
 
 class UserService extends Service {
   // TODO: 记得都要查重, 是否注册过、字段值是否合格, 所有密码记得用md5加密
   async login({account, password, mobile, sms}) {
-    // if(this.ctx.user){
-    //     console.log('jwt直接返回用户信息', this.ctx.user);
-    //     return this.ctx.user;//jwt验证过了, 可以直接返回
-    // }
     console.log('node接收到前端代理过来的请求了!!', account, password, mobile, sms);
     let code = 0;
     let message = '';
@@ -51,35 +58,13 @@ class UserService extends Service {
     }else{
       // return null;
     }
-    // const testA = {
-    //   "id": "625d58940aa9a93f2c0771e1",
-    //   "account": "wjw",
-    //   "nickname": "WJW Service",
-    //   "avatar": "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640",
-    //   "desc": "manager",
-    //   "password": "123456",
-    //   "token": "fakeToken1",
-    //   "homePath": "/personal/changePassword",
-    //   "role": [
-    //       {
-    //           "roleName": "Super Admin",
-    //           "roleValue": "super"
-    //       }
-    //   ]
-    // };
-    //TODO: 下面的部分操作记得删除啥的 到时候联表查询然后格式化数据传给前端.
+
+    //toObject(); 才能变为js对象
     const jsResult = result?.toObject() || {};
     if(result){// 必须是原result存在时才进行这一步
+      const role = await this.ctx.model.Role.findOne({ roleValue: jsResult.role }, { roleValue: 1, roleName: 1 });
       jsResult.id = jsResult._id ? jsResult._id : jsResult.id;
-      jsResult.homePath = '/personal/changePassword';//首页
-      if(jsResult.id.toString() === '625d58940aa9a93f2c0771e1'){//TODO: test super admin
-        jsResult.role = [
-          {
-            "roleName": "Super Admin",
-            "roleValue": "super"
-          }
-        ];
-      }
+      jsResult.role = [role];// 最好加容错处理
       jsResult.token = this.ctx.token;
       delete jsResult._id;
       console.log('jsResult已经拦截成mock的testA并返回给前端', code, message, jsResult);
@@ -89,7 +74,7 @@ class UserService extends Service {
     }
   }
 
-//TODO: 使jwt失效: token黑名单; 版本号
+  //使jwt失效: token黑名单; 版本号
   async logout(params){
     const res = await this.app.redis.del('tokenList-' + this.ctx.token);
     console.log('已经删除该用户token', res);
@@ -115,14 +100,7 @@ class UserService extends Service {
         }, {password: 0});
         console.log('user', user);
         if(user===null || (Array.isArray(user) && user.length===0)){
-            info.homePath = '/personal/changePassword';//首页
-            info.role = [
-              {
-                  "roleName": "普通项目用户",
-                  "roleValue": "project"
-              }
-            ];
-            info.avatar = "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
+            initAccountField(info);
             user = await this.ctx.model.User.create(info);//落库
             code = 0;
             message = '注册成功！';
@@ -201,33 +179,7 @@ class UserService extends Service {
     }
     this.ctx.app.utils.deleteThe_id(info);
     try {
-      this.validate(
-        {
-          account: {
-            type: 'string',
-            // min: 3,
-            // max: 16
-          },
-          password: {
-            type: 'string',
-          },
-          mobile: {
-            type: 'string',
-          },
-          nickname: {
-            type: 'string',
-          },
-          // role: {
-          //   type: 'array',
-          //   itemType: 'object',
-          //   allowEmpty: true,
-          // }
-        },
-        info
-      );
-      if(typeof info.role === 'string'){
-
-      }
+      initAccountField(info);
       body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
       console.log('成功新增账户：', body.result);
     } catch (error) {
@@ -239,44 +191,8 @@ class UserService extends Service {
   }
 
   async update(id, info) {
-    // this.validate(
-    //   {
-    //     name: {
-    //       type: 'string',
-    //       required: false,
-    //       allowEmpty: false,
-    //     },
-    //     url: {
-    //       type: 'string',
-    //       required: false,
-    //       allowEmpty: true,
-    //     },
-    //     github: {
-    //       type: 'string',
-    //       required: false,
-    //       allowEmpty: true,
-    //     },
-    //     description: {
-    //       type: 'array',
-    //       itemType: 'string',
-    //       required: false,
-    //     },
-    //     order: {
-    //       type: 'int',
-    //       required: false,
-    //     },
-    //     thumb: {
-    //       type: 'string',
-    //       required: false,
-    //       allowEmpty: false,
-    //     },
-    //   },
-    //   info
-    // );
     // TODO: 记得加校验
-    if(Object.keys(info).includes('_id')){
-      delete info._id;//防止改了_id;
-    }
+    this.ctx.app.utils.deleteThe_id(info);
     await this.ctx.model.User.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }
@@ -300,12 +216,16 @@ class UserService extends Service {
     console.log('超级管理员查询所有用户最终options', options);
 
     /** 多字段模糊匹配分页查询 */
-    const filter = {};
-    if(account || nickname || mobile){////TODO: 还有roles
+    const filter = {
+      _id: { $ne: superAdminId },
+      account: { $ne: 'wjw' },
+    };
+    if(account || nickname || mobile || role){////TODO: 还有roles
       filter['$and'] = [];
       account && filter['$and'].push({ account: { $regex: account, $options: 'i' } });
       nickname && filter['$and'].push({ nickname: { $regex: nickname, $options: 'i' } });
       mobile && filter['$and'].push({ mobile: { $regex: mobile, $options: 'i' } });
+      role && filter['$and'].push({ role: { $regex: role, $options: 'i' } });
     }
 
     const total = await this.ctx.model.User.countDocuments(filter);

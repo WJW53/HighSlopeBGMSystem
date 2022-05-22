@@ -30,6 +30,11 @@ module.exports = ({ mongoose }) => {
       role: {
         type: String,
       },
+      homePath: {
+        type: String,
+        required: true,
+        default: '/personal/setting',
+      },
       _role_: {
         type: ObjectId,
         ref: 'Role',

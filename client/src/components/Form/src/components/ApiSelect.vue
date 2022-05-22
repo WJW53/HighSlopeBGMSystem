@@ -110,7 +110,12 @@
             options.value = res;
             emitChange();
             return;
+          } else if (Array.isArray(res.result)) {
+            options.value = res.result;
+            emitChange();
+            return;
           }
+
           if (props.resultField) {
             options.value = get(res, props.resultField) || [];
           }

@@ -187,9 +187,10 @@
           const blob = dataURLtoBlob(previewSource.value); // 将该图片资源转为装有base64格式的blob
           try {
             setModalProps({ confirmLoading: true });
+            console.log('CopperModal uploadApi, getUserInfo: ', userStore.getUserInfo);
             const result = await uploadApi(
               {
-                id: userStore.getUserInfo.userId, // 把用户id也带过去
+                id: userStore.getUserInfo.id, // 把用户id也带过去
                 suffixPath: 'avatar', // 这里其实应该从上级传下来控制的, 本次系统仅使用到头像上传, 所以暂未变动此处
               },
               {
