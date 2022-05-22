@@ -71,7 +71,7 @@
             if (res) {
               message.success('该账号数据新增成功！');
             } else {
-              message.success('账号数据新增失败！');
+              message.error('账号数据新增失败！');
             }
           } else {
             const res = await updateAccount(values.id, values);
@@ -79,7 +79,7 @@
             if (res) {
               message.success('账号数据更新成功！');
             } else {
-              message.success('账号数据更新失败');
+              message.error('账号数据更新失败');
             }
           }
           closeModal();

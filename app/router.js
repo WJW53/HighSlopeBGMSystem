@@ -11,13 +11,13 @@ module.exports = (app) => {
   // const limit = middleware.limit();
   // const responseFomatter = middleware.responseFomatter();
 
-  // app.middleware.limit()  可以在一些post请求中用上这个中间件
+  // app.middleware.limit(); // TODO: 稍作修改, 然后在一些post请求中用上这个中间件
 
-  // TODO: 最好把超级管理员放在超级管理员的表里，普通用户就是普通用户?----不要这样, 应该加个超级管理员鉴权中间件即可
 
   /**
-   * user 用户管理  TODO: 未完成,这里最后做吧, 根据前端的功能配合完成后端, 接口也要改
-   * CRUD, 注册、登录、忘记密码、三方登录、认证、权限...
+   * 把超级管理员放在超级管理员的表里，普通用户就是普通用户??----不要这样, 加个超级管理员鉴权中间件即可
+   * 1. 超级管理员对所有用户的CRUD
+   * 2. 用户对自己的信息获取
    */
   router.post('/api/userInfo', auth, superAdminAuth ,controller.user.add);// 增加一个用户
   router.delete('/api/userInfo/:id', auth, superAdminAuth , controller.user.remove);// 删除一个用户
@@ -26,6 +26,7 @@ module.exports = (app) => {
   router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
   router.get('/api/userInfo/:id', auth, controller.user.findOne);
 
+  router.get('/api/menuInfo', auth, superAdminAuth, controller.menu.index);
 
 /**
  * 超级管理员对角色（含菜单权限）的CRUD
@@ -37,7 +38,7 @@ module.exports = (app) => {
   router.get('/api/roleInfo/:id', auth, superAdminAuth, controller.role.findOne);
 
   /**
-   * 账号的注册、登录、修改&重置密码
+   * 账号的注册、登录、退出、手机验证码、修改&重置密码
    */
   router.post('/api/register', controller.user.register);
   router.post('/api/login', auth, passport, controller.user.login);
@@ -47,29 +48,6 @@ module.exports = (app) => {
   router.post('/api/resetPassword', controller.user.resetPassword);
   
 
-  /**
-   * admin 管理员验证
-   */
-  // router.post(
-  //   '/api/admin/login',
-  //   captcha,
-  //   passport,
-  //   controller.admin.login
-  // );
-  // router.get('/api/admin/whoami', auth, controller.admin.profile);
-  // router.put('/api/admin', auth, controller.admin.update);
-  // 超级管理员得到所有的用户信息
-  // router.get('/api/admin/getAllUsersInfo', auth, controller.admin.all);
-
-  /**
-   * setting 基础设置
-   */
-  router.get('/api/setting', controller.setting.index);
-  router.put('/api/setting', auth, controller.setting.update);
-  // router.put('/api/setting', controller.setting.update);
-
-
-  //记得加入中间件噢, 基本都要加auth吧, 就是为了通过token拿到user
   /**
    * station 工位管理crud, 路径一致, 只需要控制method和参数即可
    */
@@ -101,7 +79,7 @@ module.exports = (app) => {
 
 
   /**
-   * captcha 图片验证码 TODO: 后续整个手机验证码
+   * captcha 图片验证码
    */
   router.get('/api/res/captcha', controller.captcha.index);
 
@@ -115,6 +93,28 @@ module.exports = (app) => {
   router.get('/upload', controller.upload.findAllImageURL);
   router.delete('/upload/:id', controller.upload.removeImage);
 
+
+  /** 以下暂时用不上, 是开发中思考的中间产物 */
+  /**
+   * admin 管理员验证
+   */
+  // router.post(
+  //   '/api/admin/login',
+  //   captcha,
+  //   passport,
+  //   controller.admin.login
+  // );
+  // router.get('/api/admin/whoami', auth, controller.admin.profile);
+  // router.put('/api/admin', auth, controller.admin.update);
+  // 超级管理员得到所有的用户信息
+  // router.get('/api/admin/getAllUsersInfo', auth, controller.admin.all);
+
+  /**
+   * setting 基础设置
+  //  */
+  // router.get('/api/setting', controller.setting.index);
+  // router.put('/api/setting', auth, controller.setting.update);
+  // // router.put('/api/setting', controller.setting.update);
 
   // // demo
   // router.post('/api/project', auth, controller.demo.add);

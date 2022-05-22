@@ -104,7 +104,7 @@
               message.success('该项目删除成功！');
               reload();
             } else {
-              message.success('该项目删除失败！');
+              message.error('该项目删除失败！');
             }
           },
           (err) => {

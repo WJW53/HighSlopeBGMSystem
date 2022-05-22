@@ -8,16 +8,16 @@
     @ok="handleSubmit"
   >
     <BasicForm @register="registerForm">
-      <!-- <template #menu="{ model, field }">
+      <template #menu="{ model, field }">
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
+          :fieldNames="{ title: 'menuName', key: 'menuNo' }"
           checkable
           toolbar
           title="菜单分配"
         />
-      </template> -->
+      </template>
     </BasicForm>
   </BasicDrawer>
 </template>
@@ -49,9 +49,17 @@
         resetFields();
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
-        // if (unref(treeData).length === 0) {
-        //   treeData.value = (await getMenuList()) as any as TreeItem[];
-        // }
+        if (unref(treeData).length === 0) {
+          treeData.value = (await getMenuList().then(
+            (result) => {
+              return result.menuList;
+            },
+            (error) => {
+              console.error('拉取所有菜单失败', error);
+              message.error('拉取所有菜单失败');
+            },
+          )) as any as TreeItem[];
+        }
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
@@ -68,14 +76,14 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // custom api
-          console.log(values);
+          console.log('drawer内要提交的数据: ', values); //虽然menu是代理对象, 但是不影响提交上去的对象是普通对象
           if (!unref(isUpdate)) {
             const res = await createRole(values);
             console.log(res);
             if (res) {
               message.success('该角色数据新增成功！');
             } else {
-              message.success('角色数据新增失败！');
+              message.error('角色数据新增失败！');
             }
           } else {
             const res = await updateRole(values.id, values);
@@ -83,7 +91,7 @@
             if (res) {
               message.success('角色数据更新成功！');
             } else {
-              message.success('角色数据更新失败');
+              message.error('角色数据更新失败');
             }
           }
           closeDrawer();

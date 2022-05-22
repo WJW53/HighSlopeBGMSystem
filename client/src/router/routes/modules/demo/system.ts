@@ -80,7 +80,7 @@ const system: AppRouteModule = {
     },
     {
       path: 'uploadExcel',
-      name: 'uploadExcel',
+      name: 'UploadExcel',
       component: () => import('/@/views/demo/system/excel/UploadExcel.vue'),
       meta: {
         icon: 'mdi:microsoft-excel',

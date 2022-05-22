@@ -5,7 +5,7 @@ import { t } from '/@/hooks/web/useI18n';
 
 const setup: AppRouteModule = {
   path: '/setup',
-  name: 'SetupDemo',
+  name: 'UserGuide',
   component: LAYOUT,
   redirect: '/setup/index',
   meta: {
@@ -17,7 +17,7 @@ const setup: AppRouteModule = {
   children: [
     {
       path: 'index',
-      name: 'SetupDemoPage',
+      name: 'UserGuideManagement',
       component: () => import('/@/views/demo/setup/index.vue'),
       meta: {
         title: t('routes.demo.setup.page'),

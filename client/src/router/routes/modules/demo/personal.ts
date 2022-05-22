@@ -17,7 +17,7 @@ const personal: AppRouteModule = {
     // =============================setting start=============================
     {
       path: 'setting',
-      name: 'AccountSettingPage',
+      name: 'PersonalSetting',
       component: () => import('/@/views/demo/personal/setting/index.vue'),
       meta: {
         title: t('routes.demo.page.accountSetting'),

@@ -45,6 +45,7 @@ export const baseSetschemas: FormSchema[] = [
     field: 'name',
     component: 'Input',
     label: '昵称',
+    required: true,
     colProps: { span: 18 },
   },
   {
@@ -58,7 +59,7 @@ export const baseSetschemas: FormSchema[] = [
     component: 'Input',
     label: '联系电话',
     colProps: { span: 18 },
-  },
+  }, // 去掉了, 因为会影响到手机号
   {
     field: 'address',
     component: 'Input',

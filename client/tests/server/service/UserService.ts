@@ -10,7 +10,7 @@ const fakeUserInfo = {
   role: [
     {
       roleName: 'Super Admin',
-      value: 'super',
+      roleValue: 'super',
     },
   ],
 };

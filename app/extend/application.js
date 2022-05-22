@@ -2,6 +2,7 @@ const md5 = require('md5');
 const moment = require('moment');
 const Base64 = require('js-base64').Base64;
 const axios = require('axios');
+const menuList = require('./menuList.js');
 
 /*
 向指定号码发送指定验证码
@@ -108,4 +109,5 @@ exports.utils = {
     return result;
   },
   sendCode,
+  menuList,
 };

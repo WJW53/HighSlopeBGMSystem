@@ -70,14 +70,16 @@ class UserService extends Service {
     //TODO: 下面的部分操作记得删除啥的 到时候联表查询然后格式化数据传给前端.
     const jsResult = result?.toObject() || {};
     if(result){// 必须是原result存在时才进行这一步
-      jsResult.homePath = '/personal/changePassword';//首页
-      jsResult.role = [
-        {
-          "roleName": "Super Admin",
-          "roleValue": "super"
-        }
-      ];
       jsResult.id = jsResult._id ? jsResult._id : jsResult.id;
+      jsResult.homePath = '/personal/changePassword';//首页
+      if(jsResult.id.toString() === '625d58940aa9a93f2c0771e1'){//TODO: test super admin
+        jsResult.role = [
+          {
+            "roleName": "Super Admin",
+            "roleValue": "super"
+          }
+        ];
+      }
       jsResult.token = this.ctx.token;
       delete jsResult._id;
       console.log('jsResult已经拦截成mock的testA并返回给前端', code, message, jsResult);
@@ -115,8 +117,8 @@ class UserService extends Service {
             info.homePath = '/personal/changePassword';//首页
             info.role = [
               {
-                  "roleName": "Tester",
-                  "roleValue": "test"
+                  "roleName": "普通项目用户",
+                  "roleValue": "project"
               }
             ];
             info.avatar = "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
@@ -221,6 +223,9 @@ class UserService extends Service {
         },
         info
       );
+      if(typeof info.role === 'string'){
+        
+      }
       body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
       console.log('成功新增账户：', body.result);
     } catch (error) {

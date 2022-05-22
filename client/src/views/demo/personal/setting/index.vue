@@ -25,6 +25,7 @@
   import MsgNotify from './MsgNotify.vue';
 
   export default defineComponent({
+    name: 'PersonalSetting',
     components: {
       ScrollContainer,
       Tabs,

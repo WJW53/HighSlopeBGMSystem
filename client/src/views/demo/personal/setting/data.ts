@@ -36,15 +36,16 @@ export const settingList = [
 // 基础设置 form
 export const baseSetschemas: FormSchema[] = [
   {
-    field: 'email',
-    component: 'Input',
-    label: '邮箱',
-    colProps: { span: 18 },
-  },
-  {
     field: 'nickname',
     component: 'Input',
     label: '昵称',
+    colProps: { span: 18 },
+    required: true,
+  },
+  {
+    field: 'email',
+    component: 'Input',
+    label: '邮箱',
     colProps: { span: 18 },
   },
   {

@@ -103,7 +103,7 @@
               message.success('该设备删除成功！');
               reload();
             } else {
-              message.success('该设备删除失败！');
+              message.error('该设备删除失败！');
             }
           },
           (err) => {

@@ -15,10 +15,11 @@ import { defHttp } from '/@/utils/http/axios';
 enum Api {
   Account = '/userInfo',
   Role = '/roleInfo',
+  MenuList = '/menuInfo',
+
   IsAccountExist = '/userInfo',
   DeptList = '/getDeptList',
   setRoleStatus = '/setRoleStatus',
-  MenuList = '/getMenuList',
 }
 
 /** 超级管理员对账户的CRUD */

@@ -102,7 +102,7 @@
               message.success('该工位删除成功！');
               reload();
             } else {
-              message.success('该工位删除失败！');
+              message.error('该工位删除失败！');
             }
           },
           (err) => {

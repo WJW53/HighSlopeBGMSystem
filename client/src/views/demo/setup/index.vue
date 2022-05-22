@@ -11,6 +11,7 @@
   import 'intro.js/minified/introjs.min.css';
 
   export default defineComponent({
+    name: 'UserGuideManagement',
     components: { PageWrapper },
     setup() {
       const { prefixVar } = useDesign('');
