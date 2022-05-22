@@ -26,7 +26,7 @@ module.exports = (app) => {
   router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
   router.get('/api/userInfo/:id', auth, controller.user.findOne);
 
-  router.get('/api/menuInfo', auth, superAdminAuth, controller.menu.index);
+  router.get('/api/allMenuBasicInfo', auth, superAdminAuth, controller.menu.getAllMenuBasicInfo);
 
 /**
  * 超级管理员对角色（含菜单权限）的CRUD

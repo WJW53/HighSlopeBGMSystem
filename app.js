@@ -27,18 +27,29 @@ class AppBootHook {
    * TODO: 做一个初始化超级管理员, 默认就有的账户
    */
 
-  // 初始化管理员
-  async initAdmin() {
-    const Admin = this.app.model.Admin;
-    const count = await Admin.countDocuments();
-    console.log('管理员已连接到数据库');
+  //初始化全量路由/菜单表信息
+  async initMenuList() {
+    const Menu = this.app.model.Menu;
+    const count = await Menu.countDocuments();
+    console.log('菜单表已连接到数据库');
     if (!count) {
-      this.app.config.admin.loginPwd = md5(this.app.config.admin.loginPwd);
-      this.ctx.superAdmin = await Admin.create(this.app.config.admin);
-      console.log('superAdminnnnnn', this.ctx.superAdmin);
-      console.log('管理员初始化成功');
+      await Menu.create(this.app.config.menuList);
+      console.log('菜单表初始化成功');
     }
   }
+
+  // // 初始化管理员
+  // async initAdmin() {
+  //   const Admin = this.app.model.Admin;
+  //   const count = await Admin.countDocuments();
+  //   console.log('管理员已连接到数据库');
+  //   if (!count) {
+  //     this.app.config.admin.loginPwd = md5(this.app.config.admin.loginPwd);
+  //     this.ctx.superAdmin = await Admin.create(this.app.config.admin);
+  //     console.log('superAdminnnnnn', this.ctx.superAdmin);
+  //     console.log('管理员初始化成功');
+  //   }
+  // }
 
   async initUser() {
     const User = this.app.model.User;
@@ -49,7 +60,7 @@ class AppBootHook {
         acount: 'wjw',
         mobile: '17839706350',
         password: '123456',
-        // _role_: '',
+        // role: 'super',
         nickname: '吴经纬',
       });
       console.log('User初始化成功');
@@ -133,18 +144,6 @@ class AppBootHook {
   //   }
   // }
 
-  // // 初始化关于我信息
-  // async initAbout() {
-  //   const About = this.app.model.About;
-  //   const count = await About.countDocuments();
-  //   if (!count) {
-  //     await About.create({
-  //       url: '',
-  //     });
-  //     console.log('关于我信息初始化成功');
-  //   }
-  // }
-
   mkUpload() {
     const fs = require('fs');
     const path = require('path');
@@ -167,8 +166,7 @@ class AppBootHook {
   }
 
   willReady() {
-    // 初始化管理员
-    this.initAdmin();
+    this.initMenuList();
 
     // 初始化用户--超级管理员
     this.initUser();

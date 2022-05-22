@@ -20,6 +20,10 @@ module.exports = ({ mongoose }) => {
         required: true,
         unique: true,
       },
+      menuList: {
+        type: [String],//[{path, children}]
+        required: true,
+      },
       createTime: {
         type: String,
         required: true,
@@ -32,10 +36,6 @@ module.exports = ({ mongoose }) => {
       remark: {
         type: String,
       },
-      // menuList: {
-      //   type: [Schema.Types.Mixed],//[{path, children}]
-      //   required: true,
-      // }
     },
     {
       timestamps: false,

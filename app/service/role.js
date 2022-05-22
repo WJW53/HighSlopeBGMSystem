@@ -1,17 +1,14 @@
 const Service = require('../core/BaseService');
 
+
 class RoleService extends Service {
   async add(info) {
-    if(Object.keys(info).includes('_id')){
-      delete info._id;//防止改了_id;
-    }
+    this.ctx.app.utils.deleteThe_id(info);
     return await this.ctx.model.Role.create(info);
   }
 
   async update(id, info) {
-    if(Object.keys(info).includes('_id')){
-      delete info._id;//防止改了_id;
-    }
+    this.ctx.app.utils.deleteThe_id(info);
     await this.ctx.model.Role.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }

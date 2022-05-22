@@ -13,7 +13,7 @@ const permission: AppRouteModule = {
     orderNo: 15,
     icon: 'ion:shield-checkmark-outline',
     title: t('routes.demo.permission.permission'),
-    role: [RoleEnum.SUPER],
+    // role: [RoleEnum.SUPER],
   },
 
   children: [
@@ -23,7 +23,7 @@ const permission: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.account'),
         ignoreKeepAlive: false,
-        role: [RoleEnum.SUPER],
+        // role: [RoleEnum.SUPER],
       },
       component: () => import('/@/views/demo/permission/account/index.vue'),
     },
@@ -36,7 +36,7 @@ const permission: AppRouteModule = {
         ignoreKeepAlive: true,
         showMenu: false,
         currentActiveMenu: '/permission/account',
-        role: [RoleEnum.SUPER],
+        // role: [RoleEnum.SUPER],
       },
       component: () => import('/@/views/demo/permission/account/AccountDetail.vue'),
     },
@@ -46,7 +46,7 @@ const permission: AppRouteModule = {
       meta: {
         title: t('routes.demo.system.role'),
         ignoreKeepAlive: true,
-        role: [RoleEnum.SUPER],
+        // role: [RoleEnum.SUPER],
       },
       component: () => import('/@/views/demo/permission/role/index.vue'),
     },
@@ -59,7 +59,7 @@ const permission: AppRouteModule = {
         ignoreKeepAlive: true,
         showMenu: false,
         currentActiveMenu: '/permission/role',
-        role: [RoleEnum.SUPER],
+        // role: [RoleEnum.SUPER],
       },
       component: () => import('/@/views/demo/permission/role/RoleDetail.vue'),
     },

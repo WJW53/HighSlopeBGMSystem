@@ -97,6 +97,7 @@ class UserService extends Service {
   }
 
   async register(info) {
+    this.ctx.app.utils.deleteThe_id(info);
     console.log('正在注册的用户信息', info);
     const mobile = info.mobile;
     const redis_vc = await this.app.redis.get('vc-' + mobile);
@@ -198,6 +199,7 @@ class UserService extends Service {
       message: '',
       result: null,
     }
+    this.ctx.app.utils.deleteThe_id(info);
     try {
       this.validate(
         {
@@ -224,7 +226,7 @@ class UserService extends Service {
         info
       );
       if(typeof info.role === 'string'){
-        
+
       }
       body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
       console.log('成功新增账户：', body.result);

@@ -1,12 +1,16 @@
 const path = require('path');
+const menuList = require('./routerConfig');
 
 // 用于加密的秘钥
 exports.keys = 'high_slope-server_1619356153210_1238';
 
+// 全量路由表的详细配置, 用于第一次写路由表到数据库
+exports.menuList = menuList;
+
 // 初始化的管理员信息
 exports.admin = {
-  loginId: 'wjw',
-  loginPwd: '123456',
+  account: 'wjw',
+  password: '123456',
   name: '超级管理员',
 };
 

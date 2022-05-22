@@ -16,6 +16,7 @@
           checkable
           toolbar
           title="菜单分配"
+          style="width: 365px; left: 50px"
         />
       </template>
     </BasicForm>
@@ -28,7 +29,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList, createRole, updateRole } from '/@/api/demo/system';
+  import { getAllMenuBasicInfo, createRole, updateRole } from '/@/api/demo/system';
   import { message } from 'ant-design-vue';
 
   export default defineComponent({
@@ -50,13 +51,16 @@
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getMenuList().then(
+          treeData.value = (await getAllMenuBasicInfo().then(
             (result) => {
-              return result.menuList;
+              if (result.menuList) {
+                return result.menuList;
+              }
+              return result;
             },
             (error) => {
-              console.error('拉取所有菜单失败', error);
-              message.error('拉取所有菜单失败');
+              console.error('拉取全量菜单信息失败', error);
+              message.error('拉取全量菜单信息失败');
             },
           )) as any as TreeItem[];
         }

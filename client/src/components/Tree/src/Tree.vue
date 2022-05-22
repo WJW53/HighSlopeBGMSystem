@@ -74,6 +74,7 @@
           },
           onCheck: (v: CheckKeys, e) => {
             let currentValue = toRaw(state.checkedKeys) as KeyType[];
+            console.log('onCheck CheckKeys', v, currentValue);
             if (isArray(currentValue) && searchState.startSearch) {
               const { key } = unref(getFieldNames);
               currentValue = difference(currentValue, getChildrenKeys(e.node.$attrs.node[key]));

@@ -138,5 +138,6 @@ export const formSchema: FormSchema[] = [
     field: 'menu',
     slot: 'menu',
     component: 'Input',
+    required: true,
   },
 ];

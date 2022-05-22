@@ -12,31 +12,28 @@ module.exports = ({ mongoose }) => {
      */
     const MenuSchema = new Schema(
       {
-        menuNo: {
+        path: {
           type: String,
           required: true,
           unique: true,
         },
-        menuName: {
+        name: {
           type: String,
           required: true,
           unique: true,
-        },
-        orderNo: {//展示顺序
-            type: String,
-            required: true,
         },
         component: {
             type: String,
+            required: true,
         },
-        // children: {
-        //     type: [Mixed],
-        // },
-        type: {
+        isAsync: {//是否是异步组件, 前端收到后先据此判断是否转成函数模式, 使其变为异步加载组件
+            type: Boolean,
+        },
+        redirect: {
             type: String,
         },
-        icon: {
-            type: String,
+        meta: {
+            type: Mixed,
         },
         parentMenu: {
             type: String,// 父级菜单的menuNo
@@ -46,15 +43,16 @@ module.exports = ({ mongoose }) => {
           required: true,
           default: Date.now(),
         },
-        permission: {
-            type: String,
-        },
-        status: {
-          type: String,
-        },
-        remark: {
-          type: String,
-        },
+        /** 以下三个目前都不用 */
+        // permission: {
+        //     type: String,
+        // },
+        // status: {
+        //   type: String,
+        // },
+        // remark: {
+        //   type: String,
+        // },
       },
       {
         timestamps: false,
@@ -72,4 +70,51 @@ module.exports = ({ mongoose }) => {
     return mongoose.model('Menu', MenuSchema);
   };
   
+
+
+//   {
+//     menuNo: {
+//       type: String,
+//       required: true,
+//       unique: true,
+//     },
+//     menuName: {
+//       type: String,
+//       required: true,
+//       unique: true,
+//     },
+//     orderNo: {//展示顺序
+//         type: String,
+//         required: true,
+//     },
+//     component: {
+//         type: String,
+//     },
+//     // children: {
+//     //     type: [Mixed],
+//     // },
+//     type: {
+//         type: String,
+//     },
+//     icon: {
+//         type: String,
+//     },
+//     parentMenu: {
+//         type: String,// 父级菜单的menuNo
+//     },
+//     createTime: {
+//       type: String,
+//       required: true,
+//       default: Date.now(),
+//     },
+//     permission: {
+//         type: String,
+//     },
+//     status: {
+//       type: String,
+//     },
+//     remark: {
+//       type: String,
+//     },
+//   },
 

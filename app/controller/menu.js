@@ -28,6 +28,10 @@ class menuController extends Controller {
         await this.ctx.service.menu.increaseScanNumber(this.ctx.params.id);
         this.ctx.body = await this.ctx.service.menu.find(this.ctx.params.id);
     }
+
+    async getAllMenuBasicInfo() {
+        this.ctx.body = await this.ctx.service.menu.getAllMenuBasicInfo();
+    }
 }
 
 module.exports = menuController;
