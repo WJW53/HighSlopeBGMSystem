@@ -42,13 +42,15 @@ class EquipmentService extends Service {
     }
 
     const total = await this.ctx.model.Equipment.countDocuments(filter);
-    const result = await this.ctx.model.Equipment.find(filter)
+    const data = await this.ctx.model.Equipment.find(filter)
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
-      // .sort('-createDate')
-      // .populate('blogId', 'id title');
-    result.total = total;
-    return result;
+    return {
+      result: {
+        result: data,
+        total,
+      }
+    };
   }
 }
 

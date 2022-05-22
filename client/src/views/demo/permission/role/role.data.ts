@@ -135,8 +135,8 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: ' ',
-    field: 'menu',
-    slot: 'menu',
+    field: 'menuList',
+    slot: 'menuList',
     component: 'Input',
     required: true,
   },

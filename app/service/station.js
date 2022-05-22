@@ -98,13 +98,15 @@ class StationService extends Service {
     }
 
     const total = await this.ctx.model.Station.countDocuments(filter);
-    const result = await this.ctx.model.Station.find(filter)
+    const data = await this.ctx.model.Station.find(filter)
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
-      // .sort('-createDate')
-      // .populate('blogId', 'id title');
-    result.total = total;
-    return result;
+    return {
+      result: {
+        result: data,
+        total,
+      }
+    };
   }
 }
 

@@ -1,20 +1,27 @@
 //orderNo保证同层比较就行了
 // TODO:其实这里最好是：从数据库中查出所有路由配备信息，然后再封装成如下格式才对
 
-const getMenuNoLayerMap = (menuList) => {
+const getMenuLayerMap = (allMenuBasicInfoList) => {
   const map = new Map();
-  map.set('firstLayer', []);
-  map.set('secondLayer', []);
-  const firstLayer = map.get('firstLayer');
-  const secondLayer = map.get('secondLayer');
-  for(const menu of menuList){
-    firstLayer.push(menu.menuNo);
-    if(menu.children && !menu.children.length > 0){
+  map.set('firstLayerToSecondLayer', {});
+  map.set('secondLayerToFirstLayer', {});
+  const firstLayerToSecondLayer = map.get('firstLayerToSecondLayer');
+  const secondLayerToFirstLayer = map.get('secondLayerToFirstLayer');
+  for(const menu of allMenuBasicInfoList){
+    const menuNo = menu.menuNo;
+    if(!firstLayerToSecondLayer[menuNo]){
+      firstLayerToSecondLayer[menuNo] = [];
+    }
+    if(menu.children && menu.children.length > 0){
       for(const subMenu of menu.children){
-        secondLayer.push(subMenu.menuNo);
+        if(!secondLayerToFirstLayer[subMenu.menuNo]){
+          secondLayerToFirstLayer[subMenu.menuNo] = subMenu.parentMenu;
+          firstLayerToSecondLayer[menuNo].push(subMenu.menuNo);
+        }
       }
     }
   }
+  console.log('getMenuLayerMap 已完成', firstLayerToSecondLayer, secondLayerToFirstLayer);
   return map;
 }
 
@@ -36,16 +43,16 @@ const getMenuNoLayerMap = (menuList) => {
  */
 
 const getFindMenuFilter = (reqMenuList, allMenuLayerMap) => {
-  const firstLayerList = allMenuLayerMap.get('firstLayer');
-  const secondLayerList = allMenuLayerMap.get('secondLayer');
+  const firstLayer = allMenuLayerMap.get('firstLayer');
+  const secondLayer = allMenuLayerMap.get('secondLayer');
   const filter = {
     $or: [],
   }
   for(const menu of reqMenuList){
     const menuNo = menu.menuNo;
-    if(firstLayerList.includes(menuNo)){
+    if(firstLayer.includes(menuNo)){
       filter['$or'].push({name: menuNo});
-    }else if(secondLayerList.includes(menuNo)){
+    }else if(secondLayer.includes(menuNo)){
     }
     if(menu.children){
       for(const subMenu of menu.children){
@@ -60,7 +67,7 @@ const getFindMenuFilter = (reqMenuList, allMenuLayerMap) => {
   }
 }
 
-
+/** 这是全量的菜单简易信息, 只有超级管理员才能获取, 为了分配给角色的 */
 const allMenuBasicInfoList = [
     {
       "menuNo": "Dashboard",
@@ -114,32 +121,33 @@ const allMenuBasicInfoList = [
         },
       ]
     },
-    {
-      "menuNo": "Permission",
-      "menuName": "权限管理",
-      "component": "LAYOUT",
-      "icon": 'ion:shield-checkmark-outline',
-      "type": "0",
-      "orderNo": 21,
-      "children": [
-        {
-          "menuNo": "AccountManagement",
-          "menuName": "账号管理",
-          "type": "1",
-          // "icon": "ion:document",
-          "orderNo": 1,
-          "parentMenu": "Permission",
-        },
-        {
-          "menuNo": "RoleManagement",
-          "menuName": "角色管理",
-          "type": "1",
-          // "icon": "ion:document",
-          "orderNo": 2,
-          "parentMenu": "Permission",
-        },
-      ]
-    },
+    ////因为只有超级管理员才有这俩权限啊, 所以超级管理员不能把这俩权限分配给其他角色
+    // {
+    //   "menuNo": "Permission",
+    //   "menuName": "权限管理",
+    //   "component": "LAYOUT",
+    //   "icon": 'ion:shield-checkmark-outline',
+    //   "type": "0",
+    //   "orderNo": 21,
+    //   "children": [
+    //     {
+    //       "menuNo": "AccountManagement",
+    //       "menuName": "账号管理",
+    //       "type": "1",
+    //       // "icon": "ion:document",
+    //       "orderNo": 1,
+    //       "parentMenu": "Permission",
+    //     },
+    //     {
+    //       "menuNo": "RoleManagement",
+    //       "menuName": "角色管理",
+    //       "type": "1",
+    //       // "icon": "ion:document",
+    //       "orderNo": 2,
+    //       "parentMenu": "Permission",
+    //     },
+    //   ]
+    // },
     {
       "menuNo": "System",
       "menuName": "系统管理",
@@ -202,9 +210,24 @@ const allMenuBasicInfoList = [
     },
 ]
 
-const allMenuLayerMap = getMenuNoLayerMap(allMenuBasicInfoList);
+const allMenuLayerMap = getMenuLayerMap(allMenuBasicInfoList);
+
+//如果有二级菜单no但没有其父级菜单no, 则将父级menoNo也加进来
+const formatToStringMenuNoList = (stringMenuList, allMenuLayerMap) => {3
+  const newStringMenuList = [...stringMenuList];
+  const firstLayerToSecondLayer = allMenuLayerMap.get('firstLayerToSecondLayer');
+  const secondLayerToFirstLayer = allMenuLayerMap.get('secondLayerToFirstLayer');
+  for(const stringMenuNo of newStringMenuList){
+    const tempMenuNo = secondLayerToFirstLayer[stringMenuNo];
+    if((tempMenuNo) && (!newStringMenuList.includes(tempMenuNo)) && (firstLayerToSecondLayer[tempMenuNo])){
+      newStringMenuList.push(tempMenuNo);
+    }
+  }
+  return newStringMenuList;
+}
 
 module.exports = {
   allMenuBasicInfoList,
   allMenuLayerMap,
+  formatToStringMenuNoList,
 }

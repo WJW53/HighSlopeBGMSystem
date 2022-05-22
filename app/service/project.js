@@ -44,13 +44,17 @@ class ProjectService extends Service {
     }
 
     const total = await this.ctx.model.Project.countDocuments(filter);
-    const result = await this.ctx.model.Project.find(filter)
+    const data = await this.ctx.model.Project.find(filter)
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
-      // .sort('-createDate')
-      // .populate('blogId', 'id title');
-    result.total = total;
-    return result;
+      // .sort('createTime')
+      // .populate('', '');
+    return {
+      result: {
+        result: data,
+        total,
+      }
+    };
   }
 }
 

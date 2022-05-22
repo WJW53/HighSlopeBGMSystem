@@ -21,7 +21,7 @@ module.exports = ({ mongoose }) => {
         unique: true,
       },
       menuList: {
-        type: [String],//[{path, children}]
+        type: [String],
         required: true,
       },
       createTime: {

@@ -309,13 +309,17 @@ class UserService extends Service {
     }
 
     const total = await this.ctx.model.User.countDocuments(filter);
-    const result = await this.ctx.model.User.find(filter, {avatar: 0})
+    const data = await this.ctx.model.User.find(filter, {avatar: 0})
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
-      // .sort('-createDate')
+      // .sort('-createTime')
       // .populate('_role_', '_id roleName roleValue');
-    result.total = total;
-    return result;
+    return {
+      result: {
+        result: data,
+        total,
+      }
+    };
   }
 }
 

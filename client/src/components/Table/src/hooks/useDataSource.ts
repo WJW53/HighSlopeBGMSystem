@@ -1,3 +1,4 @@
+import { Result } from '/#/axios';
 import type { BasicTableProps, FetchParams, SorterResult } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import {
@@ -287,12 +288,21 @@ export function useDataSource(
       }
 
       const res = await api(params);
-      rawDataSourceRef.value = res;
+      console.log('表格的数据: ', res);
+      rawDataSourceRef.value = res.result; //result和total(库里总共的数量), 跟后端定的,TODO: 但是这里没改TS的类型定义
 
       const isArrayResult = Array.isArray(res);
 
-      let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
-      const resultTotal: number = isArrayResult ? res.length : get(res, totalField);
+      let resultItems: Recordable[] = isArrayResult
+        ? res
+        : res.result
+        ? res.result
+        : get(res, listField);
+      const resultTotal: number = res.total
+        ? res.total
+        : isArrayResult
+        ? res.length
+        : get(res, totalField);
 
       // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
       if (resultTotal) {
