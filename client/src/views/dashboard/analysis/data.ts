@@ -5,39 +5,44 @@ export interface GrowCardItem {
   total: number;
   color: string;
   action: string;
+  unit: string;
 }
 
 export const growCardList: GrowCardItem[] = [
   {
-    title: '访问数',
-    icon: 'visit-count|svg',
+    title: '工位数',
+    icon: 'station|svg',
     value: 2000,
     total: 120000,
     color: 'green',
-    action: '月',
+    action: '个',
+    unit: '月',
   },
   {
-    title: '成交额',
-    icon: 'total-sales|svg',
+    title: '设备数',
+    icon: 'equipment|svg',
     value: 20000,
     total: 500000,
     color: 'blue',
-    action: '月',
+    action: '个',
+    unit: '月',
   },
   {
-    title: '下载数',
-    icon: 'download-count|svg',
+    title: '项目数',
+    icon: 'project|svg',
     value: 8000,
     total: 120000,
     color: 'orange',
-    action: '周',
+    action: '个',
+    unit: '月',
   },
   {
-    title: '成交数',
-    icon: 'transaction|svg',
+    title: '访问数',
+    icon: 'visit-count|svg',
     value: 5000,
     total: 50000,
     color: 'purple',
-    action: '年',
+    action: '次',
+    unit: '月',
   },
 ];

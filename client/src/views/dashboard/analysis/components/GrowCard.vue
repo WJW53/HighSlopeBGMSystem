@@ -9,7 +9,7 @@
         :class="{ '!md:mr-4': index + 1 < 4, '!mt-4': index > 0 }"
       >
         <template #extra>
-          <Tag :color="item.color">{{ item.action }}</Tag>
+          <Tag :color="item.color">{{ item.unit }}</Tag>
         </template>
 
         <div class="py-4 px-4 flex justify-between items-center">
@@ -19,7 +19,7 @@
 
         <div class="p-2 px-4 flex justify-between">
           <span>总{{ item.title }}</span>
-          <CountTo prefix="$" :startVal="1" :endVal="item.total" />
+          <CountTo :suffix="item.action" :startVal="0" :endVal="item.total" />
         </div>
       </Card>
     </template>
