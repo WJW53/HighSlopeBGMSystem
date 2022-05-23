@@ -9,10 +9,12 @@ const initAccountField = (info) => {
   info.avatar = info.avatar || "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
 }
 
-//TODO: 用户登录时, 应该去populate把role查出来, 组装成roleName, roleValue,
 
 class UserService extends Service {
-  // TODO: 记得都要查重, 是否注册过、字段值是否合格, 所有密码记得用md5加密
+  /**
+   * 用户登录时, 应该去populate把role查出来, 组装成roleName, roleValue,
+   * 记得都要查重, 是否注册过、字段值是否合格, 所有密码记得用md5加密
+   */
   async login({account, password, mobile, sms}) {
     console.log('node接收到前端代理过来的请求了!!', account, password, mobile, sms);
     let code = 0;

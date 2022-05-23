@@ -9,15 +9,17 @@ const handleIfSuperAdminRole = (info, ctx) => {
 class RoleService extends Service {
   async add(info) {
     this.ctx.app.utils.deleteThe_id(info);
-    // info.menuList = this.ctx.app.utils.formatToStringMenuNoList(info.menuList, this.ctx.app.utils.allMenuLayerMap)
     console.log('createRole end_info: ', info);
     handleIfSuperAdminRole(info, this.ctx);
+    if(!info.menuList.includes('PersonalCenter')){//个人中心是基础路由
+      info.menuList.unshift('PersonalCenter', 'PersonalSetting', 'ChangePassword');
+    }
     return await this.ctx.model.Role.create(info);
   }
 
   async update(id, info) {
     this.ctx.app.utils.deleteThe_id(info);
-    // info.menuList = this.ctx.app.utils.formatToStringMenuNoList(info.menuList, this.ctx.app.utils.allMenuLayerMap);
+    
     console.log('updateRole end_info: ', info);
     handleIfSuperAdminRole(info, this.ctx);
     await this.ctx.model.Role.updateOne({ _id: id }, { $set: info });

@@ -33,15 +33,20 @@ class MenuService extends Service {
     // });
     // const allFilterMenu = await this.ctx.model.Menu.find(menuFilter);
     const allMenuInfo = await this.ctx.model.Menu.find();
-    console.log('MenuService-findAll-Role', roleValue, role.menuList);
+    const menuList = role.menuList;
+    if(!menuList.includes('PersonalCenter')){//个人中心是基础必备路由; 懒得修改数据库老数据了, 就用这个逻辑更新吧
+      menuList.unshift('PersonalCenter', 'PersonalSetting', 'ChangePassword');
+      await role.save();
+    }
+    console.log('MenuService-findAll-Role', roleValue, menuList);
     // console.log('MenuService-findAll: ', { allMenuInfo });
     const jsAllMenu = [];
     for(const menu of allMenuInfo){
       const tempMenu = menu.toObject();//不转的话都是doc
       jsAllMenu.push(tempMenu);
     }
-    const newMenuList = this.ctx.app.utils.getForFrontEndMenuList(role.menuList, this.ctx.app.utils.allMenuLayerMap, jsAllMenu);
-    console.log('MenuService--newMenuList: ', newMenuList)
+    const newMenuList = this.ctx.app.utils.getForFrontEndMenuList(menuList, this.ctx.app.utils.allMenuLayerMap, jsAllMenu);
+    console.log('MenuService--newMenuList: ');
     return newMenuList;
   }
 
@@ -49,7 +54,8 @@ class MenuService extends Service {
   // 直接返回已经设置好的全量的菜单的基本数据, 不需要在数据库中找, 因为这个东西没有落库, 如果落库需要落到另一个库, 而不是menu库
   getAllMenuBasicInfo(query) {
     const menuList = this.ctx.app.utils.allMenuBasicInfoList;
-    const finallyList = menuList.filter(menu => menu.menuNo !== 'Permission');//去掉权限管理, 因为这个是只有超级管理员才有的, 不能分配给其他角色
+    //去掉权限管理, 因为这个是只有超级管理员才有的, 不能分配给其他角色; 个人中心是基础路由, 必须常在
+    const finallyList = menuList.filter(menu => menu.menuNo !== 'Permission' && menu.menuNo !== 'PersonalCenter');
     return finallyList;
   }
 }

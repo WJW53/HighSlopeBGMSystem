@@ -178,52 +178,59 @@ const getForFrontEndMenuList = (menuList, allMenuLayerMap, allUserMenuInfo) => {
   const firstLayer = allMenuLayerMap.get('firstLayerToSecondLayer');
   const secondLayer = allMenuLayerMap.get('secondLayerToFirstLayer');
   let allIsFirstLayerMenu = true;//假设全都是一级路由
+  const cacheParentMenuNameList = [];
   for(const name of menuList){
-    menu = allUserMenuInfo.find(menu => menu.name === name);
-    if(firstLayer[menu.name]){
+    const menu = allUserMenuInfo.find(menu => menu.name === name);
+    if(firstLayer[name]){
       const newMenu = {...menu};
       if(!newMenu.children){
         newMenu.children = [];
       }
-      newMenuList.push(newMenu);
-    }else if(secondLayer[menu.name]){
-      allIsFirstLayerMenu = false;
-      const parentMenu = menu.parentMenu;
-      //二级路由先找到该父路由, 然后判断其子路由里是否加入过当前路由
-      for(const newMenu of newMenuList){
-        let hasExists = false;
-        if(newMenu.name === parentMenu){
-          newMenu.children.forEach(tempMenu => {
-            if(tempMenu.name === menu.name){
-              hasExists = true;
-            }
-          });
-          !hasExists && newMenu.children.push({...menu});
-          break;
-        }
+      const hasMenu = newMenuList.find(newMenu => newMenu.name === name);
+      if(!hasMenu){//新表中没有的话才加进去
+        newMenuList.push(newMenu);
       }
+    }else if(secondLayer[name]){
+      allIsFirstLayerMenu = false;
+      const parentMenuName = menu.parentMenu;
+      //如果当前表里没有父路由name, 则将父亲加入newMenuList; cache防止后面的子路由也走了这个逻辑
+      if(!menuList.includes(parentMenuName) && !cacheParentMenuNameList.includes(parentMenuName)){
+        cacheParentMenuNameList.push(parentMenuName);
+        const parentMenu = allUserMenuInfo.find(menu => menu.name === parentMenuName);
+        const newParentMenu = {...parentMenu};
+        if(!newParentMenu.children){
+          newParentMenu.children = [];
+        }
+        newMenuList.push(newParentMenu);
+      }
+      //二级路由先找到该父路由, 然后判断其子路由里是否加入过当前路由
+      let parentMenuInNew = newMenuList.find(newMenu => newMenu.name === parentMenuName);
+      if(menuList.includes(parentMenuName) && !parentMenuInNew){
+        //参数表中有父路由, 但是尚未同步到newMenuList时, 就把父路由加进新表中
+        parentMenuInNew = allUserMenuInfo.find(menu => menu.name === parentMenuName);
+        if(!parentMenuInNew.children){
+          parentMenuInNew.children = [];
+        }
+        newMenuList.push(parentMenuInNew);
+      }
+      const hasExistsSubMenu = parentMenuInNew.children.find(subMenu => subMenu.name === name);
+      !hasExistsSubMenu && parentMenuInNew.children.push({...menu});
     }
   }
 
   //如果当前列表全是一级路由, 则把其相应全部子路由也加进来
   if(allIsFirstLayerMenu){
     menuList.forEach((name) => {
-      menu = allUserMenuInfo.find(menu => menu.name === name);
-      const curSubMenuList = firstLayer[menu.name].map(name => {
-        for(const userMenu of allUserMenuInfo){
-          if(userMenu.name === name){
-            return userMenu;
-          }
-        }
+      const curMenu = allUserMenuInfo.find(curMenu => curMenu.name === name);
+      const curSubMenuList = firstLayer[curMenu.name].map(name => {
+        return allUserMenuInfo.find(userMenu => userMenu.name === name);
       });
-      for(const newMenu of newMenuList){
-        if(newMenu.name === menu.name){
-          newMenu.children = curSubMenuList;
-        }
-      }
+      const newMenu = newMenuList.find(newMenu => newMenu.name === name);//这是newMenuList里的父路由
+      newMenu.children = curSubMenuList;
     });
   }
-  console.log('getForFrontEndMenuList已完成')
+//这种情况我没处理,TODO: [一级路由A(尤指A下有子路由, 且子路由都包括, 但是这个数组里没子路由，这是不合理的格式), 一级路由B，二级路由Bb];
+  console.log('getForFrontEndMenuList已完成');
   return newMenuList;
 }
 
