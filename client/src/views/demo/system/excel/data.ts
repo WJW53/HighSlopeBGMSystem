@@ -2,10 +2,8 @@ import { BasicColumn } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
-    title: '项目id',
+    title: '采集编号',
     dataIndex: 'id',
-    // defaultHidden: true,
-    ifShow: false,
   },
   {
     title: '项目编号',
@@ -36,6 +34,10 @@ export const columns: BasicColumn[] = [
     dataIndex: 'createTime',
   },
   {
+    title: '采集频率',
+    dataIndex: 'frequency',
+  },
+  {
     title: '经度',
     dataIndex: 'longitude',
   },
@@ -54,20 +56,32 @@ export const data: any[] = (() => {
   for (let index = 0; index < 40; index++) {
     arr.push({
       id: `${index}`,
-      name: `${index} John Brown`,
-      age: `${index + 10}`,
-      no: `${index}98678`,
-      address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
-      beginTime: new Date().toLocaleString(),
-      endTime: new Date().toLocaleString(),
+      projectNo: `P-${index}`,
+      projectName: `PN-${index + 10}`,
+      projectLeader: `吴经纬`,
+      mobile: '11111111111',
+      stationName: `SN-${index}`,
+      equipmentName: `EN-${index}`,
+      createTime: Date.now(),
+      longitude: '122.2',
+      latitude: '123.1',
+      remark: '随便吧',
     });
   }
   return arr;
 })();
 
-// ["ID", "姓名", "年龄", "编号", "地址", "开始时间", "结束时间"]
-export const arrHeader = columns.map((column) => column.title);
-// [["ID", "姓名", "年龄", "编号", "地址", "开始时间", "结束时间"],["0", "0 John Brown", "10", "098678"]]
+export const arrHeader = columns.map((column) => {
+  return column.title;
+});
 export const arrData = data.map((item) => {
   return Object.keys(item).map((key) => item[key]);
 });
+
+export const mapArrHeader = (() => {
+  const cache = {};
+  columns.forEach((item) => {
+    cache[item.title] = item.dataIndex;
+  });
+  return cache;
+})();

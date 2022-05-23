@@ -1,12 +1,24 @@
 const Service = require('../core/BaseService');
 const project = require('../model/project');
 
+const deleteThe_id = (info) => {
+  delete info.id;
+  delete info._id;
+}
 class ProjectService extends Service {
   async add(info) {
-// TODO: 记得加校验
-    info._user_ = this.ctx.user._id;//是这个用户下的工位
+    const ctx = this.ctx;
+    if(Array.isArray(info)){//批量增加
+      info.forEach(item => {
+        item._user_ = ctx.user._id;
+        deleteThe_id(item);
+      });
+    }else if(info && typeof info === 'object'){
+      info._user_ = ctx.user._id;//是这个用户下的工位
+      deleteThe_id(info);
+    }
     console.log('正在添加该项目', info);
-    return await this.ctx.model.Project.create(info);
+    return await ctx.model.Project.create(info);
   }
 
   async update(id, info) {
