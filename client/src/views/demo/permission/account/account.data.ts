@@ -105,7 +105,6 @@ export const accountFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
-    ifShow: true,
   },
   {
     field: 'mobile',

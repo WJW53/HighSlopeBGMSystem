@@ -5,7 +5,7 @@ const superAdminMobile = '17839706350';
 
 const initAccountField = (info) => {
   info.homePath = info.homePath || '/personal/setting'; // 个人设置页
-  info.role = info.homePath || 'project';
+  info.role = info.role || 'project';
   info.avatar = info.avatar || "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
 }
 

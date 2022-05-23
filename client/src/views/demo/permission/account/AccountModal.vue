@@ -48,7 +48,7 @@
           {
             field: 'password',
             show: !unref(isUpdate),
-            required: false,
+            required: !unref(isUpdate),
           },
           {
             field: 'mobile',

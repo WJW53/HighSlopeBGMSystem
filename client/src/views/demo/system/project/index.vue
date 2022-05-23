@@ -1,5 +1,6 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <!-- fixedHeight若加上了, 表格下面的分页模块就看不见了, 被页脚遮住了 -->
+  <PageWrapper dense contentFullHeight contentClass="flex">
     <BasicTable @register="registerTable" class="w-full xl:w-full" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增项目</a-button>

@@ -190,14 +190,22 @@ export const projectFormSchema: FormSchema[] = [
   {
     field: 'longitude',
     label: '经度',
-    component: 'Input',
+    component: 'InputNumber',
     required: true,
+    componentProps: {
+      min: 0,
+      max: 180,
+    },
   },
   {
     field: 'latitude',
     label: '纬度',
-    component: 'Input',
+    component: 'InputNumber',
     required: true,
+    componentProps: {
+      min: 0,
+      max: 90,
+    },
   },
   {
     field: 'remark',
