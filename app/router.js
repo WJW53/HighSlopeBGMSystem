@@ -27,6 +27,7 @@ module.exports = (app) => {
   router.get('/api/userInfo/:id', auth, controller.user.findOne);
 
   router.get('/api/allMenuBasicInfo', auth, superAdminAuth, controller.menu.getAllMenuBasicInfo);
+  router.get('/api/userMenuInfo', auth,  controller.menu.index);
 
 /**
  * 超级管理员对角色（含菜单权限）的CRUD

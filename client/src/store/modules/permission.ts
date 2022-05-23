@@ -23,6 +23,7 @@ import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
+import { t } from '/@/hooks/web/useI18n';
 
 interface PermissionState {
   // Permission code list
@@ -184,8 +185,33 @@ export const usePermissionStore = defineStore({
           // this function may only need to be executed once, and the actual project can be put at the right time by itself
           let routeList: AppRouteRecordRaw[] = [];
           try {
-            this.changePermissionCode();
+            // this.changePermissionCode();
             routeList = (await getMenuList()) as AppRouteRecordRaw[];
+            /**
+             * 开始格式化后端返回的路由表
+             */
+            routeList.forEach((route) => {
+              console.log(route.isAsync, route.name, route.component);
+              if (route.isAsync === true) {
+                // route.component = () => import(route.component);
+              }
+              if (route.meta?.title) {
+                route.meta.title = t(route.meta.title);
+              }
+              if (route.children?.length > 0) {
+                route.children?.forEach((subRoute) => {
+                  if (subRoute.isAsync) {
+                    //这样写不行, vite不支持, 详见 https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+                    // subRoute.component = () => import(subRoute.component);
+                    subRoute.component = subRoute.component.replace('./views', '');
+                  }
+                  if (subRoute.meta?.title) {
+                    subRoute.meta.title = t(subRoute.meta.title);
+                  }
+                });
+              }
+            });
+            console.log('前端格式化后的路由表为: ', routeList);
           } catch (error) {
             console.error(error);
           }

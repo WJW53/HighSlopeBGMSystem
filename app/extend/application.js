@@ -5,6 +5,7 @@ const axios = require('axios');
 const {
   allMenuBasicInfoList,
   allMenuLayerMap,
+  getForFrontEndMenuList,
   formatToStringMenuNoList,
 } = require('./menuList.js');
 
@@ -119,5 +120,6 @@ exports.utils = {
   sendCode,
   allMenuBasicInfoList,
   allMenuLayerMap,
+  getForFrontEndMenuList,
   formatToStringMenuNoList,
 };

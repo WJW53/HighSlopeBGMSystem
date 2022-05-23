@@ -23,8 +23,10 @@ const setting: ProjectConfig = {
   // `Settings` button position
   settingButtonPosition: SettingButtonPositionEnum.AUTO,
 
+  /** 代码未改之前就是ROUTE_MAPPING; 而ROLE: 是前端模式, 菜单路由分开 */
   // Permission mode
-  permissionMode: PermissionModeEnum.ROUTE_MAPPING,
+  // permissionMode: PermissionModeEnum.ROUTE_MAPPING,//前端模式（菜单由路由生成，默认）
+  permissionMode: PermissionModeEnum.BACK,
 
   // Permission-related cache is stored in sessionStorage or localStorage
   permissionCacheType: CacheTypeEnum.LOCAL,

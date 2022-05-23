@@ -17,7 +17,7 @@ class menuController extends Controller {
     }
 
     async index() {
-        this.ctx.body = await this.ctx.service.menu.findAll(this.ctx.query);
+        this.ctx.body = await this.ctx.service.menu.findAll(this.ctx.user.role);
     }
 
     async findOne() {

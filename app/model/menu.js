@@ -61,12 +61,12 @@ module.exports = ({ mongoose }) => {
       }
     );
     console.log('wjw menu', );
-    MenuSchema.add({children: [MenuSchema]});//树形递归定义schema
+    // MenuSchema.add({children: [MenuSchema]});//树形递归定义schema
 
-    // MenuSchema.methods.toJSON = function () {
-    //     const obj = mongoose.Document.prototype.toJSON.call(this);
-    //     return obj;
-    // };
+    MenuSchema.methods.toJSON = function () {
+        const obj = mongoose.Document.prototype.toJSON.call(this);
+        return obj;
+    };
     return mongoose.model('Menu', MenuSchema);
   };
   
