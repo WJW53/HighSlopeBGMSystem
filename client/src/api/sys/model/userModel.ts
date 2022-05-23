@@ -2,8 +2,10 @@
  * @description: Login interface parameters
  */
 export interface LoginParams {
-  account: string;
-  password: string;
+  account?: string;
+  password?: string;
+  mobile?: string;
+  sms?: string;
 }
 
 export interface RoleInfo {

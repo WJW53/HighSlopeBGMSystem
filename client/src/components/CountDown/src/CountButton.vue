@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
   import { defineComponent, ref, watchEffect, computed, unref } from 'vue';
-  import { Button } from 'ant-design-vue';
+  import { Button, message } from 'ant-design-vue';
   import { useCountdown } from './useCountdown';
   import { isFunction } from '/@/utils/is';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -55,6 +55,8 @@
               console.log('mobile', mobile);
               const canStart = await beforeStartFunc({ mobile });
               canStart && start();
+            }else if(mobile){
+              message.error('请先输入合法手机号，再点击获取验证码');
             }
           } finally {
             loading.value = false;

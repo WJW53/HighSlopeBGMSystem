@@ -86,6 +86,7 @@ export default {
     // placeholder
     accountPlaceholder: '请输入账号',
     passwordPlaceholder: '请输入密码',
+    newPasswordPlaceholder: '请输入新密码',
     smsPlaceholder: '请输入验证码',
     mobilePlaceholder: '请输入手机号码',
     policyPlaceholder: '勾选后才能注册',

@@ -13,7 +13,7 @@ enum Api {
 export const registerUser = (params) => defHttp.post({ url: Api.REGISTER, params });
 export const loginUser = (params) => defHttp.post({ url: Api.LOGIN, params });
 export const changePassword = (params) => defHttp.post({ url: Api.CHANGEPASSWORD, params });
-export const resetPassword = (params) => defHttp.post({ url: Api.CHANGEPASSWORD, params });
+export const resetPassword = (params) => defHttp.post({ url: Api.RESETPASSWORD, params });
 
 export const getUserInfo = (params) => defHttp.get({ url: `${Api.USERINFO}/${params.id}` });
 // export const getAllUserInfo = (params) => defHttp.get({ url: Api.USERINFO, params });

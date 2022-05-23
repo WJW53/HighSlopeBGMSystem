@@ -8,12 +8,12 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.login(this.ctx.request.body);
     }
 
-    async logout() {//TODO: 注销token，清除redis等
+    async logout() {//注销token，清除redis等
         console.log('logoutTTTTTT');
         this.ctx.body = await this.ctx.service.user.logout(this.ctx.request.body);
     }
 
-    //TODO: 把验证码缓存到redis中，为了到时候验证注册/登录/忘记密码时的手机验证码;
+    //把验证码缓存到redis中，为了到时候验证注册/登录/忘记密码时的手机验证码;
     async getSMS(){
         console.log('getSMSSSSSSSSSSSS');
         const code = this.ctx.app.utils.randomCode(6);//生成6位数字随机验证码
@@ -22,7 +22,7 @@ class UserController extends Controller {
         try{
            const success = await this.ctx.app.utils.sendCode(mobile, code);
             if(success){
-                const expIn = 60 * 5; // 如果5分钟不输入，就过期
+                const expIn = 60 * 1440; // 如果5分钟不输入，就过期;  为了便于测试及答辩, 先设置为24hour
                 await this.app.redis.set('vc-' + mobile, code, 'ex', expIn);
                 this.ctx.body = '短信验证码已发送至其手机，请查收！';
             }else{

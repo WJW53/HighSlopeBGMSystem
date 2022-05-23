@@ -114,8 +114,9 @@
     registerUser(data).then(
       (resp) => {
         console.log('注册之后后端返回的数据', resp);
-        if (String(resp.code) === '0') {
+        if (resp) {
           message.success('注册成功！');
+          formRef.value.resetFields();
           handleBackLogin();
         } else {
           message.error(resp.message);

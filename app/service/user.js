@@ -26,7 +26,7 @@ class UserService extends Service {
       console.log('redis_vccccc', mobile, redis_vc);
       if (redis_vc === null) {
           code = 'ERROR';
-          message = '超时，请重新获取验证码。';
+          message = '验证码有误';
       } else if (redis_vc === sms) {
           let user = await this.ctx.model.User.findOne({ mobile }, {password: 0});
           if(user){
@@ -94,7 +94,7 @@ class UserService extends Service {
     let result = null;
     if (redis_vc === null) {
         code = 'ERROR';
-        message = '超时，请重新获取验证码。';
+        message = '验证码有误';
     } else if (redis_vc === info.sms) {
     // 检查是否存在user，如果没有就添加
         let user = await this.ctx.model.User.find({
@@ -121,12 +121,38 @@ class UserService extends Service {
   // 这俩貌似也可以合并为一个: 就是要多做几个or关系的验证和筛选
   async resetPassword(info) {
     console.log('正在重置用户密码', info);
-    // TODO: 验证验证码是否正确 info.smsCode;
-    return await this.ctx.model.User.findOneAndUpdate(
-      { account: info.account, mobile: info.mobile },
-      { password: info.newPassword },
-      { new: true, }//runValidators: true, //new: true代表要返回更新后的doc
-    );
+    const {account, newPassword, mobile, sms} = info;
+    let code = 0;
+    let message = '';
+    let result = null;
+    /** 手机号验证码登录验证 */
+    if(mobile && sms){
+      const redis_vc = await this.app.redis.get('vc-' + mobile);
+      console.log('resetPassword--redis_vccccc', mobile, redis_vc);
+      if (redis_vc === null) {
+          code = 'ERROR';
+          message = '验证码有误';
+      } else if (redis_vc === sms) {
+        let user = await this.ctx.model.User.findOneAndUpdate(
+          { account, mobile},
+          { password: newPassword },
+          { new: true, }//runValidators: true, //new: true代表要返回更新后的doc
+        );
+        if(user){
+            code = 0;
+            message = '重置密码成功！';
+            result = {account: user.account, mobile: user.mobile};
+        }else{
+            code = 'ERROR';
+            message = '该账号未注册！请先注册！';
+            result = null
+        }
+      } else {
+          code = 'ERROR';
+          message = '验证码错误，请重新输入';
+      }
+    }
+    return {code, message, result};
   }
 
   async changePassword(info) {
