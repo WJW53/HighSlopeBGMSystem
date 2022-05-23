@@ -1,5 +1,7 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { getAllCityInfo } from '/@/api/demo/system';
+import { cityOptions } from './city';
 
 export const columns: BasicColumn[] = [
   {
@@ -110,7 +112,11 @@ export const stationFormSchema: FormSchema[] = [
   {
     label: '所属地',
     field: 'location',
-    component: 'Input',
+    component: 'Cascader',
+    componentProps: {
+      options: cityOptions,
+    },
+    colProps: { span: 24 },
     required: true,
   },
   {

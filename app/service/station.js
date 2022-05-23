@@ -108,6 +108,12 @@ class StationService extends Service {
       }
     };
   }
+
+  getAllCityInfo(params) {
+    const cityList = this.ctx.app.config.cityOptions;
+    console.log('cityList: ', cityList.length, typeof cityList);
+    return cityList;
+  }
 }
 
 module.exports = StationService;

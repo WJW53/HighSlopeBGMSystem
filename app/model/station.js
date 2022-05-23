@@ -21,7 +21,7 @@ module.exports = ({ mongoose }) => {
         required: true,
       },
       location: {
-        type: String,
+        type: Schema.Types.Mixed,
         required: true,
       },
       remark: {

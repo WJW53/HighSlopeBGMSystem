@@ -1,6 +1,6 @@
 module.exports = () => async (ctx, next) => {
   await next();
-  console.log('ctx.status: ', ctx.status, 'ctx.body: ', ctx.body);
+  // console.log('ctx.status: ', ctx.status, 'ctx.body: ', ctx.body);
   if (ctx.status && ctx.status !== 200) {
     ctx.app.error.throw(ctx.body.code, ctx.body.message, ctx.status);
   }

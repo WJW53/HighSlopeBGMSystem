@@ -1,11 +1,14 @@
 const path = require('path');
 const menuList = require('./routerConfig');
+const cityOptions = require('./city');
 
 // 用于加密的秘钥
 exports.keys = 'high_slope-server_1619356153210_1238';
 
 // 全量路由表的详细配置, 用于第一次写路由表到数据库
 exports.menuList = menuList;
+// 全量的中国行政区信息
+exports.cityOptions = cityOptions;
 
 // 初始化的管理员信息
 exports.admin = {

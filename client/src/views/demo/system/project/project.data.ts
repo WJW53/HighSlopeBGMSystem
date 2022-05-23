@@ -1,6 +1,7 @@
 import { getAllProject,  } from '/@/api/demo/project';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
+import { frequencyOptions } from '../equipment/equipment.data';
 
 export const columns: BasicColumn[] = [
   {
@@ -40,6 +41,10 @@ export const columns: BasicColumn[] = [
   {
     title: '采集频率',
     dataIndex: 'frequency',
+    // customRender: ({ record }) => {
+    //   const curFrequency = record.frequency;
+    //   return frequencyOptions.find(item => item.value === curFrequency)?.value || '';
+    // },
   },
   {
     title: '经度',
@@ -161,6 +166,9 @@ export const projectFormSchema: FormSchema[] = [
     field: 'mobile',
     label: '联系电话',
     component: 'Input',
+    componentProps: {
+      length: 11,
+    },
     required: true,
   },
   {
@@ -178,13 +186,19 @@ export const projectFormSchema: FormSchema[] = [
   {
     field: 'createTime',
     label: '创建时间',
-    component: 'Input',
+    component: 'DatePicker',
     required: true,
   },
   {
     label: '采集频率',
     field: 'frequency',
-    component: 'Input',
+    component: 'Select',
+    componentProps: {
+      options: frequencyOptions,
+    },
+    colProps: {
+      span: 13,
+    },
     required: true,
   },
   {
@@ -196,6 +210,9 @@ export const projectFormSchema: FormSchema[] = [
       min: 0,
       max: 180,
     },
+    colProps: {
+      span: 13,
+    },
   },
   {
     field: 'latitude',
@@ -206,10 +223,16 @@ export const projectFormSchema: FormSchema[] = [
       min: 0,
       max: 90,
     },
+    colProps: {
+      span: 13,
+    },
   },
   {
     field: 'remark',
     label: '备注',
     component: 'InputTextArea',
+    colProps: {
+      span: 13,
+    },
   },
 ];

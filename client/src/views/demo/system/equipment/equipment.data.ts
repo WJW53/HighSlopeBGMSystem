@@ -2,6 +2,29 @@ import { getAllEquipment } from '/@/api/demo/equipment';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
+export const frequencyOptions = [
+  {
+    value: '6hours/次',
+    label: '6hours/次',
+  },
+  {
+    value: '12hours/次',
+    label: '12hours/次',
+  },
+  {
+    value: '1天/次',
+    label: '1天/次',
+  },
+  {
+    value: '1周/次',
+    label: '1周/次',
+  },
+  {
+    value: '1月/次',
+    label: '1月/次',
+  },
+];
+
 export const columns: BasicColumn[] = [
   {
     title: '设备id',
@@ -112,7 +135,10 @@ export const equipmentFormSchema: FormSchema[] = [
   {
     label: '采集频率',
     field: 'frequency',
-    component: 'Input',
+    component: 'Select',
+    componentProps: {
+      options: frequencyOptions,
+    },
     required: true,
   },
   {

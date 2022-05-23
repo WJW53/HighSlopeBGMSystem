@@ -16,6 +16,7 @@ enum Api {
   Account = '/userInfo',
   Role = '/roleInfo',
   AllMenuBasicInfo = '/allMenuBasicInfo', //'allMenuBasicInfo'
+  CityInfo = '/cityInfo',
 
   IsAccountExist = '/userInfo',
   DeptList = '/getDeptList',
@@ -54,3 +55,6 @@ export const setRoleStatus = (id: number, status: string) =>
 export const isAccountExist = (
   params, //params 里面有 account
 ) => defHttp.post({ url: Api.IsAccountExist, params }, { errorMessageMode: 'none' });
+
+export const getAllCityInfo = (params?: MenuParams) =>
+  defHttp.get<MenuListGetResultModel>({ url: Api.CityInfo, params });

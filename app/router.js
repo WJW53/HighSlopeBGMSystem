@@ -57,6 +57,7 @@ module.exports = (app) => {
   router.put('/api/stationInfo/:id', auth, controller.station.update);
   router.get('/api/stationInfo', auth, controller.station.index);
   // router.get('/api/stationInfo/:id', auth, controller.station.findOne);
+  router.get('/api/cityInfo', auth, controller.station.getAllCityInfo);
 
 
   /**

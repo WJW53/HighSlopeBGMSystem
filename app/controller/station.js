@@ -33,6 +33,11 @@ class StationController extends Controller {
         await this.ctx.service.station.increaseScanNumber(this.ctx.params.id);
         this.ctx.body = await this.ctx.service.station.find(this.ctx.params.id);
     }
+
+    async getAllCityInfo() {
+        console.log('getAllCityInfoOOOOOOO');
+        this.ctx.body = await this.ctx.service.station.getAllCityInfo(this.ctx.query);
+    }
 }
 
 module.exports = StationController;

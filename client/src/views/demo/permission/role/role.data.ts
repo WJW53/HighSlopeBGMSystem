@@ -129,6 +129,11 @@ export const formSchema: FormSchema[] = [
   //   },
   // },
   {
+    field: 'createTime',
+    label: '创建时间',
+    component: 'DatePicker',
+  },
+  {
     label: '备注',
     field: 'remark',
     component: 'InputTextArea',
