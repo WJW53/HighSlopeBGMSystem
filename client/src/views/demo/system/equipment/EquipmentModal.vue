@@ -39,6 +39,13 @@
             ...data.record,
           });
         }
+
+        updateSchema([
+          {
+            field: 'equipmentNo',
+            show: !unref(isUpdate),
+          },
+        ]);
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增设备' : '编辑设备'));

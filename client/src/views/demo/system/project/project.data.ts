@@ -1,4 +1,5 @@
-import { getAllProject,  } from '/@/api/demo/project';
+import { getAllEquipment } from '/@/api/demo/equipment';
+import { getAllStation } from '/@/api/demo/station';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { frequencyOptions } from '../equipment/equipment.data';
@@ -27,24 +28,32 @@ export const columns: BasicColumn[] = [
     dataIndex: 'mobile',
   },
   {
+    title: '工位编号',
+    dataIndex: 'stationNo',
+  },
+  {
     title: '工位名称',
     dataIndex: 'stationName',
+  },
+  {
+    title: '工位所在地',
+    dataIndex: 'location',
+  },
+  {
+    title: '设备编号',
+    dataIndex: 'equipmentNo',
   },
   {
     title: '设备名称',
     dataIndex: 'equipmentName',
   },
   {
-    title: '创建时间',
-    dataIndex: 'createTime',
+    title: '设备采集频率',
+    dataIndex: 'frequency',
   },
   {
-    title: '采集频率',
-    dataIndex: 'frequency',
-    // customRender: ({ record }) => {
-    //   const curFrequency = record.frequency;
-    //   return frequencyOptions.find(item => item.value === curFrequency)?.value || '';
-    // },
+    title: '创建时间',
+    dataIndex: 'createTime',
   },
   {
     title: '经度',
@@ -87,7 +96,7 @@ export const searchFormSchema: FormSchema[] = [
   },
   {
     field: 'frequency',
-    label: '采集频率',
+    label: '设备采集频率',
     component: 'Select',
     componentProps: {
       options: frequencyOptions,
@@ -187,33 +196,33 @@ export const projectFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'stationName',
-    label: '工位名称',
-    component: 'Input',
+    field: 'station',
+    label: '工位',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAllStation,
+      labelField: 'stationName',
+      valueField: 'stationNo',
+    },
+    colProps: { span: 16 },
     required: true,
   },
   {
-    field: 'equipmentName',
-    label: '设备名称',
-    component: 'Input',
+    field: 'equipment',
+    label: '设备',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getAllEquipment,
+      labelField: 'equipmentName',
+      valueField: 'equipmentNo',
+    },
+    colProps: { span: 16 },
     required: true,
   },
   {
     field: 'createTime',
     label: '创建时间',
     component: 'DatePicker',
-    required: true,
-  },
-  {
-    label: '采集频率',
-    field: 'frequency',
-    component: 'Select',
-    componentProps: {
-      options: frequencyOptions,
-    },
-    colProps: {
-      span: 13,
-    },
     required: true,
   },
   {

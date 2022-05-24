@@ -244,8 +244,41 @@ class UserService extends Service {
     return await this.ctx.model.User.findById(id);
   }
 
-  async getAnalysisRes(id) {
-    return await this.ctx.model.User.findById(id);
+  //组合出分析页所需的各项数据
+  async getAnalysisRes(userId) {
+    const visitCount =  this.ctx.user.visitCount || 0;
+    const filter = { _user_: userId };
+    const stationCount = await this.ctx.model.Station.countDocuments(filter);
+    const equipmentCount = await this.ctx.model.Equipment.countDocuments(filter);
+    const projectList = await this.ctx.model.Project.find(filter);
+    const projectCount = projectList.length;
+
+    /** 项目采集频率统计处理 与 监测城市数据统计处理 */
+    const frequencyAnalysisData = [];
+    const frequencyMap = {};
+    const cityAnalysisData = [];
+    const cityMap = {};
+    projectList.forEach((item)=>{
+      frequencyMap[item.frequency] = frequencyMap[item.frequency] ? frequencyMap[item.frequency] + 1 : 1;
+      cityMap[item.location[0]] = cityMap[item.location[0]] ? cityMap[item.location[0]] + 1 : 1;
+    });
+    for(const key of Object.keys(frequencyMap)){
+      frequencyAnalysisData.push({name: key, value: frequencyMap[key]});
+    }
+    for(const key of Object.keys(cityMap)){
+      cityAnalysisData.push({name: key, value: cityMap[key]});
+    }
+
+    /**  */
+
+    return {
+      stationCount,
+      equipmentCount,
+      projectCount,
+      visitCount,
+      frequencyAnalysisData,
+      cityAnalysisData,
+    }
   }
 
   async findAll(body) {//只有超级管理员有资格查找所有的账号

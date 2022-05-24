@@ -39,6 +39,13 @@
             ...data.record,
           });
         }
+
+        updateSchema([
+          {
+            field: 'stationNo',
+            show: !unref(isUpdate),
+          },
+        ]);
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增工位' : '编辑工位'));

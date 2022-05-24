@@ -5,26 +5,60 @@ const deleteThe_id = (info) => {
   delete info.id;
   delete info._id;
 }
+
+//处理项目关联工位设备的数据
+const projPopulateSE = async (info, ctx) => {
+  let newInfo = {...info, _user_: ctx.user._id};
+  deleteThe_id(newInfo);
+  const stationFilter = { 
+    _user_: newInfo._user_, 
+    stationNo: newInfo.station,//字段名是name, 但实际的值是对应的stationNo
+  };
+  const equipmentFilter = { 
+    _user_: newInfo._user_, 
+    equipmentNo: newInfo.equipment,//同理
+  };
+
+  const station = await ctx.model.Station.findOne(stationFilter);
+  const equipment = await ctx.model.Equipment.findOne(equipmentFilter);
+  const { stationNo, stationName, location } = station;
+  const { equipmentNo, equipmentName, frequency } = equipment;
+  const extraField = {
+    stationNo,
+    stationName,
+    location,
+    equipmentNo,
+    equipmentName,
+    frequency,
+  }
+  newInfo = {...newInfo, ...extraField};
+  return newInfo;
+}
+
+//项目初次建立时，找到对应设备的所属地和采集频率; 并写入这个项目的对应的字段内; 更新时前端不暴露那几个字段到modal-form里
 class ProjectService extends Service {
   async add(info) {
     const ctx = this.ctx;
+    let finallyInfo = null;
     if(Array.isArray(info)){//批量增加
-      info.forEach(item => {
-        item._user_ = ctx.user._id;
-        deleteThe_id(item);
-      });
+      const newInfoList = [];
+      for(const item of info){
+        const tempInfo = await projPopulateSE(item, ctx);
+        newInfoList.push(tempInfo);
+      }
+      finallyInfo = newInfoList;
     }else if(info && typeof info === 'object'){
-      info._user_ = ctx.user._id;//是这个用户下的工位
-      deleteThe_id(info);
+      finallyInfo = await projPopulateSE(info, ctx);
     }
-    console.log('正在添加该项目', info);
-    return await ctx.model.Project.create(info);
+    console.log('即将添加该项目', finallyInfo);
+    return await ctx.model.Project.create(finallyInfo);
   }
 
   async update(id, info) {
-// 记得加校验
+// 记得加校验, 去掉关于设备、工位的字段等
     console.log('正在修改该项目', id, info);
-    await this.ctx.model.Project.updateOne({ _id: id }, { $set: info });
+    const newInfo = await projPopulateSE(info, this.ctx);
+    await this.ctx.model.Project.updateOne({ _id: id }, { $set: newInfo });
     return await this.find(id);
   }
 

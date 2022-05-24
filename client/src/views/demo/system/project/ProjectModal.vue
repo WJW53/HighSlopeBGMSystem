@@ -40,12 +40,12 @@
           });
         }
 
-        // updateSchema([
-        //   {
-        //     field: 'id',
-        //     show: false,
-        //   },
-        // ]);
+        updateSchema([
+          {
+            field: 'projectNo',
+            show: !unref(isUpdate),
+          },
+        ]);
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增项目' : '编辑项目'));

@@ -11,6 +11,7 @@ interface NavItem {
   title: string;
   icon: string;
   color: string;
+  path: string;
 }
 
 interface DynamicInfoItem {
@@ -22,34 +23,40 @@ interface DynamicInfoItem {
 
 export const navItems: NavItem[] = [
   {
-    title: '首页',
+    title: '个人设置',
     icon: 'ion:home-outline',
     color: '#1fdaca',
+    path: '/personal/setting',
   },
   {
-    title: '仪表盘',
-    icon: 'ion:grid-outline',
+    title: '分析页',
+    icon: 'ion:bar-chart-outline',
     color: '#bf0c2c',
-  },
-  {
-    title: '组件',
-    icon: 'ion:layers-outline',
-    color: '#e18525',
-  },
-  {
-    title: '系统管理',
-    icon: 'ion:settings-outline',
-    color: '#3fb27f',
+    path: '/dashboard/analysis',
   },
   {
     title: '权限管理',
     icon: 'ion:key-outline',
     color: '#4daf1bc9',
+    path: '/permission/account',
   },
   {
-    title: '图表',
-    icon: 'ion:bar-chart-outline',
+    title: '系统管理',
+    icon: 'ion:settings-outline',
+    color: '#3fb27f',
+    path: '/system/station',
+  },
+  {
+    title: '导入数据',
+    icon: 'mdi:microsoft-excel',
+    color: '#e18525',
+    path: '/system/uploadExcel',
+  },
+  {
+    title: '用户引导',
+    icon: 'whh:paintroll',
     color: '#00d8ff',
+    path: '/setup/index',
   },
 ];
 

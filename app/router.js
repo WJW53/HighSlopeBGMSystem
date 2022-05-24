@@ -93,9 +93,9 @@ module.exports = (app) => {
    */
   router.post('/upload/avatar/:id', auth, controller.upload.uploadAvatar);
   // router.post('/upload', auth, controller.upload.index);
-  router.post('/uploadURL', controller.upload.addUploadImageURL);
-  router.get('/upload', controller.upload.findAllImageURL);
-  router.delete('/upload/:id', controller.upload.removeImage);
+  router.post('/uploadURL', auth, controller.upload.addUploadImageURL);
+  router.get('/upload', auth, controller.upload.findAllImageURL);
+  router.delete('/upload/:id', auth, controller.upload.removeImage);
 
 
   /** 以下暂时用不上, 是开发中思考的中间产物 */

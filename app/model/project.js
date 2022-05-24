@@ -28,6 +28,9 @@ module.exports = ({ mongoose }) => {
         ref: 'User',
         required: true,
       },
+      station: {
+        type: String,
+      },
       // 这样写是因为, 项目数据比较多, 经常关联查询太耗费效率,
       stationNo: {
         type: String,
@@ -35,21 +38,23 @@ module.exports = ({ mongoose }) => {
       },
       stationName: {
         type: String,
-        required: true,
+      },
+      location: {
+        type: Schema.Types.Mixed,
+      },
+      equipment: {
+        type: String,
       },
       equipmentNo: {
         type: String,
-        // required: true,
       },
       equipmentName: {
         type: String,
-        required: true,
-      },
-      createTime: {
-        type: String,
-        required: true,
       },
       frequency: {
+        type: String,
+      },
+      createTime: {
         type: String,
         required: true,
       },

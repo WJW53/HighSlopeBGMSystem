@@ -1,6 +1,6 @@
 <template>
   <div class="md:flex">
-    <template v-for="(item, index) in growCardList" :key="item.title">
+    <template v-for="(item, index) in growCardList" :key="item.key">
       <Card
         size="small"
         :loading="loading"
@@ -26,14 +26,29 @@
   </div>
 </template>
 <script lang="ts" setup>
+  import { ref, watch } from 'vue';
   import { CountTo } from '/@/components/CountTo/index';
   import { Icon } from '/@/components/Icon';
   import { Tag, Card } from 'ant-design-vue';
-  import { growCardList } from '../data';
+  import { getGrowCardList } from '../data';
 
-  defineProps({
-    loading: {
-      type: Boolean,
+  const props = defineProps({
+    analysisData: {
+      type: Object,
+      required: true,
     },
   });
+  const growCardList = ref([]);
+  const loading = ref(true);
+
+  watch(
+    () => props.analysisData,
+    () => {
+      if (props.analysisData) {
+        growCardList.value = getGrowCardList(props.analysisData);
+        loading.value = false;
+      }
+    },
+    { immediate: true },
+  );
 </script>

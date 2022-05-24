@@ -1,3 +1,4 @@
+import { equipmentFormSchema } from './../equipment/equipment.data';
 import { BasicColumn } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
@@ -22,12 +23,12 @@ export const columns: BasicColumn[] = [
     dataIndex: 'mobile',
   },
   {
-    title: '工位名称',
-    dataIndex: 'stationName',
+    title: '工位',
+    dataIndex: 'station',
   },
   {
-    title: '设备名称',
-    dataIndex: 'equipmentName',
+    title: '设备',
+    dataIndex: 'equipment',
   },
   {
     title: '创建时间',
@@ -60,8 +61,8 @@ export const data: any[] = (() => {
       projectName: `PN-${index + 10}`,
       projectLeader: `吴经纬`,
       mobile: '11111111111',
-      stationName: `SN-${index}`,
-      equipmentName: `EN-${index}`,
+      station: `SN-${index}`,
+      equipment: `EN-${index}`,
       createTime: Date.now(),
       longitude: '122.2',
       latitude: '123.1',

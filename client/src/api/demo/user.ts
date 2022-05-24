@@ -24,4 +24,4 @@ export const createUserInfo = (params) => defHttp.post({ url: Api.USERINFO, para
 export const deleteUserInfo = (params) => defHttp.delete({ url: `${Api.USERINFO}/${params.id}` });
 
 //拉取分析页数据
-export const getAnalysisRes = (params) => defHttp.get({ url: Api.ANALYSISRES, params });
+export const getAnalysisRes = () => defHttp.get({ url: Api.ANALYSISRES });

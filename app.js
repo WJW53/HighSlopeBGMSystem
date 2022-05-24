@@ -15,7 +15,7 @@ mongoose.Document.prototype.toJSON = function (...args) {
   return obj;
 };
 
-const appId = '625d58940aa9a93f2c0771e1';
+const appId = '625d58940aa9a93f2c0771e1';//超级管理员--wjw的账户id
 
 // app.js
 class AppBootHook {
@@ -23,18 +23,14 @@ class AppBootHook {
     this.app = app;
   }
 
-  /**
-   * TODO: 做一个初始化超级管理员, 默认就有的账户
-   */
-
   //初始化全量路由/菜单表信息
   async initMenuList() {
     const Menu = this.app.model.Menu;
     const count = await Menu.countDocuments();
-    console.log('菜单表已连接到数据库');
+    console.log('Menu已连接到数据库');
     if (!count) {
       await Menu.create(this.app.config.menuList);
-      console.log('菜单表初始化成功');
+      console.log('Menu初始化成功');
     }
   }
 
@@ -54,70 +50,25 @@ class AppBootHook {
   async initUser() {
     const User = this.app.model.User;
     const count = await User.countDocuments();
-    console.log('User已连接数据库')
-    if (!count) {
-      await User.create({
-        acount: 'wjw',
-        mobile: '17839706350',
-        password: '123456',
-        // role: 'super',
-        nickname: '吴经纬',
-      });
-      console.log('User初始化成功');
-    }
+    console.log('User已连接数据库', count);
   }
 
   async initStation() {
     const Station = this.app.model.Station;
     const count = await Station.countDocuments();
-    console.log('Station已连接数据库')
-    if (!count) {
-      await Station.create({
-        stationNo: 'S1',
-        stationName: '第一个工位',
-        _user_: appId,
-        location: '重庆市巴南区红光大道',
-      });
-      console.log('Station初始化成功');
-    }
+    console.log('Station已连接数据库', count);
   }
 
   async initEquipment() {
     const Equipment = this.app.model.Equipment;
     const count = await Equipment.countDocuments();
-    console.log('Equipment已连接数据库')
-    if (!count) {
-      await Equipment.create({
-        equipmentNo: 'E1',
-        equipmentName: '第一台设备',
-        _user_: appId,
-        frequency: '12hours/次',
-      });
-      console.log('Equipment初始化成功');
-    }
+    console.log('Equipment已连接数据库', count);
   }
 
   async initProject() {
     const Project = this.app.model.Project;
     const count = await Project.countDocuments();
-    console.log('Project已连接数据库')
-    if (!count) {
-      await Project.create({
-        projectNo: 'P1',
-        projectName: '第一个项目',
-        projectLeader: '吴经纬',
-        mobile: '17839706350',
-        _user_: appId,
-        stationNo: 'S1',
-        stationName: '第一个工位',
-        equipmentNo: 'E1',
-        equipmentName: '第一台设备',
-        createTime: Date.now(),
-        longitude: '99.99',
-        latitude: '88.88',
-      });
-      console.log('Project初始化成功');
-    }
+    console.log('Project已连接数据库', count);
   }
 
   // // 初始化全局设置
