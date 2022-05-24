@@ -17,6 +17,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { PageEnum } from '/@/enums/pageEnum';
   import { useUserStore } from '/@/store/modules/user';
+  import { useI18n } from '/@/hooks/web/useI18n';
 
   const props = defineProps({
     /**
@@ -38,6 +39,7 @@
   const userStore = useUserStore();
   const { title } = useGlobSetting();
   const go = useGo();
+  const { t } = useI18n();
 
   const getAppLogoClass = computed(() => [
     prefixCls,

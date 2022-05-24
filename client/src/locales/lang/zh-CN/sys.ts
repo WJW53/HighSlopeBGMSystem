@@ -68,9 +68,6 @@ export default {
     signInTitle: '高边坡监测云平台',
     signInDesc: '请输入您的个人详细信息以开始使用！',
     policy: '我同意高边坡监测云平台隐私政策',
-    // signInTitle: '开箱即用的中后台管理系统',
-    // signInDesc: '输入您的个人详细信息开始使用！',
-    // policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
     loginButton: '登录',
