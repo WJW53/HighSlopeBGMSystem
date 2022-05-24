@@ -6,6 +6,7 @@ enum Api {
   CHANGEPASSWORD = '/changePassword',
   RESETPASSWORD = '/resetPassword',
   USERINFO = '/userInfo',
+  ANALYSISRES = '/analysis',
 }
 
 // Get personal center-basic settings
@@ -21,3 +22,6 @@ export const updateUserInfo = (userId, params) =>
   defHttp.put({ url: `${Api.USERINFO}/${userId}`, params });
 export const createUserInfo = (params) => defHttp.post({ url: Api.USERINFO, params });
 export const deleteUserInfo = (params) => defHttp.delete({ url: `${Api.USERINFO}/${params.id}` });
+
+//拉取分析页数据
+export const getAnalysisRes = (params) => defHttp.get({ url: Api.ANALYSISRES, params });

@@ -16,7 +16,7 @@ export const growCardList: GrowCardItem[] = [
     total: 120000,
     color: 'green',
     action: '个',
-    unit: '月',
+    unit: '总',
   },
   {
     title: '设备数',
@@ -25,7 +25,7 @@ export const growCardList: GrowCardItem[] = [
     total: 500000,
     color: 'blue',
     action: '个',
-    unit: '月',
+    unit: '总',
   },
   {
     title: '项目数',
@@ -34,7 +34,7 @@ export const growCardList: GrowCardItem[] = [
     total: 120000,
     color: 'orange',
     action: '个',
-    unit: '月',
+    unit: '总',
   },
   {
     title: '访问数',
@@ -43,6 +43,6 @@ export const growCardList: GrowCardItem[] = [
     total: 50000,
     color: 'purple',
     action: '次',
-    unit: '月',
+    unit: '总',
   },
 ];

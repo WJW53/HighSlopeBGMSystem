@@ -59,6 +59,9 @@ module.exports = ({ mongoose }) => {
       profile: {//个人简介
         type: String,
       },
+      visitCount: {//登录次数
+        type: Number,
+      },
       remark: {
         type: String,
       },

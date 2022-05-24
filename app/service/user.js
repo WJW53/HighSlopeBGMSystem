@@ -32,6 +32,8 @@ class UserService extends Service {
       } else if (redis_vc === sms) {
           let user = await this.ctx.model.User.findOne({ mobile }, {password: 0});
           if(user){
+              user.visitCount = user.visitCount ? user.visitCount + 1 : 1;//每次登录进来都将访问数+1
+              await user.save();
               code = 0;
               message = '登录成功！';
               result = user;
@@ -51,6 +53,8 @@ class UserService extends Service {
         password: md5(password),
       }, {password: 0});
       if(user){
+        user.visitCount = user.visitCount ? user.visitCount + 1 : 1;//每次登录进来都将访问数+1
+        await user.save();
         code = 0;
         message = '登录成功！';
         result = user;
@@ -240,6 +244,10 @@ class UserService extends Service {
     return await this.ctx.model.User.findById(id);
   }
 
+  async getAnalysisRes(id) {
+    return await this.ctx.model.User.findById(id);
+  }
+
   async findAll(body) {//只有超级管理员有资格查找所有的账号
     const options = this.getPagerOptions(body);
     const { account, nickname, mobile, role } = options;
@@ -250,7 +258,7 @@ class UserService extends Service {
       _id: { $ne: superAdminId },
       account: { $ne: 'wjw' },
     };
-    if(account || nickname || mobile || role){////TODO: 还有roles
+    if(account || nickname || mobile || role){
       filter['$and'] = [];
       account && filter['$and'].push({ account: { $regex: account, $options: 'i' } });
       nickname && filter['$and'].push({ nickname: { $regex: nickname, $options: 'i' } });

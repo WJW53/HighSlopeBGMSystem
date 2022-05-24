@@ -26,6 +26,7 @@ module.exports = (app) => {
   router.get('/api/userInfo', auth, superAdminAuth, controller.user.index);// superAdmin获取所有用户数据
   router.get('/api/userInfo/whoami', auth, controller.user.whoami);// 这行必须放上面, 否则whoami会被识别为下面的id
   router.get('/api/userInfo/:id', auth, controller.user.findOne);
+  router.get('/api/analysis', auth, controller.user.getAnalysisRes);
 
   router.get('/api/allMenuBasicInfo', auth, superAdminAuth, controller.menu.getAllMenuBasicInfo);
   router.get('/api/userMenuInfo', auth,  controller.menu.index);

@@ -86,6 +86,11 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.findOne(this.ctx.params.id);
     }
 
+    async getAnalysisRes() {
+        console.log('getAnalysisResSSSSSSSSSSSS');
+        this.ctx.body = await this.ctx.service.user.getAnalysisRes(this.ctx.user._id);
+    }
+
     async whoami() {
         console.log('whoamiIIIIIII', this.ctx.user);
         this.ctx.body = await this.ctx.service.user.findOne(this.ctx.user._id);
