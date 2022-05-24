@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const md5 = require('md5');
 
 module.exports = () => async (ctx, next) => {
   if(!ctx.user){//没有发布过token时才再次验证并发布
@@ -29,7 +30,7 @@ module.exports = () => async (ctx, next) => {
     }else if(account && password){
       user = await ctx.model.User.findOne({
         account,
-        password,//md5 ?
+        password: md5(password),
       }, {password: 0});
     }else{
       // return null;

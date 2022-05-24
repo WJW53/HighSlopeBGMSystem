@@ -1,4 +1,5 @@
 const Service = require('../core/BaseService');
+const md5 = require('md5');
 const superAdminId = '625d58940aa9a93f2c0771e1';
 const superAdminAccount = 'wjw';
 const superAdminMobile = '17839706350';
@@ -47,7 +48,7 @@ class UserService extends Service {
       /** 账号密码登录验证 */
       const user = await this.ctx.model.User.findOne({
         account,
-        password,//md5 ?
+        password: md5(password),
       }, {password: 0});
       if(user){
         code = 0;
@@ -136,7 +137,7 @@ class UserService extends Service {
       } else if (redis_vc === sms) {
         let user = await this.ctx.model.User.findOneAndUpdate(
           { account, mobile},
-          { password: newPassword },
+          { password: md5(newPassword), },
           { new: true, }//runValidators: true, //new: true代表要返回更新后的doc
         );
         if(user){
@@ -174,8 +175,8 @@ class UserService extends Service {
         }
       }
       const result = await this.ctx.model.User.findOneAndUpdate(
-        { account: info.account, password: info.password },
-        { password: info.newPassword },
+        { account: info.account, password: md5(info.password) },
+        { password: md5(info.newPassword) },
         { new: true, }//runValidators: true, 
       );
       if(result){

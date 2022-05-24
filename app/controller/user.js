@@ -38,7 +38,7 @@ class UserController extends Controller {
         this.ctx.body = await this.ctx.service.user.register(this.ctx.request.body);
     }
 
-    // async updateAvatar() {//TODO:这要去调upload接口, 然后再调用this.updateBasicInfo
+    // async updateAvatar() {//
     //     console.log('updateAvatar');
     //     this.ctx.body = await this.ctx.service.user.updateAvatar(this.ctx.request.body);
     // }

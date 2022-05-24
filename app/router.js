@@ -12,7 +12,8 @@ module.exports = (app) => {
   // const responseFomatter = middleware.responseFomatter();
 
   // app.middleware.limit(); // TODO: 稍作修改, 然后在一些post请求中用上这个中间件
-
+// console.log('test123 md5 -> ', md5('test123'));//默认是32位小写字符串
+// console.log('WJWadmin123!!', md5('WJWadmin123!!'));
 
   /**
    * 把超级管理员放在超级管理员的表里，普通用户就是普通用户??----不要这样, 加个超级管理员鉴权中间件即可
