@@ -1,6 +1,6 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
-import { getAllCityInfo } from '/@/api/demo/system';
+// import { getAllCityInfo } from '/@/api/demo/system';
 import { cityOptions } from './city';
 
 export const columns: BasicColumn[] = [
@@ -44,6 +44,10 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'location',
     label: '所属地',
+    // component: 'Cascader',
+    // componentProps: {
+    //   options: cityOptions,
+    // },
     component: 'Input',
     colProps: { span: 8 },
   },
@@ -66,6 +70,7 @@ export const stationFormSchema: FormSchema[] = [
     field: 'stationNo',
     component: 'Input',
     required: true,
+    helpMessage: ['编号格式', '不得少于两个个字符，含英文'],
     rules: [
       {
         required: true,

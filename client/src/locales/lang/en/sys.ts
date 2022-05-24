@@ -71,7 +71,7 @@ export default {
     signUpFormTitle: 'Sign up',
     forgetFormTitle: 'Reset password',
 
-    signInTitle: 'Backstage management system',
+    signInTitle: 'Cloud platform for high slope monitoring',
     signInDesc: 'Enter your personal details and get started!',
     policy: 'I agree to the high slope monitoring background management system privacy policy',
     // policy: 'I agree to the xxx Privacy Policy',

@@ -68,7 +68,14 @@
         showTableSetting: true,
         bordered: true,
         handleSearchInfoFn(info) {
-          console.log('handleSearchInfoFn', info);
+          console.log('handleSearchInfoFn', info); // 因为info是代理对象, 用不了扩展运算符
+          // const newInfo = {};
+          // for(const key of Object.keys(info)){
+          //   newInfo[key] = info[key];
+          // }
+          // newInfo.location = info.location?.toString()?.split(',')?.join('');
+          // console.log(newInfo);
+          // return newInfo;
           return info;
         },
         actionColumn: {

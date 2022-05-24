@@ -66,7 +66,10 @@ export const searchFormSchema: FormSchema[] = [
   {
     field: 'frequency',
     label: '采集频率',
-    component: 'Input',
+    component: 'Select',
+    componentProps: {
+      options: frequencyOptions,
+    },
     colProps: { span: 8 },
   },
 ];
@@ -88,6 +91,10 @@ export const equipmentFormSchema: FormSchema[] = [
     field: 'equipmentNo',
     component: 'Input',
     required: true,
+    colProps: {
+      span: 16,
+    },
+    helpMessage: ['编号格式', '不得少于两个个字符，含英文'],
     rules: [
       {
         required: true,
@@ -113,6 +120,9 @@ export const equipmentFormSchema: FormSchema[] = [
     field: 'equipmentName',
     component: 'Input',
     required: true,
+    colProps: {
+      span: 16,
+    },
     rules: [
       {
         required: true,
@@ -140,11 +150,17 @@ export const equipmentFormSchema: FormSchema[] = [
       options: frequencyOptions,
     },
     required: true,
+    colProps: {
+      span: 16,
+    },
   },
   {
     label: '备注',
     field: 'remark',
     component: 'InputTextArea',
     required: false,
+    colProps: {
+      span: 16,
+    },
   },
 ];

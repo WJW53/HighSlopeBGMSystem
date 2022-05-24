@@ -1,5 +1,5 @@
 import { FormSchema } from '/@/components/Form/index';
-
+import { cityOptions } from '../../system/station/city';
 export interface ListItem {
   key: string;
   title: string;
@@ -43,6 +43,15 @@ export const baseSetschemas: FormSchema[] = [
     required: true,
   },
   {
+    field: 'mobile',
+    component: 'Input',
+    componentProps: {
+      disabled: true,
+    },
+    label: '手机号',
+    colProps: { span: 18 },
+  },
+  {
     field: 'email',
     component: 'Input',
     label: '邮箱',
@@ -54,15 +63,12 @@ export const baseSetschemas: FormSchema[] = [
     label: '个人简介',
     colProps: { span: 18 },
   },
-  // {
-  //   field: 'mobile',
-  //   component: 'Input',
-  //   label: '联系电话',
-  //   colProps: { span: 18 },
-  // },
   {
     field: 'address',
-    component: 'Input',
+    component: 'Cascader',
+    componentProps: {
+      options: cityOptions,
+    },
     label: '所在地区',
     colProps: { span: 18 },
   },

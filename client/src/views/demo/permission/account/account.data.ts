@@ -31,6 +31,9 @@ export const columns: BasicColumn[] = [
   {
     title: '角色',
     dataIndex: 'role',
+    customRender: ({ record }) => {
+      return record.role.roleName || '';
+    },
   },
   {
     title: '备注',
@@ -81,7 +84,7 @@ export const accountFormSchema: FormSchema[] = [
     field: 'account',
     label: '账户名',
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的账户名'],
+    helpMessage: ['账号格式', '不得少于3个字符, 含英文'],
     rules: [
       {
         required: true,
@@ -105,6 +108,7 @@ export const accountFormSchema: FormSchema[] = [
     label: '密码',
     component: 'InputPassword',
     required: true,
+    helpMessage: ['密码格式', '6-16个字符'],
   },
   {
     field: 'mobile',
@@ -127,7 +131,10 @@ export const accountFormSchema: FormSchema[] = [
       labelField: 'roleName',
       valueField: 'roleValue',
     },
-    // required: true,
+    colProps: {
+      span: 18,
+    },
+    required: true,
   },
   {
     label: '邮箱',
@@ -138,10 +145,16 @@ export const accountFormSchema: FormSchema[] = [
     field: 'createTime',
     label: '创建时间',
     component: 'DatePicker',
+    colProps: {
+      span: 18,
+    },
   },
   {
     label: '备注',
     field: 'remark',
     component: 'InputTextArea',
+    colProps: {
+      span: 18,
+    },
   },
 ];

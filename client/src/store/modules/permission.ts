@@ -191,20 +191,19 @@ export const usePermissionStore = defineStore({
              * 开始格式化后端返回的路由表
              */
             routeList.forEach((route) => {
-              console.log(route.isAsync, route.name, route.component);
-              if (route.isAsync === true) {
-                // route.component = () => import(route.component);
-              }
+              console.log(route.name, route.component);
+              // if (route.isAsync === true) {
+              //   route.component = () => import(route.component);
+              // }
               if (route.meta?.title) {
                 route.meta.title = t(route.meta.title);
               }
               if (route.children?.length > 0) {
                 route.children?.forEach((subRoute) => {
-                  if (subRoute.isAsync) {
-                    //这样写不行, vite不支持, 详见 https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-                    // subRoute.component = () => import(subRoute.component);
-                    subRoute.component = subRoute.component.replace('./views', '');
-                  }
+                  // if (subRoute.isAsync) {
+                  //   //这样写不行, vite不支持, 详见 https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+                  //   subRoute.component = () => import(subRoute.component);
+                  // }
                   if (subRoute.meta?.title) {
                     subRoute.meta.title = t(subRoute.meta.title);
                   }

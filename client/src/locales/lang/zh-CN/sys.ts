@@ -65,7 +65,7 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: '高边坡监测云平台-后台管理系统',
+    signInTitle: '高边坡监测云平台',
     signInDesc: '请输入您的个人详细信息以开始使用！',
     policy: '我同意高边坡监测云平台隐私政策',
     // signInTitle: '开箱即用的中后台管理系统',

@@ -16,7 +16,8 @@ function randomName() {
 async function imgToBase64(url) {
   try{
     const data = await fs.promises.readFile(url, 'binary')
-    return Buffer.from(data, 'binary').toString('base64');
+    const content = Buffer.from(data, 'binary').toString('base64');
+    return `data:image/png;base64,${content}`;
   }catch(e){
     console.error(e);
     ctx.app.error.throw(500, '服务端图片转base64格式发生异常！');
@@ -42,11 +43,8 @@ class UploadController extends Controller {
     const ext = path.extname(file.filename);
     const basename = name + ext;
     const dest = path.join(__dirname, '../public/upload', basename);
-    // const url = ctx.app.config.static.prefix + 'upload/' + basename;//TODO: 这是最初的逻辑, 放在了根目录下的static, 但是我这没有那些图片啊
-    // const url = `/app/public/upload/${basename}`;
-    await fs.promises.rename(file.filepath, dest);
-    let url = await imgToBase64(dest);
-    url = `data:image/png;base64,${url}`;
+    await fs.promises.rename(file.filepath, dest);//修改到public的upload目录下
+    const url = 'http://localhost:27017' + ctx.app.config.static.prefix + 'upload/' + basename;
     const userId = ctx.params.id;
     console.log('userId', userId);
     await ctx.service.upload.postAvatar(userId, url);

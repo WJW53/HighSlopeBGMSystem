@@ -17,7 +17,7 @@ const dashboardRoutes = [
         name: 'Workbench',
         isAsync: true,
         parentMenu: 'Dashboard',
-        component: './views/dashboard/workbench/index.vue',
+        component: 'dashboard/workbench/index.vue',
         meta: {
             title: 'routes.dashboard.workbench',
         },
@@ -27,7 +27,7 @@ const dashboardRoutes = [
         name: 'Analysis',
         isAsync: true,
         parentMenu: 'Dashboard',
-        component: './views/dashboard/analysis/index.vue',
+        component: 'dashboard/analysis/index.vue',
         meta: {
             // affix: true,
             title: 'routes.dashboard.analysis',
@@ -52,7 +52,7 @@ const personalRoutes = [
     {
         path: 'setting',
         name: 'PersonalSetting',
-        component:'./views/demo/personal/setting/index.vue',
+        component:'demo/personal/setting/index.vue',
         isAsync: true,
         parentMenu: 'PersonalCenter',
         meta: {
@@ -65,7 +65,7 @@ const personalRoutes = [
     {
         path: 'changePassword',
         name: 'ChangePassword',
-        component: './views/demo/personal/password/index.vue',
+        component: 'demo/personal/password/index.vue',
         isAsync: true,
         parentMenu: 'PersonalCenter',
         meta: {
@@ -99,7 +99,7 @@ const permissionRoutes = [
         },
         isAsync: true,
         parentMenu: 'Permission',
-        component: './views/demo/permission/account/index.vue',
+        component: 'demo/permission/account/index.vue',
       },
       {
         path: 'account_detail/:id',
@@ -114,7 +114,7 @@ const permissionRoutes = [
         },
         isAsync: true,
         parentMenu: 'Permission',
-        component: './views/demo/permission/account/AccountDetail.vue',
+        component: 'demo/permission/account/AccountDetail.vue',
       },
       {
         path: 'role',
@@ -126,7 +126,7 @@ const permissionRoutes = [
         },
         isAsync: true,
         parentMenu: 'Permission',
-        component: './views/demo/permission/role/index.vue',
+        component: 'demo/permission/role/index.vue',
       },
       {
         path: 'role_detail/:id',
@@ -141,7 +141,7 @@ const permissionRoutes = [
         },
         isAsync: true,
         parentMenu: 'Permission',
-        component: './views/demo/permission/role/RoleDetail.vue',
+        component: 'demo/permission/role/RoleDetail.vue',
       },
 ];
   
@@ -167,7 +167,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/station/index.vue',
+        component: 'demo/system/station/index.vue',
     },
     {
         path: 'station_detail/:id',
@@ -181,7 +181,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/station/StationDetail.vue',
+        component: 'demo/system/station/StationDetail.vue',
     },
     {
         path: 'equipment',
@@ -192,7 +192,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/equipment/index.vue',
+        component: 'demo/system/equipment/index.vue',
     },
     {
         path: 'equipment_detail/:id',
@@ -206,7 +206,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/equipment/EquipmentDetail.vue',
+        component: 'demo/system/equipment/EquipmentDetail.vue',
     },
     {
         path: 'project',
@@ -217,7 +217,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/project/index.vue',
+        component: 'demo/system/project/index.vue',
     },
     {
         path: 'project_detail/:id',
@@ -231,7 +231,7 @@ const systemRoutes = [
         },
         isAsync: true,
         parentMenu: 'System',
-        component: './views/demo/system/project/ProjectDetail.vue',
+        component: 'demo/system/project/ProjectDetail.vue',
     },
     {
         path: 'uploadExcel',
@@ -243,7 +243,7 @@ const systemRoutes = [
             title: 'routes.demo.excel.importExcel',
             ignoreKeepAlive: true,
         },
-        component: './views/demo/system/excel/UploadExcel.vue',
+        component: 'demo/system/excel/UploadExcel.vue',
     },
 ];
 
@@ -265,7 +265,7 @@ const userGuideRoutes = [
         name: 'UserGuideManagement',
         isAsync: true,
         parentMenu: 'UserGuide',
-        component: './views/demo/setup/index.vue',
+        component: 'demo/setup/index.vue',
         meta: {
           title: 'routes.demo.setup.page',
           icon: 'whh:paintroll',

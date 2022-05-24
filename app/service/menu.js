@@ -29,7 +29,7 @@ class MenuService extends Service {
     const role = await this.ctx.model.Role.findOne({ roleValue });//先去角色表找对应菜单列表
     // const menuFilter = { $or: [] };
     // role.menuList.forEach(name => {
-    //   menuFilter['$or'].push({ name });//tnnd  $or好像最多13个, 所以不要用这个
+    //   menuFilter['$or'].push({ name });//tnnd  $or好像最多13个, 所以不能用这个
     // });
     // const allFilterMenu = await this.ctx.model.Menu.find(menuFilter);
     const allMenuInfo = await this.ctx.model.Menu.find();

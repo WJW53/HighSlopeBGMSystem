@@ -33,9 +33,8 @@ module.exports = ({ mongoose }) => {
       homePath: {
         type: String,
         required: true,
-        default: '/personal/setting',
       },
-      _role_: {
+      _role_: {//暂时没用上
         type: ObjectId,
         ref: 'Role',
       },
@@ -55,7 +54,7 @@ module.exports = ({ mongoose }) => {
         type: String,
       },
       address: {//住址
-        type: String,
+        type: Schema.Types.Mixed,
       },
       profile: {//个人简介
         type: String,
@@ -72,6 +71,10 @@ module.exports = ({ mongoose }) => {
   );
   UserSchema.methods.toJSON = function () {
     const obj = mongoose.Document.prototype.toJSON.call(this);
+    if(obj._id){
+      obj.id = obj._id;
+      delete obj._id;
+    }
     delete obj.password;
     return obj;
   };

@@ -1,6 +1,7 @@
 const path = require('path');
 const menuList = require('./routerConfig');
 const cityOptions = require('./city');
+const avatarUrlList = require('./avatar');
 
 // 用于加密的秘钥
 exports.keys = 'high_slope-server_1619356153210_1238';
@@ -9,6 +10,8 @@ exports.keys = 'high_slope-server_1619356153210_1238';
 exports.menuList = menuList;
 // 全量的中国行政区信息
 exports.cityOptions = cityOptions;
+// 头像可选链接
+exports.avatarUrlList = avatarUrlList;
 
 // 初始化的管理员信息
 exports.admin = {
@@ -92,7 +95,7 @@ exports.validate = {
 
 // static
 exports.static = {
-  prefix: '/static/',
+  // prefix: '/public/',//url里输入/public/xxx.png, 就会自动去app下的public文件夹找xxx.png
   maxAge: 2 * 365 * 24 * 60 * 60, // 缓存两年
 };
 

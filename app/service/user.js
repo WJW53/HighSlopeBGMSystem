@@ -3,10 +3,11 @@ const superAdminId = '625d58940aa9a93f2c0771e1';
 const superAdminAccount = 'wjw';
 const superAdminMobile = '17839706350';
 
-const initAccountField = (info) => {
+const initAccountField = (info, ctx) => {
   info.homePath = info.homePath || '/personal/setting'; // 个人设置页
   info.role = info.role || 'project';
-  info.avatar = info.avatar || "https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640";
+  const randomIndex = ctx.app.utils.getRandom(0, 6);
+  info.avatar = info.avatar || ctx.app.config.avatarUrlList[randomIndex];
 }
 
 
@@ -102,7 +103,7 @@ class UserService extends Service {
         }, {password: 0});
         console.log('user', user);
         if(user===null || (Array.isArray(user) && user.length===0)){
-            initAccountField(info);
+            initAccountField(info, this.ctx);
             user = await this.ctx.model.User.create(info);//落库
             code = 0;
             message = '注册成功！';
@@ -157,7 +158,7 @@ class UserService extends Service {
 
   async changePassword(info) {
     console.log('正在修改用户密码', info);
-    // TODO: 这里应该看是否存在ctx.user, 存在说明已经登录, 可以修改, 否则不能修改;
+    // 这里应该看是否存在ctx.user, 存在说明已经登录, 可以修改, 否则不能修改;
     if(this.ctx.user){
       if(info.password===info.newPassword){
         return {
@@ -197,7 +198,7 @@ class UserService extends Service {
 
   /**
    * 
-   * TODO: 每个账号初始化建立后, 就给它两个可选设备、工位; 普通用户权限
+   * 每个账号初始化建立后, 要先初始化一些信息
    */
   async add(info) {
     let body = {
@@ -207,7 +208,7 @@ class UserService extends Service {
     }
     this.ctx.app.utils.deleteThe_id(info);
     try {
-      initAccountField(info);
+      initAccountField(info, this.ctx);
       body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
       console.log('成功新增账户：', body.result);
     } catch (error) {
@@ -219,7 +220,7 @@ class UserService extends Service {
   }
 
   async update(id, info) {
-    // TODO: 记得加校验
+    // 记得加校验
     this.ctx.app.utils.deleteThe_id(info);
     await this.ctx.model.User.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
@@ -255,16 +256,23 @@ class UserService extends Service {
       mobile && filter['$and'].push({ mobile: { $regex: mobile, $options: 'i' } });
       role && filter['$and'].push({ role: { $regex: role, $options: 'i' } });
     }
-
+    const allRole = await this.ctx.model.Role.find({}, {roleValue: 1, roleName: 1});
     const total = await this.ctx.model.User.countDocuments(filter);
     const data = await this.ctx.model.User.find(filter, {avatar: 0})
       .skip((options.page - 1) * options.limit)
       .limit(options.limit);
-      // .sort('-createTime')
-      // .populate('_role_', '_id roleName roleValue');
+    const newData = data.map(item => item.toObject()).map(item => {
+      const curRole = allRole.find(role => role.roleValue === item.role);
+      item.role = curRole;
+      if(item._id){//toObject后就保留了_id了, 只有当作响应体发送出去时, egg底层才会默认调用toJSON
+        item.id = item._id;
+        delete item._id;
+      }
+      return item;
+    });//格式化处理role字段
     return {
       result: {
-        result: data,
+        result: newData,
         total,
       }
     };

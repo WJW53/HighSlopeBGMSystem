@@ -85,6 +85,21 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Input',
     colProps: { span: 8 },
   },
+  {
+    field: 'frequency',
+    label: '采集频率',
+    component: 'Select',
+    componentProps: {
+      options: frequencyOptions,
+    },
+    colProps: { span: 8 },
+  },
+  {
+    label: '项目负责人',
+    field: 'projectLeader',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
 ];
 
 // componentProps: {
@@ -131,7 +146,7 @@ export const projectFormSchema: FormSchema[] = [
     field: 'projectNo',
     label: '项目编号',
     component: 'Input',
-    helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
+    helpMessage: ['编号格式', '不得少于两个个字符，含英文'],
     rules: [
       {
         required: true,

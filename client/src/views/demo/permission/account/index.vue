@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper dense contentFullHeight contentClass="flex">
     <BasicTable @register="registerTable" class="w-full xl:w-full" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增账号</a-button>
@@ -86,7 +86,7 @@
       }
 
       function handleEdit(record: Recordable) {
-        console.log(record);
+        console.log('handleEdit', record);
         openModal(true, {
           record,
           isUpdate: true,

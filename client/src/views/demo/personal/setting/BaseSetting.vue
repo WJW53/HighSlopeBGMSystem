@@ -68,12 +68,12 @@
         return avatar || headerImg;
       });
 
-      //source就是src->base64, data是上传到服务器后, 返回的数据
+      //source就是src->base64, data是上传到服务器后, 后端返回的数据
       function updateAvatar({ source, data }) {
-        console.log('已经上传给服务器base64地址了, 这个src就是base64', source, data);
+        console.log('预览使用的是base64格式, 现已上传到服务器,并返回可访问的图片资源地址啦', data);
         const userinfo = userStore.getUserInfo;
         // userinfo.avatar = source;
-        userinfo.avatar = data.result; // TODO: 记得看看是否要改回来
+        userinfo.avatar = data.result;
         userStore.setUserInfo(userinfo);
       }
 

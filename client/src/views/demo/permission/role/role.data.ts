@@ -115,6 +115,7 @@ export const formSchema: FormSchema[] = [
     label: '角色值',
     required: true,
     component: 'Input',
+    helpMessage: ['角色值格式', '不得少于3个字符, 含英文'],
   },
   // {
   //   field: 'status',

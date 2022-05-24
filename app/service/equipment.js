@@ -1,17 +1,13 @@
 const Service = require('../core/BaseService');
 
 class EquipmentService extends Service {
+  //记得加校验
   async add(info) {
-    // this.validate(
-    //   {}
-    // );
-    //TODO: 记得加校验
     info._user_ = this.ctx.user._id;
     return await this.ctx.model.Equipment.create(info);
   }
 
   async update(id, info) {
-    //TODO: 记得加校验
     await this.ctx.model.Equipment.updateOne({ _id: id }, { $set: info });
     return await this.find(id);
   }

@@ -1,6 +1,6 @@
 <template>
-  <!-- fixedHeight若加上了, 表格下面的分页模块就看不见了, 被页脚遮住了 -->
   <PageWrapper dense contentFullHeight contentClass="flex">
+    <!-- fixedHeight若加上了, 表格下面的分页模块就看不见了, 被页脚遮住了;这个注释不能放在上面, 会引起多个根节点！导致切换tab空白 -->
     <BasicTable @register="registerTable" class="w-full xl:w-full" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增项目</a-button>

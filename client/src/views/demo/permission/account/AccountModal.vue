@@ -37,6 +37,7 @@
           rowId.value = data.record.id;
           setFieldsValue({
             ...data.record,
+            role: data.record.role.roleValue,
           });
         }
         // 无论是否为超级管理员: 账号名不允许修改,密码可以改
