@@ -58,11 +58,19 @@ module.exports = ({ mongoose }) => {
         type: String,
         required: true,
       },
+      '[startTime, endTime]': {
+        type: Schema.Types.Mixed,
+        required: true,
+      },
       startTime: {
         type: String,
         required: true,
       },
       endTime: {
+        type: String,
+        required: true,
+      },
+      monitorDiffTime: {
         type: String,
         required: true,
       },

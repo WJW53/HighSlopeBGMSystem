@@ -137,17 +137,20 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    label: '邮箱',
-    field: 'email',
-    component: 'Input',
-  },
-  {
     field: 'createTime',
     label: '创建时间',
     component: 'DatePicker',
-    colProps: {
-      span: 18,
+    componentProps: {
+      format: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: '请选择创建时间',
+      showTime: { format: 'HH:mm:ss' },
     },
+    required: true,
+  },
+  {
+    label: '邮箱',
+    field: 'email',
+    component: 'Input',
   },
   {
     label: '备注',

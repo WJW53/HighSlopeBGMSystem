@@ -13,7 +13,7 @@
         </template>
 
         <div class="py-4 px-4 flex justify-between items-center">
-          <CountTo prefix="$" :startVal="1" :endVal="item.value" class="text-2xl" />
+          <CountTo :startVal="0" :endVal="item.value" class="text-2xl" />
           <Icon :icon="item.icon" :size="40" />
         </div>
 

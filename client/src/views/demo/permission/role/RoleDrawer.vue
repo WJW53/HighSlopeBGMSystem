@@ -40,7 +40,7 @@
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
 
-      const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
+      const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 90,
         schemas: formSchema,
         showActionButtonGroup: false,
@@ -71,6 +71,14 @@
             ...data.record,
           });
         }
+        updateSchema([
+          {
+            field: 'roleValue',
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
+          },
+        ]);
       });
 
       const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));

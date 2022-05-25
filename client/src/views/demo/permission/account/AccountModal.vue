@@ -40,11 +40,14 @@
             role: data.record.role.roleValue,
           });
         }
-        // 无论是否为超级管理员: 账号名不允许修改,密码可以改
+
         updateSchema([
           {
             field: 'account',
-            show: !unref(isUpdate),
+            // show: !unref(isUpdate),
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
           },
           {
             field: 'password',
@@ -53,7 +56,28 @@
           },
           {
             field: 'mobile',
-            show: !unref(isUpdate),
+            // show: !unref(isUpdate),
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
+          },
+          {
+            field: 'email',
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
+          },
+          {
+            field: 'createTime',
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
+          },
+          {
+            field: 'nickname',
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
           },
         ]);
       });

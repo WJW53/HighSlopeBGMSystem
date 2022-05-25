@@ -7,8 +7,17 @@ class StationService extends Service {
   }
 
   async update(id, info) {
-    await this.ctx.model.Station.updateOne({ _id: id }, { $set: info });
-    return await this.find(id);
+    const newStation = await this.ctx.model.Station.findOneAndUpdate({ _id: id }, { $set: info }, { new: true });// 这个的返回值, 不是那个最新的数据, 而是nModified: xx等字段;
+    //联动的要修改project表里的值
+      const { stationNo, stationName, location, _user_ } = newStation;//
+      console.log('updatestation', stationNo, stationName, location, _user_);
+      await this.ctx.model.Project.updateMany(
+        { _user_: _user_, stationNo, },
+        { $set: { stationName, location } },
+        { multi: true, new: true },
+      );
+      return newStation;
+    // return await this.find(id);
   }
 
   async remove(id) {

@@ -8,8 +8,18 @@ class EquipmentService extends Service {
   }
 
   async update(id, info) {
-    await this.ctx.model.Equipment.updateOne({ _id: id }, { $set: info });
-    return await this.find(id);
+    console.log('updateEquipment Info: ', info);//注意!! 这个info里面会被去掉_user_我也不知道为啥
+    // await this.ctx.model.Equipment.updateOne({ _id: id }, { $set: info });// 这个的返回值, 不是那个最新的数据, 而是nModified: xx等字段;
+    const newEquipment = await this.ctx.model.Equipment.findOneAndUpdate({ _id: id }, { $set: info }, { new: true });// 这个的返回值, 不是那个最新的数据, 而是nModified: xx等字段;
+  //联动的要修改project表里的值
+    const { equipmentNo, equipmentName, frequency, _user_ } = newEquipment;//
+    console.log('updateEquipment', equipmentNo, equipmentName, frequency, _user_);
+    await this.ctx.model.Project.updateMany(
+      { _user_: _user_, equipmentNo, },
+      { $set: { equipmentName, frequency } },
+      { multi: true, new: true },
+    );
+    return newEquipment;
   }
 
   async remove(id) {

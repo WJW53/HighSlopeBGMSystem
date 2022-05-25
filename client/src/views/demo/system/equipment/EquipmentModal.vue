@@ -43,7 +43,9 @@
         updateSchema([
           {
             field: 'equipmentNo',
-            show: !unref(isUpdate),
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
           },
         ]);
       });

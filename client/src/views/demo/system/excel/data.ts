@@ -31,11 +31,15 @@ export const columns: BasicColumn[] = [
     dataIndex: 'equipment',
   },
   {
-    title: '开始监测日期',
+    title: '项目创建时间',
     dataIndex: 'createTime',
   },
   {
-    title: '停止监测日期',
+    title: '开始监测时间',
+    dataIndex: 'startTime',
+  },
+  {
+    title: '停止监测时间',
     dataIndex: 'endTime',
   },
   {
@@ -68,6 +72,7 @@ export const data: any[] = (() => {
       station: `SN-${index}`,
       equipment: `EN-${index}`,
       createTime: Date.now(),
+      startTime: Date.now() + 120000000,
       endTime: Date.now() + 360000000,
       longitude: '122.2',
       latitude: '123.1',

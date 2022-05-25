@@ -19,10 +19,10 @@ class RoleService extends Service {
 
   async update(id, info) {
     this.ctx.app.utils.deleteThe_id(info);
-    
     console.log('updateRole end_info: ', info);
     handleIfSuperAdminRole(info, this.ctx);
     await this.ctx.model.Role.updateOne({ _id: id }, { $set: info });
+    //这里不用联动着修改用户表的相应的role数据是因为, user表里只有role字段且存的是roleValue, roleValue一经生成不可被修改
     return await this.find(id);
   }
 

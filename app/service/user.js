@@ -1,6 +1,6 @@
 const Service = require('../core/BaseService');
 const md5 = require('md5');
-const dayjs = require('dayjs');
+// const dayjs = require('dayjs');
 const superAdminId = '625d58940aa9a93f2c0771e1';
 const superAdminAccount = 'wjw';
 const superAdminMobile = '17839706350';
@@ -259,17 +259,21 @@ class UserService extends Service {
     const frequencyMap = {};
     const cityAnalysisData = [];
     const cityMap = {};
+    const monitorDiffTimeAnalysisData = [];
     const monitorTimeMap = {};
     projectList.forEach((item)=>{
       frequencyMap[item.frequency] = frequencyMap[item.frequency] ? frequencyMap[item.frequency] + 1 : 1;
       cityMap[item.location[0]] = cityMap[item.location[0]] ? cityMap[item.location[0]] + 1 : 1;
-      // monitorTimeMap;
+      monitorTimeMap[item.monitorDiffTime] = monitorTimeMap[item.monitorDiffTime] ? monitorTimeMap[item.monitorDiffTime] + 1 : 1;
     });
     for(const key of Object.keys(frequencyMap)){
       frequencyAnalysisData.push({name: key, value: frequencyMap[key]});
     }
     for(const key of Object.keys(cityMap)){
       cityAnalysisData.push({name: key, value: cityMap[key]});
+    }
+    for(const key of Object.keys(monitorTimeMap)){
+      monitorDiffTimeAnalysisData.push({name: key, value: monitorTimeMap[key]});
     }
 
     /**  */
@@ -281,6 +285,7 @@ class UserService extends Service {
       visitCount,
       frequencyAnalysisData,
       cityAnalysisData,
+      monitorDiffTimeAnalysisData
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <Card title="监测项目的采集频率数据统计" :loading="loading" class="space-y-5">
+  <Card title="监测项目采集频率统计" :loading="loading" class="space-y-5">
     <div ref="chartRef" :style="{ width, height, marginTop: '-35px' }"></div>
   </Card>
 </template>
@@ -40,7 +40,7 @@
             {
               // color: ['#5ab1ef', '#b6a2de', '#67e0e3', '#2ec7c9'],
               color: ['#3ca170', '#5470c6', '#91cd77', '#ef6567', '#f9c956', '#75bedc'],
-              name: '监测项目的采集频率数据统计',
+              name: '监测设备采集频率统计',
               type: 'pie',
               radius: ['40%', '70%'],
               avoidLabelOverlap: false,

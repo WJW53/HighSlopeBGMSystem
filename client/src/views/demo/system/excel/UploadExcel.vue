@@ -25,6 +25,7 @@
   import { mapArrHeader } from './data';
   import { createProject } from '/@/api/demo/project';
   import { message } from 'ant-design-vue';
+import dayjs from 'dayjs';
 
   export default defineComponent({
     name: 'UploadExcel',
@@ -58,6 +59,10 @@
           for (const key of Object.keys(item)) {
             ans[mapArrHeader[key]] = item[key];
           }
+          const { startTime, endTime } = ans;
+          ans['[startTime, endTime]'] = [startTime, endTime];
+          const monitorDiffTime = dayjs(endTime).diff(startTime, 'day');
+          ans.monitorDiffTime = monitorDiffTime;
           return ans;
         });
         formattedResultsRef.value = formattedResults;

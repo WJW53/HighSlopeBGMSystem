@@ -58,8 +58,7 @@ class ProjectService extends Service {
 // 记得加校验, 去掉关于设备、工位的字段等
     console.log('正在修改该项目', id, info);
     const newInfo = await projPopulateSE(info, this.ctx);
-    await this.ctx.model.Project.updateOne({ _id: id }, { $set: newInfo });
-    return await this.find(id);
+    return await this.ctx.model.Project.findOneAndUpdate({ _id: id }, { $set: newInfo }, { new: true });
   }
 
   async remove(id) {

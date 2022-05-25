@@ -10,6 +10,7 @@
   import { projectFormSchema } from './project.data';
   import { createProject, updateProject } from '/@/api/demo/project';
   import { message } from 'ant-design-vue';
+  import dayjs from 'dayjs';
 
   export default defineComponent({
     name: 'ProjectModal',
@@ -43,7 +44,9 @@
         updateSchema([
           {
             field: 'projectNo',
-            show: !unref(isUpdate),
+            componentProps: {
+              disabled: unref(isUpdate),
+            },
           },
         ]);
       });
@@ -56,8 +59,10 @@
           setModalProps({ confirmLoading: true });
           // 在这里做新增/编辑请求即可
           const [startTime, endTime] = values['[startTime, endTime]'];
+          const monitorDiffTime = dayjs(endTime).diff(startTime, 'day');
           values.startTime = startTime;
           values.endTime = endTime;
+          values.monitorDiffTime = monitorDiffTime;
           console.log('准备提交的项目数据为:', values);
           if (!unref(isUpdate)) {
             const res = await createProject(values);

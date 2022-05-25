@@ -105,17 +105,17 @@ export const formSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: 'roleName',
-    label: '角色名称',
-    required: true,
-    component: 'Input',
-  },
-  {
     field: 'roleValue',
     label: '角色值',
     required: true,
     component: 'Input',
     helpMessage: ['角色值格式', '不得少于3个字符, 含英文'],
+  },
+  {
+    field: 'roleName',
+    label: '角色名称',
+    required: true,
+    component: 'Input',
   },
   // {
   //   field: 'status',
@@ -133,6 +133,11 @@ export const formSchema: FormSchema[] = [
     field: 'createTime',
     label: '创建时间',
     component: 'DatePicker',
+    componentProps: {
+      format: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: '请选择创建时间',
+      showTime: { format: 'HH:mm:ss' },
+    },
   },
   {
     label: '备注',
