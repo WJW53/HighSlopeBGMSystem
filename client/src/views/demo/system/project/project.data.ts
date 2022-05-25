@@ -3,6 +3,7 @@ import { getAllStation } from '/@/api/demo/station';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { frequencyOptions } from '../equipment/equipment.data';
+import dayjs from 'dayjs';
 
 export const columns: BasicColumn[] = [
   {
@@ -52,8 +53,16 @@ export const columns: BasicColumn[] = [
     dataIndex: 'frequency',
   },
   {
-    title: '创建时间',
+    title: '项目成立时间',
     dataIndex: 'createTime',
+  },
+  {
+    title: '开始监测时间',
+    dataIndex: 'startTime',
+  },
+  {
+    title: '停止监测时间',
+    dataIndex: 'endTime',
   },
   {
     title: '经度',
@@ -221,8 +230,28 @@ export const projectFormSchema: FormSchema[] = [
   },
   {
     field: 'createTime',
-    label: '创建时间',
+    label: '项目成立时间',
     component: 'DatePicker',
+    componentProps: {
+      format: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: '项目成立时间',
+      showTime: { format: 'HH:mm:ss' },
+    },
+    required: true,
+  },
+  {
+    field: '[startTime, endTime]',
+    label: '监测时间范围',
+    component: 'RangePicker',
+    componentProps: {
+      format: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: ['开始监测时间', '停止监测时间'],
+      showTime: { format: 'HH:mm:ss' },
+      ranges: {
+        今天: [dayjs(), dayjs()],
+        本月: [dayjs(), dayjs().endOf('month')],
+      },
+    },
     required: true,
   },
   {

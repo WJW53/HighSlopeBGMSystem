@@ -9,6 +9,7 @@
   "dependencies": {
     "@types/superagent": "4.1.15",
     "axios": "^0.19.2",
+    "dayjs": "^1.11.2",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-mongoose": "^3.3.1",

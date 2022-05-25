@@ -58,6 +58,14 @@ module.exports = ({ mongoose }) => {
         type: String,
         required: true,
       },
+      startTime: {
+        type: String,
+        required: true,
+      },
+      endTime: {
+        type: String,
+        required: true,
+      },
       //经度
       longitude: {
         type: String,

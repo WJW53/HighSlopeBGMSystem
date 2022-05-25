@@ -55,7 +55,10 @@
           const values = await validate();
           setModalProps({ confirmLoading: true });
           // 在这里做新增/编辑请求即可
-          console.log(values);
+          const [startTime, endTime] = values['[startTime, endTime]'];
+          values.startTime = startTime;
+          values.endTime = endTime;
+          console.log('准备提交的项目数据为:', values);
           if (!unref(isUpdate)) {
             const res = await createProject(values);
             console.log(res);
