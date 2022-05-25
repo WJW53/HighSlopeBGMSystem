@@ -62,13 +62,13 @@
             const res = await createEquipment(values);
             console.log(res);
             if (res) {
-              message.success('该项目数据新增成功！');
+              message.success('该设备数据新增成功！');
             }
           } else {
             const res = await updateEquipment(values.id, values);
             console.log(res);
             if (res) {
-              message.success('该项目数据更新成功！');
+              message.success('该设备数据更新成功！');
             }
           }
           closeModal();

@@ -62,13 +62,13 @@
             const res = await createStation(values);
             console.log(res);
             if (res) {
-              message.success('该项目数据新增成功！');
+              message.success('该工位数据新增成功！');
             }
           } else {
             const res = await updateStation(values.id, values);
             console.log(res);
             if (res) {
-              message.success('该项目数据更新成功！');
+              message.success('该工位数据更新成功！');
             }
           }
           closeModal();

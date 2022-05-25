@@ -215,6 +215,7 @@ class UserService extends Service {
     this.ctx.app.utils.deleteThe_id(info);
     try {
       initAccountField(info, this.ctx);
+      info.password = md5(info.password);
       body.result = await this.ctx.model.User.create(info);//错误可能在这儿！！在create时, 先针对model进行校验, 不通过就error了
       console.log('成功新增账户：', body.result);
     } catch (error) {
