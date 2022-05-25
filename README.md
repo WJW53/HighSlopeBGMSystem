@@ -1,4 +1,4 @@
-mysite-server是为渡一「个人空间」项目提供的后端接口服务
+HighSlope Platform是我个人的毕设项目----by WJW53.
 
 # 如何使用？
 
@@ -28,15 +28,12 @@ build environment:
 ## 克隆仓库
 
 ```shell
-git clone https://gitee.com/duyiedu/mysite-server
+git clone https://github.com/WJW53/HighSlopeBGMSystem.git
 ```
 
 ## 安装依赖
 
-```shell
-$ cd mysite-server
-$ npm i
-```
+当前文件夹下pnpm i, 进入client目录下再次pnpm i; 分别对应安装node和vue项目所需依赖
 
 ## 修改配置
 
@@ -46,17 +43,9 @@ $ npm i
 
 ```js
 // 用于加密的秘钥
-exports.keys = 'mysite-server_1619336153310_6069'; // 为避免安全问题，强烈建议修改该值
+exports.keys = ''; // 为避免安全问题，强烈建议修改该值
 ```
 
-```js
-// 初始化的管理员信息
-exports.admin = {
-  loginId: 'admin', // 为避免安全问题，强烈建议修改该值
-  loginPwd: '123123', // 为避免安全问题，强烈建议修改该值
-  name: '超级管理员',
-};
-```
 
 ## 启动服务
 
@@ -64,15 +53,20 @@ exports.admin = {
 
 完成之后，即可启动服务
 
-进入`mysite-server`根目录，进入终端，运行下面的命令即可启动服务
+进入根目录，进入终端，运行下面的命令即可启动服务
 
 ```shell
-npm start
+
+# 前后端项目开发环境
+pnpm run dev
+
+ #这是生产环境; 得先打包好相关项目, 工程化配置目录
+# npm start
 ```
 
 启动完成后即可关闭终端
 
-根据配置文件，服务将监听本机的`7001`端口，此时，你可以根据[个人空间的接口文档](http://mock.duyiedu.com/project/76/interface/api)进行前端程序的开发了。
+根据配置文件，服务将监听本机的`27017`端口
 
 重启电脑后，重新启动服务即可
 
@@ -82,4 +76,4 @@ npm start
 
 但如果你在服务运行过程中更改了服务端代码，例如配置内容，则需要停止服务后重新启动
 
-如果需要停止服务，进入`mysite-server`目录，运行`npm stop`即可
+如果需要停止服务，进入根目录，运行`npm stop`即可

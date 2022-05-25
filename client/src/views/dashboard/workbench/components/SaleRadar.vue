@@ -31,19 +31,13 @@
       setOptions({
         legend: {
           bottom: 0,
-          data: ['Visits', 'Sales'],
+          data: ['Visits', 'DAU'],
         },
         tooltip: {},
         radar: {
           radius: '60%',
           splitNumber: 8,
           indicator: [
-            {
-              name: '2017',
-            },
-            {
-              name: '2017',
-            },
             {
               name: '2018',
             },
@@ -55,6 +49,9 @@
             },
             {
               name: '2021',
+            },
+            {
+              name: '2022',
             },
           ],
         },
@@ -79,7 +76,7 @@
               },
               {
                 value: [70, 75, 70, 76, 20, 85],
-                name: 'Sales',
+                name: 'DAU',
                 itemStyle: {
                   color: '#67e0e3',
                 },
