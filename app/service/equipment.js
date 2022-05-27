@@ -58,6 +58,10 @@ class EquipmentService extends Service {
       }
     };
   }
+
+  async getAllEquipmentList(userId) {
+    return await this.ctx.model.Equipment.find({ _user_: userId }, { equipmentNo: 1, equipmentName: 1 });
+  }
 }
 
 module.exports = EquipmentService;

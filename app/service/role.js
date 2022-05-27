@@ -63,6 +63,10 @@ class RoleService extends Service {
       }
     };
   }
+
+  async getAllRoleList(userId) {//暴露给账号管理的
+    return await this.ctx.model.Role.find({ roleValue: {$ne: 'super'} }, { roleName: 1, roleValue: 1 }).sort({createTime: 1});
+  }
 }
 
 module.exports = RoleService;

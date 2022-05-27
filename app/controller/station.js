@@ -25,6 +25,10 @@ class StationController extends Controller {
         this.ctx.body = await this.ctx.service.station.findAll(this.ctx.query);
     }
 
+    async getAllStationList() {
+        this.ctx.body = await this.ctx.service.station.getAllStationList(this.ctx.user._id);
+    }
+
     async findOne() {
         this.ctx.body = await this.ctx.service.station.findOne(this.ctx.params.id);
     }

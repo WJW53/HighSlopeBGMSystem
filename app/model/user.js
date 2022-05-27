@@ -25,7 +25,7 @@ module.exports = ({ mongoose }) => {
         type: String,
         required: true,
         minLength: 6,
-        maxLength: 16,
+        maxLength: 32,//16的话md5 32位就超了
       },
       role: {
         type: String,

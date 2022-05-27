@@ -21,6 +21,10 @@ class EquipmentController extends Controller {
         this.ctx.body = await this.ctx.service.equipment.findAll(this.ctx.query);
     }
 
+    async getAllEquipmentList() {
+        this.ctx.body = await this.ctx.service.equipment.getAllEquipmentList(this.ctx.user._id);
+    }
+
     async findOne() {
         this.ctx.body = await this.ctx.service.equipment.findOne(this.ctx.params.id);
     }

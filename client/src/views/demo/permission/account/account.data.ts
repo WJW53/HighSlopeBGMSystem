@@ -1,4 +1,4 @@
-import { getAllRole, isAccountExist } from '/@/api/demo/system';
+import { getAllRoleList } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
@@ -65,7 +65,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '角色',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRole,
+      api: getAllRoleList,
       labelField: 'roleName',
       valueField: 'roleValue',
     },
@@ -127,7 +127,7 @@ export const accountFormSchema: FormSchema[] = [
     field: 'role',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllRole,
+      api: getAllRoleList,
       labelField: 'roleName',
       valueField: 'roleValue',
     },

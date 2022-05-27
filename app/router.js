@@ -39,6 +39,7 @@ module.exports = (app) => {
   router.put('/api/roleInfo/:id', auth, superAdminAuth, controller.role.update);// 某个角色信息的更新
   router.get('/api/roleInfo', auth, superAdminAuth, controller.role.index);// superAdmin获取所有角色数据
   router.get('/api/roleInfo/:id', auth, superAdminAuth, controller.role.findOne);
+  router.get('/api/roleList', auth, superAdminAuth, controller.role.getAllRoleList);//暴露给账号的全量角色简易信息
 
   /**
    * 账号的注册、登录、退出、手机验证码、修改&重置密码
@@ -60,6 +61,7 @@ module.exports = (app) => {
   router.get('/api/stationInfo', auth, controller.station.index);
   // router.get('/api/stationInfo/:id', auth, controller.station.findOne);
   router.get('/api/cityInfo', auth, controller.station.getAllCityInfo);
+  router.get('/api/stationList', auth, controller.station.getAllStationList);//暴露给项目的全量工位简易信息
 
 
   /**
@@ -70,6 +72,7 @@ module.exports = (app) => {
   router.put('/api/equipmentInfo/:id', auth, controller.equipment.update);
   router.get('/api/equipmentInfo', auth, controller.equipment.index);
   // router.get('/api/equipmentInfo/:id', auth, controller.equipment.findOne);
+  router.get('/api/equipmentList', auth, controller.equipment.getAllEquipmentList);//暴露给项目的全量设备简易信息
 
 
   /**
@@ -80,6 +83,8 @@ module.exports = (app) => {
   router.put('/api/projectInfo/:id', auth, controller.project.update);//项目id
   router.get('/api/projectInfo', auth, controller.project.index);//算了，这里不用id了，因为这里id是用户id，怕和下面注释起来的搞混淆了
   // router.get('/api/projectInfo/:id', auth, controller.project.findOne);//这个id是项目id
+
+  
 
 
   /**

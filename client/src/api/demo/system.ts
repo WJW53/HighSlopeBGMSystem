@@ -15,6 +15,7 @@ import { defHttp } from '/@/utils/http/axios';
 enum Api {
   Account = '/userInfo',
   Role = '/roleInfo',
+  RoleList = '/roleList',
   AllMenuBasicInfo = '/allMenuBasicInfo', //'allMenuBasicInfo'
   CityInfo = '/cityInfo',
 
@@ -40,6 +41,8 @@ export const getAnRole = (id, params) => defHttp.get({ url: `${Api.Role}/${id}`,
 export const createRole = (params) => defHttp.post({ url: Api.Role, params });
 export const deleteRole = (id) => defHttp.delete({ url: `${Api.Role}/${id}` });
 export const updateRole = (id, params) => defHttp.put({ url: `${Api.Role}/${id}`, params });
+
+export const getAllRoleList = () => defHttp.get({ url: Api.RoleList });
 
 //other todo
 export const getDeptList = (params?: DeptListItem) =>

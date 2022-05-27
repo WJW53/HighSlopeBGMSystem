@@ -17,7 +17,7 @@ class BaseService extends Service {
   }
 
   getPagerOptions(options) {
-    console.log(options);
+    console.log('getPagerOptions', options);
     options.page = +options.page || 1;
     options.limit = (+options.pageSize) || (+options.limit) ||10;
     options.keyword = options.keyword || '';

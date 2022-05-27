@@ -1,5 +1,5 @@
-import { getAllEquipment } from '/@/api/demo/equipment';
-import { getAllStation } from '/@/api/demo/station';
+import { getAllEquipmentList } from '/@/api/demo/equipment';
+import { getAllStationList } from '/@/api/demo/station';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { frequencyOptions } from '../equipment/equipment.data';
@@ -209,7 +209,7 @@ export const projectFormSchema: FormSchema[] = [
     label: '工位',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllStation,
+      api: getAllStationList,
       labelField: 'stationName',
       valueField: 'stationNo',
     },
@@ -221,7 +221,7 @@ export const projectFormSchema: FormSchema[] = [
     label: '设备',
     component: 'ApiSelect',
     componentProps: {
-      api: getAllEquipment,
+      api: getAllEquipmentList,
       labelField: 'equipmentName',
       valueField: 'equipmentNo',
     },

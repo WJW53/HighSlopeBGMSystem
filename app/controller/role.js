@@ -20,6 +20,10 @@ class RoleController extends Controller {
         this.ctx.body = await this.ctx.service.role.findAll(this.ctx.query);
     }
 
+    async getAllRoleList() {
+        this.ctx.body = await this.ctx.service.role.getAllRoleList(this.ctx.user._id);
+    }
+
     async findOne() {
         this.ctx.body = await this.ctx.service.role.findOne(this.ctx.params.id);
     }

@@ -20,6 +20,10 @@ module.exports = ({ mongoose }) => {
         required: true,
         unique: true,
       },
+      // _user_: {//其实最好还是要关联一下_user_, 但貌似也没必要, 因为已经有验证超级管理员的中间件了
+      //   type: ObjectId,
+      //   required: true,
+      // },
       menuList: {
         type: [String],
         required: true,

@@ -57,6 +57,10 @@ class StationService extends Service {
     };
   }
 
+  async getAllStationList(userId) {
+    return await this.ctx.model.Station.find({ _user_: userId }, { stationNo: 1, stationName: 1 });
+  }
+
   getAllCityInfo(params) {
     const cityList = this.ctx.app.config.cityOptions;
     console.log('cityList: ', cityList.length, typeof cityList);

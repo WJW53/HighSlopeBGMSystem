@@ -138,6 +138,7 @@ export const formSchema: FormSchema[] = [
       placeholder: '请选择创建时间',
       showTime: { format: 'HH:mm:ss' },
     },
+    required: true,
   },
   {
     label: '备注',
