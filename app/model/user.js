@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema;
   const ObjectId = Schema.Types.ObjectId;
@@ -45,7 +46,7 @@ module.exports = ({ mongoose }) => {
       createTime: {//账号的创建时间
         type: String,
         required: true,
-        default: Date.now(),
+        default: dayjs().format('YYYY-MM-DD HH:MM:SS'),
       },
       avatar: {// 头像
         type: String,

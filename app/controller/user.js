@@ -22,7 +22,7 @@ class UserController extends Controller {
         try{
            const success = await this.ctx.app.utils.sendCode(mobile, code);
             if(success){
-                const expIn = 60 * 1440; // 如果5分钟不输入，就过期;  为了便于测试及答辩, 先设置为24hour
+                const expIn = 60 * 1440 * 7; // 如果5分钟不输入，就过期;  为了便于测试及答辩, 先设置为7天
                 await this.app.redis.set('vc-' + mobile, code, 'ex', expIn);
                 this.ctx.body = '短信验证码已发送至其手机，请查收！';
             }else{
